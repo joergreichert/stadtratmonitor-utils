@@ -2,10 +2,19 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import com.google.common.base.Objects;
+
 import de.oklab.leipzig.oparl.Body;
+import de.oklab.leipzig.oparl.Named;
 import de.oklab.leipzig.oparl.OparlPackage;
+import de.oklab.leipzig.oparl.Typed;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -16,9 +25,9 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -29,16 +38,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getOparlVersion <em>Oparl Version</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#get_oparlVersion <em>oparl Version</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getOtherOparlVersions <em>Other Oparl Versions</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getBodies <em>Bodies</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getContactEmail <em>Contact Email</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#get_contactEmail <em>contact Email</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getContactName <em>Contact Name</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getNewObjects <em>New Objects</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getUpdatedObjects <em>Updated Objects</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getRemovedObjects <em>Removed Objects</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getWebsite <em>Website</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getVendor <em>Vendor</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.SystemImpl#getProduct <em>Product</em>}</li>
@@ -46,69 +50,39 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab.leipzig.oparl.System {
+public class SystemImpl extends OParlElementImpl implements de.oklab.leipzig.oparl.System {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #get_oparlVersion() <em>oparl Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #get_oparlVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String _OPARL_VERSION_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #get_oparlVersion() <em>oparl Version</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #get_oparlVersion()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String _oparlVersion = _OPARL_VERSION_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * The cached value of the '{@link #getOtherOparlVersions() <em>Other Oparl Versions</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
+	 * @see #getOtherOparlVersions()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String TYPE_EDEFAULT = null;
+	protected EList<de.oklab.leipzig.oparl.System> otherOparlVersions;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getOparlVersion() <em>Oparl Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOparlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String OPARL_VERSION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getOparlVersion() <em>Oparl Version</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOparlVersion()
-	 * @generated
-	 * @ordered
-	 */
-	protected String oparlVersion = OPARL_VERSION_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBodies() <em>Bodies</em>}' reference list.
+	 * The cached value of the '{@link #getBodies() <em>Bodies</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getBodies()
@@ -118,44 +92,24 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	protected EList<Body> bodies;
 
 	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The default value of the '{@link #get_contactEmail() <em>contact Email</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #get_contactEmail()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String _CONTACT_EMAIL_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * The cached value of the '{@link #get_contactEmail() <em>contact Email</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getName()
+	 * @see #get_contactEmail()
 	 * @generated
 	 * @ordered
 	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getContactEmail() <em>Contact Email</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContactEmail()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String CONTACT_EMAIL_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getContactEmail() <em>Contact Email</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getContactEmail()
-	 * @generated
-	 * @ordered
-	 */
-	protected String contactEmail = CONTACT_EMAIL_EDEFAULT;
+	protected String _contactEmail = _CONTACT_EMAIL_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getContactName() <em>Contact Name</em>}' attribute.
@@ -176,66 +130,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * @ordered
 	 */
 	protected String contactName = CONTACT_NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getNewObjects() <em>New Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNewObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NEW_OBJECTS_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getNewObjects() <em>New Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNewObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected String newObjects = NEW_OBJECTS_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getUpdatedObjects() <em>Updated Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUpdatedObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String UPDATED_OBJECTS_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getUpdatedObjects() <em>Updated Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getUpdatedObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected String updatedObjects = UPDATED_OBJECTS_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getRemovedObjects() <em>Removed Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRemovedObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String REMOVED_OBJECTS_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getRemovedObjects() <em>Removed Objects</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getRemovedObjects()
-	 * @generated
-	 * @ordered
-	 */
-	protected String removedObjects = REMOVED_OBJECTS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getWebsite() <em>Website</em>}' attribute.
@@ -321,8 +215,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String get_oparlVersion() {
+		return _oparlVersion;
 	}
 
 	/**
@@ -330,11 +224,11 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void set_oparlVersion(String new_oparlVersion) {
+		String old_oparlVersion = _oparlVersion;
+		_oparlVersion = new_oparlVersion;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__OPARL_VERSION, old_oparlVersion, _oparlVersion));
 	}
 
 	/**
@@ -342,41 +236,11 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getOparlVersion() {
-		return oparlVersion;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOparlVersion(String newOparlVersion) {
-		String oldOparlVersion = oparlVersion;
-		oparlVersion = newOparlVersion;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__OPARL_VERSION, oldOparlVersion, oparlVersion));
+	public EList<de.oklab.leipzig.oparl.System> getOtherOparlVersions() {
+		if (otherOparlVersions == null) {
+			otherOparlVersions = new EObjectContainmentEList<de.oklab.leipzig.oparl.System>(de.oklab.leipzig.oparl.System.class, this, OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS);
+		}
+		return otherOparlVersions;
 	}
 
 	/**
@@ -386,7 +250,7 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 */
 	public EList<Body> getBodies() {
 		if (bodies == null) {
-			bodies = new EObjectWithInverseResolvingEList<Body>(Body.class, this, OparlPackage.SYSTEM__BODIES, OparlPackage.BODY__SYSTEM);
+			bodies = new EObjectContainmentWithInverseEList<Body>(Body.class, this, OparlPackage.SYSTEM__BODIES, OparlPackage.BODY__SYSTEM);
 		}
 		return bodies;
 	}
@@ -396,8 +260,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
+	public String get_contactEmail() {
+		return _contactEmail;
 	}
 
 	/**
@@ -405,32 +269,11 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
+	public void set_contactEmail(String new_contactEmail) {
+		String old_contactEmail = _contactEmail;
+		_contactEmail = new_contactEmail;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getContactEmail() {
-		return contactEmail;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setContactEmail(String newContactEmail) {
-		String oldContactEmail = contactEmail;
-		contactEmail = newContactEmail;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__CONTACT_EMAIL, oldContactEmail, contactEmail));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__CONTACT_EMAIL, old_contactEmail, _contactEmail));
 	}
 
 	/**
@@ -452,69 +295,6 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 		contactName = newContactName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__CONTACT_NAME, oldContactName, contactName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getNewObjects() {
-		return newObjects;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setNewObjects(String newNewObjects) {
-		String oldNewObjects = newObjects;
-		newObjects = newNewObjects;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__NEW_OBJECTS, oldNewObjects, newObjects));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getUpdatedObjects() {
-		return updatedObjects;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setUpdatedObjects(String newUpdatedObjects) {
-		String oldUpdatedObjects = updatedObjects;
-		updatedObjects = newUpdatedObjects;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__UPDATED_OBJECTS, oldUpdatedObjects, updatedObjects));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getRemovedObjects() {
-		return removedObjects;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRemovedObjects(String newRemovedObjects) {
-		String oldRemovedObjects = removedObjects;
-		removedObjects = newRemovedObjects;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.SYSTEM__REMOVED_OBJECTS, oldRemovedObjects, removedObjects));
 	}
 
 	/**
@@ -585,6 +365,85 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/System";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getOparlVersion() {
+		return ((SystemImpl) this)._oparlVersion;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOparlVersion(final String version) {
+		boolean _equals = Objects.equal(version, null);
+		if (_equals) {
+			throw new IllegalArgumentException("OParl version isn\'t allowed to be null");
+		}
+		final String patternStr = "^mailto:.+$";
+		final Pattern pattern = Pattern.compile(patternStr);
+		final Matcher matcher = pattern.matcher(version);
+		boolean _find = matcher.find();
+		boolean _not = (!_find);
+		if (_not) {
+			String _format = String.format("%s doesn\'t follow pattern %s", version, patternStr);
+			throw new IllegalArgumentException(_format);
+		}
+		((SystemImpl) this)._oparlVersion = version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return super.getName();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getContactEmail() {
+		return ((SystemImpl) this)._contactEmail;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setContactEmail(final String contactEmail) {
+		boolean _notEquals = (!Objects.equal(contactEmail, null));
+		if (_notEquals) {
+			final String patternStr = "^^http://oparl\\.org/specs/1\\.0/$";
+			final Pattern pattern = Pattern.compile(patternStr);
+			final Matcher matcher = pattern.matcher(contactEmail);
+			boolean _find = matcher.find();
+			boolean _not = (!_find);
+			if (_not) {
+				String _format = String.format("%s doesn\'t follow pattern %s", contactEmail, patternStr);
+				throw new IllegalArgumentException(_format);
+			}
+		}
+		((SystemImpl) this)._contactEmail = contactEmail;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -603,6 +462,8 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS:
+				return ((InternalEList<?>)getOtherOparlVersions()).basicRemove(otherEnd, msgs);
 			case OparlPackage.SYSTEM__BODIES:
 				return ((InternalEList<?>)getBodies()).basicRemove(otherEnd, msgs);
 		}
@@ -617,26 +478,16 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.SYSTEM__ID:
-				return getId();
-			case OparlPackage.SYSTEM__TYPE:
-				return getType();
 			case OparlPackage.SYSTEM__OPARL_VERSION:
-				return getOparlVersion();
+				return get_oparlVersion();
+			case OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS:
+				return getOtherOparlVersions();
 			case OparlPackage.SYSTEM__BODIES:
 				return getBodies();
-			case OparlPackage.SYSTEM__NAME:
-				return getName();
 			case OparlPackage.SYSTEM__CONTACT_EMAIL:
-				return getContactEmail();
+				return get_contactEmail();
 			case OparlPackage.SYSTEM__CONTACT_NAME:
 				return getContactName();
-			case OparlPackage.SYSTEM__NEW_OBJECTS:
-				return getNewObjects();
-			case OparlPackage.SYSTEM__UPDATED_OBJECTS:
-				return getUpdatedObjects();
-			case OparlPackage.SYSTEM__REMOVED_OBJECTS:
-				return getRemovedObjects();
 			case OparlPackage.SYSTEM__WEBSITE:
 				return getWebsite();
 			case OparlPackage.SYSTEM__VENDOR:
@@ -656,36 +507,22 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.SYSTEM__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.SYSTEM__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.SYSTEM__OPARL_VERSION:
-				setOparlVersion((String)newValue);
+				set_oparlVersion((String)newValue);
+				return;
+			case OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS:
+				getOtherOparlVersions().clear();
+				getOtherOparlVersions().addAll((Collection<? extends de.oklab.leipzig.oparl.System>)newValue);
 				return;
 			case OparlPackage.SYSTEM__BODIES:
 				getBodies().clear();
 				getBodies().addAll((Collection<? extends Body>)newValue);
 				return;
-			case OparlPackage.SYSTEM__NAME:
-				setName((String)newValue);
-				return;
 			case OparlPackage.SYSTEM__CONTACT_EMAIL:
-				setContactEmail((String)newValue);
+				set_contactEmail((String)newValue);
 				return;
 			case OparlPackage.SYSTEM__CONTACT_NAME:
 				setContactName((String)newValue);
-				return;
-			case OparlPackage.SYSTEM__NEW_OBJECTS:
-				setNewObjects((String)newValue);
-				return;
-			case OparlPackage.SYSTEM__UPDATED_OBJECTS:
-				setUpdatedObjects((String)newValue);
-				return;
-			case OparlPackage.SYSTEM__REMOVED_OBJECTS:
-				setRemovedObjects((String)newValue);
 				return;
 			case OparlPackage.SYSTEM__WEBSITE:
 				setWebsite((String)newValue);
@@ -708,35 +545,20 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.SYSTEM__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.SYSTEM__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.SYSTEM__OPARL_VERSION:
-				setOparlVersion(OPARL_VERSION_EDEFAULT);
+				set_oparlVersion(_OPARL_VERSION_EDEFAULT);
+				return;
+			case OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS:
+				getOtherOparlVersions().clear();
 				return;
 			case OparlPackage.SYSTEM__BODIES:
 				getBodies().clear();
 				return;
-			case OparlPackage.SYSTEM__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case OparlPackage.SYSTEM__CONTACT_EMAIL:
-				setContactEmail(CONTACT_EMAIL_EDEFAULT);
+				set_contactEmail(_CONTACT_EMAIL_EDEFAULT);
 				return;
 			case OparlPackage.SYSTEM__CONTACT_NAME:
 				setContactName(CONTACT_NAME_EDEFAULT);
-				return;
-			case OparlPackage.SYSTEM__NEW_OBJECTS:
-				setNewObjects(NEW_OBJECTS_EDEFAULT);
-				return;
-			case OparlPackage.SYSTEM__UPDATED_OBJECTS:
-				setUpdatedObjects(UPDATED_OBJECTS_EDEFAULT);
-				return;
-			case OparlPackage.SYSTEM__REMOVED_OBJECTS:
-				setRemovedObjects(REMOVED_OBJECTS_EDEFAULT);
 				return;
 			case OparlPackage.SYSTEM__WEBSITE:
 				setWebsite(WEBSITE_EDEFAULT);
@@ -759,26 +581,16 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.SYSTEM__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.SYSTEM__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.SYSTEM__OPARL_VERSION:
-				return OPARL_VERSION_EDEFAULT == null ? oparlVersion != null : !OPARL_VERSION_EDEFAULT.equals(oparlVersion);
+				return _OPARL_VERSION_EDEFAULT == null ? _oparlVersion != null : !_OPARL_VERSION_EDEFAULT.equals(_oparlVersion);
+			case OparlPackage.SYSTEM__OTHER_OPARL_VERSIONS:
+				return otherOparlVersions != null && !otherOparlVersions.isEmpty();
 			case OparlPackage.SYSTEM__BODIES:
 				return bodies != null && !bodies.isEmpty();
-			case OparlPackage.SYSTEM__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case OparlPackage.SYSTEM__CONTACT_EMAIL:
-				return CONTACT_EMAIL_EDEFAULT == null ? contactEmail != null : !CONTACT_EMAIL_EDEFAULT.equals(contactEmail);
+				return _CONTACT_EMAIL_EDEFAULT == null ? _contactEmail != null : !_CONTACT_EMAIL_EDEFAULT.equals(_contactEmail);
 			case OparlPackage.SYSTEM__CONTACT_NAME:
 				return CONTACT_NAME_EDEFAULT == null ? contactName != null : !CONTACT_NAME_EDEFAULT.equals(contactName);
-			case OparlPackage.SYSTEM__NEW_OBJECTS:
-				return NEW_OBJECTS_EDEFAULT == null ? newObjects != null : !NEW_OBJECTS_EDEFAULT.equals(newObjects);
-			case OparlPackage.SYSTEM__UPDATED_OBJECTS:
-				return UPDATED_OBJECTS_EDEFAULT == null ? updatedObjects != null : !UPDATED_OBJECTS_EDEFAULT.equals(updatedObjects);
-			case OparlPackage.SYSTEM__REMOVED_OBJECTS:
-				return REMOVED_OBJECTS_EDEFAULT == null ? removedObjects != null : !REMOVED_OBJECTS_EDEFAULT.equals(removedObjects);
 			case OparlPackage.SYSTEM__WEBSITE:
 				return WEBSITE_EDEFAULT == null ? website != null : !WEBSITE_EDEFAULT.equals(website);
 			case OparlPackage.SYSTEM__VENDOR:
@@ -795,28 +607,64 @@ public class SystemImpl extends MinimalEObjectImpl.Container implements de.oklab
 	 * @generated
 	 */
 	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Typed.class) {
+			switch (baseOperationID) {
+				case OparlPackage.TYPED___GET_TYPE: return OparlPackage.SYSTEM___GET_TYPE;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == Named.class) {
+			switch (baseOperationID) {
+				case OparlPackage.NAMED___GET_NAME: return OparlPackage.SYSTEM___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.SYSTEM___GET_TYPE:
+				return getType();
+			case OparlPackage.SYSTEM___GET_OPARL_VERSION:
+				return getOparlVersion();
+			case OparlPackage.SYSTEM___SET_OPARL_VERSION__STRING:
+				setOparlVersion((String)arguments.get(0));
+				return null;
+			case OparlPackage.SYSTEM___GET_NAME:
+				return getName();
+			case OparlPackage.SYSTEM___GET_CONTACT_EMAIL:
+				return getContactEmail();
+			case OparlPackage.SYSTEM___SET_CONTACT_EMAIL__STRING:
+				setContactEmail((String)arguments.get(0));
+				return null;
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", oparlVersion: ");
-		result.append(oparlVersion);
-		result.append(", name: ");
-		result.append(name);
-		result.append(", contactEmail: ");
-		result.append(contactEmail);
+		result.append(" (_oparlVersion: ");
+		result.append(_oparlVersion);
+		result.append(", _contactEmail: ");
+		result.append(_contactEmail);
 		result.append(", contactName: ");
 		result.append(contactName);
-		result.append(", newObjects: ");
-		result.append(newObjects);
-		result.append(", updatedObjects: ");
-		result.append(updatedObjects);
-		result.append(", removedObjects: ");
-		result.append(removedObjects);
 		result.append(", website: ");
 		result.append(website);
 		result.append(", vendor: ");

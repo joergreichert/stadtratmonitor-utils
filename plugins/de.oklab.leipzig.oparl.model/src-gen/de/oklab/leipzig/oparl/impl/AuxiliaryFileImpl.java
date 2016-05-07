@@ -2,19 +2,28 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import de.oklab.leipzig.oparl.AgendaItemAuxiliaryFile;
 import de.oklab.leipzig.oparl.AuxiliaryFile;
 import de.oklab.leipzig.oparl.Meeting;
 import de.oklab.leipzig.oparl.OparlPackage;
+import de.oklab.leipzig.oparl.Paper;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,11 +34,33 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * <ul>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AuxiliaryFileImpl#getMeeting <em>Meeting</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AuxiliaryFileImpl#getAgendaItem <em>Agenda Item</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AuxiliaryFileImpl#getPaper <em>Paper</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
+	/**
+	 * The cached value of the '{@link #getAgendaItem() <em>Agenda Item</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAgendaItem()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AgendaItemAuxiliaryFile> agendaItem;
+
+	/**
+	 * The cached value of the '{@link #getPaper() <em>Paper</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPaper()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Paper> paper;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,6 +136,31 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<AgendaItemAuxiliaryFile> getAgendaItem() {
+		if (agendaItem == null) {
+			agendaItem = new EObjectWithInverseResolvingEList<AgendaItemAuxiliaryFile>(AgendaItemAuxiliaryFile.class, this, OparlPackage.AUXILIARY_FILE__AGENDA_ITEM, OparlPackage.AGENDA_ITEM_AUXILIARY_FILE__AUXILIARY_FILE);
+		}
+		return agendaItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Paper> getPaper() {
+		if (paper == null) {
+			paper = new EObjectResolvingEList<Paper>(Paper.class, this, OparlPackage.AUXILIARY_FILE__PAPER);
+		}
+		return paper;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -112,6 +168,8 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetMeeting((Meeting)otherEnd, msgs);
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAgendaItem()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -126,6 +184,8 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 		switch (featureID) {
 			case OparlPackage.AUXILIARY_FILE__MEETING:
 				return basicSetMeeting(null, msgs);
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				return ((InternalEList<?>)getAgendaItem()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -155,6 +215,10 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 			case OparlPackage.AUXILIARY_FILE__MEETING:
 				if (resolve) return getMeeting();
 				return basicGetMeeting();
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				return getAgendaItem();
+			case OparlPackage.AUXILIARY_FILE__PAPER:
+				return getPaper();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -164,11 +228,20 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case OparlPackage.AUXILIARY_FILE__MEETING:
 				setMeeting((Meeting)newValue);
+				return;
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				getAgendaItem().clear();
+				getAgendaItem().addAll((Collection<? extends AgendaItemAuxiliaryFile>)newValue);
+				return;
+			case OparlPackage.AUXILIARY_FILE__PAPER:
+				getPaper().clear();
+				getPaper().addAll((Collection<? extends Paper>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -185,6 +258,12 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 			case OparlPackage.AUXILIARY_FILE__MEETING:
 				setMeeting((Meeting)null);
 				return;
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				getAgendaItem().clear();
+				return;
+			case OparlPackage.AUXILIARY_FILE__PAPER:
+				getPaper().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -199,6 +278,10 @@ public class AuxiliaryFileImpl extends FileImpl implements AuxiliaryFile {
 		switch (featureID) {
 			case OparlPackage.AUXILIARY_FILE__MEETING:
 				return basicGetMeeting() != null;
+			case OparlPackage.AUXILIARY_FILE__AGENDA_ITEM:
+				return agendaItem != null && !agendaItem.isEmpty();
+			case OparlPackage.AUXILIARY_FILE__PAPER:
+				return paper != null && !paper.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

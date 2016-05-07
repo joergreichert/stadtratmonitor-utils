@@ -7,8 +7,6 @@ import de.oklab.leipzig.oparl.PersonOrOrganization;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Person Or Organization</b></em>'.
@@ -16,7 +14,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *
  * @generated
  */
-public abstract class PersonOrOrganizationImpl extends MinimalEObjectImpl.Container implements PersonOrOrganization {
+public abstract class PersonOrOrganizationImpl extends AddressableOParlElementImpl implements PersonOrOrganization {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

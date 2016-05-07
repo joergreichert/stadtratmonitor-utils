@@ -6,11 +6,15 @@ import de.oklab.leipzig.oparl.AuxiliaryFile;
 import de.oklab.leipzig.oparl.Body;
 import de.oklab.leipzig.oparl.Consultation;
 import de.oklab.leipzig.oparl.File;
-import de.oklab.leipzig.oparl.Location;
+import de.oklab.leipzig.oparl.Named;
 import de.oklab.leipzig.oparl.OparlPackage;
 import de.oklab.leipzig.oparl.Organization;
 import de.oklab.leipzig.oparl.Paper;
-import de.oklab.leipzig.oparl.PersonOrOrganization;
+import de.oklab.leipzig.oparl.PaperLocation;
+import de.oklab.leipzig.oparl.Person;
+import de.oklab.leipzig.oparl.Typed;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -24,11 +28,12 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -39,97 +44,25 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getBody <em>Body</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getReference <em>Reference</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getPublishedDate <em>Published Date</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getPaperType <em>Paper Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getRelatedPaper <em>Related Paper</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getSuperordinatedPaper <em>Superordinated Paper</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getSubordinatedPaper <em>Subordinated Paper</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getMainFile <em>Main File</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getAuxiliaryFile <em>Auxiliary File</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getLocation <em>Location</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getOriginator <em>Originator</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getConsultation <em>Consultation</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getModified <em>Modified</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getKeyword <em>Keyword</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getOriginatorPerson <em>Originator Person</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getUnderDirectionof <em>Under Directionof</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getOriginatorOrganization <em>Originator Organization</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.PaperImpl#getConsultation <em>Consultation</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected Body body;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
+public class PaperImpl extends OParlElementImpl implements Paper {
 	/**
 	 * The default value of the '{@link #getReference() <em>Reference</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -201,7 +134,27 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	protected EList<Paper> relatedPaper;
 
 	/**
-	 * The cached value of the '{@link #getMainFile() <em>Main File</em>}' reference.
+	 * The cached value of the '{@link #getSuperordinatedPaper() <em>Superordinated Paper</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSuperordinatedPaper()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Paper> superordinatedPaper;
+
+	/**
+	 * The cached value of the '{@link #getSubordinatedPaper() <em>Subordinated Paper</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getSubordinatedPaper()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Paper> subordinatedPaper;
+
+	/**
+	 * The cached value of the '{@link #getMainFile() <em>Main File</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMainFile()
@@ -211,7 +164,7 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	protected File mainFile;
 
 	/**
-	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' reference list.
+	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAuxiliaryFile()
@@ -221,64 +174,24 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	protected EList<AuxiliaryFile> auxiliaryFile;
 
 	/**
-	 * The cached value of the '{@link #getLocation() <em>Location</em>}' reference list.
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Location> location;
+	protected EList<PaperLocation> location;
 
 	/**
-	 * The cached value of the '{@link #getOriginator() <em>Originator</em>}' reference list.
+	 * The cached value of the '{@link #getOriginatorPerson() <em>Originator Person</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOriginator()
+	 * @see #getOriginatorPerson()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<PersonOrOrganization> originator;
-
-	/**
-	 * The cached value of the '{@link #getConsultation() <em>Consultation</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getConsultation()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Consultation> consultation;
-
-	/**
-	 * The default value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date MODIFIED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date modified = MODIFIED_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> keyword;
+	protected EList<Person> originatorPerson;
 
 	/**
 	 * The cached value of the '{@link #getUnderDirectionof() <em>Under Directionof</em>}' reference list.
@@ -289,6 +202,26 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @ordered
 	 */
 	protected EList<Organization> underDirectionof;
+
+	/**
+	 * The cached value of the '{@link #getOriginatorOrganization() <em>Originator Organization</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOriginatorOrganization()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Organization> originatorOrganization;
+
+	/**
+	 * The cached value of the '{@link #getConsultation() <em>Consultation</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getConsultation()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Consultation> consultation;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -314,58 +247,9 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Body getBody() {
-		if (body != null && body.eIsProxy()) {
-			InternalEObject oldBody = (InternalEObject)body;
-			body = (Body)eResolveProxy(oldBody);
-			if (body != oldBody) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.PAPER__BODY, oldBody, body));
-			}
-		}
-		return body;
+		if (eContainerFeatureID() != OparlPackage.PAPER__BODY) return null;
+		return (Body)eContainer();
 	}
 
 	/**
@@ -374,7 +258,8 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @generated
 	 */
 	public Body basicGetBody() {
-		return body;
+		if (eContainerFeatureID() != OparlPackage.PAPER__BODY) return null;
+		return (Body)eInternalContainer();
 	}
 
 	/**
@@ -383,12 +268,7 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @generated
 	 */
 	public NotificationChain basicSetBody(Body newBody, NotificationChain msgs) {
-		Body oldBody = body;
-		body = newBody;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__BODY, oldBody, newBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newBody, OparlPackage.PAPER__BODY, msgs);
 		return msgs;
 	}
 
@@ -398,10 +278,12 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @generated
 	 */
 	public void setBody(Body newBody) {
-		if (newBody != body) {
+		if (newBody != eInternalContainer() || (eContainerFeatureID() != OparlPackage.PAPER__BODY && newBody != null)) {
+			if (EcoreUtil.isAncestor(this, newBody))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__PAPER, Body.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newBody != null)
 				msgs = ((InternalEObject)newBody).eInverseAdd(this, OparlPackage.BODY__PAPER, Body.class, msgs);
 			msgs = basicSetBody(newBody, msgs);
@@ -409,27 +291,6 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__BODY, newBody, newBody));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__NAME, oldName, name));
 	}
 
 	/**
@@ -512,15 +373,31 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public File getMainFile() {
-		if (mainFile != null && mainFile.eIsProxy()) {
-			InternalEObject oldMainFile = (InternalEObject)mainFile;
-			mainFile = (File)eResolveProxy(oldMainFile);
-			if (mainFile != oldMainFile) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.PAPER__MAIN_FILE, oldMainFile, mainFile));
-			}
+	public EList<Paper> getSuperordinatedPaper() {
+		if (superordinatedPaper == null) {
+			superordinatedPaper = new EObjectWithInverseResolvingEList.ManyInverse<Paper>(Paper.class, this, OparlPackage.PAPER__SUPERORDINATED_PAPER, OparlPackage.PAPER__SUBORDINATED_PAPER);
 		}
+		return superordinatedPaper;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Paper> getSubordinatedPaper() {
+		if (subordinatedPaper == null) {
+			subordinatedPaper = new EObjectWithInverseResolvingEList.ManyInverse<Paper>(Paper.class, this, OparlPackage.PAPER__SUBORDINATED_PAPER, OparlPackage.PAPER__SUPERORDINATED_PAPER);
+		}
+		return subordinatedPaper;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public File getMainFile() {
 		return mainFile;
 	}
 
@@ -529,8 +406,14 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public File basicGetMainFile() {
-		return mainFile;
+	public NotificationChain basicSetMainFile(File newMainFile, NotificationChain msgs) {
+		File oldMainFile = mainFile;
+		mainFile = newMainFile;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__MAIN_FILE, oldMainFile, newMainFile);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -539,10 +422,17 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @generated
 	 */
 	public void setMainFile(File newMainFile) {
-		File oldMainFile = mainFile;
-		mainFile = newMainFile;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__MAIN_FILE, oldMainFile, mainFile));
+		if (newMainFile != mainFile) {
+			NotificationChain msgs = null;
+			if (mainFile != null)
+				msgs = ((InternalEObject)mainFile).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.PAPER__MAIN_FILE, null, msgs);
+			if (newMainFile != null)
+				msgs = ((InternalEObject)newMainFile).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - OparlPackage.PAPER__MAIN_FILE, null, msgs);
+			msgs = basicSetMainFile(newMainFile, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__MAIN_FILE, newMainFile, newMainFile));
 	}
 
 	/**
@@ -552,7 +442,7 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 */
 	public EList<AuxiliaryFile> getAuxiliaryFile() {
 		if (auxiliaryFile == null) {
-			auxiliaryFile = new EObjectResolvingEList<AuxiliaryFile>(AuxiliaryFile.class, this, OparlPackage.PAPER__AUXILIARY_FILE);
+			auxiliaryFile = new EObjectContainmentEList<AuxiliaryFile>(AuxiliaryFile.class, this, OparlPackage.PAPER__AUXILIARY_FILE);
 		}
 		return auxiliaryFile;
 	}
@@ -562,9 +452,9 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Location> getLocation() {
+	public EList<PaperLocation> getLocation() {
 		if (location == null) {
-			location = new EObjectResolvingEList<Location>(Location.class, this, OparlPackage.PAPER__LOCATION);
+			location = new EObjectContainmentWithInverseEList<PaperLocation>(PaperLocation.class, this, OparlPackage.PAPER__LOCATION, OparlPackage.PAPER_LOCATION__PAPER);
 		}
 		return location;
 	}
@@ -574,56 +464,11 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<PersonOrOrganization> getOriginator() {
-		if (originator == null) {
-			originator = new EObjectResolvingEList<PersonOrOrganization>(PersonOrOrganization.class, this, OparlPackage.PAPER__ORIGINATOR);
+	public EList<Person> getOriginatorPerson() {
+		if (originatorPerson == null) {
+			originatorPerson = new EObjectResolvingEList<Person>(Person.class, this, OparlPackage.PAPER__ORIGINATOR_PERSON);
 		}
-		return originator;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Consultation> getConsultation() {
-		if (consultation == null) {
-			consultation = new EObjectWithInverseResolvingEList<Consultation>(Consultation.class, this, OparlPackage.PAPER__CONSULTATION, OparlPackage.CONSULTATION__PAPER);
-		}
-		return consultation;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getModified() {
-		return modified;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModified(Date newModified) {
-		Date oldModified = modified;
-		modified = newModified;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.PAPER__MODIFIED, oldModified, modified));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.PAPER__KEYWORD);
-		}
-		return keyword;
+		return originatorPerson;
 	}
 
 	/**
@@ -643,14 +488,62 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<Organization> getOriginatorOrganization() {
+		if (originatorOrganization == null) {
+			originatorOrganization = new EObjectResolvingEList<Organization>(Organization.class, this, OparlPackage.PAPER__ORIGINATOR_ORGANIZATION);
+		}
+		return originatorOrganization;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Consultation> getConsultation() {
+		if (consultation == null) {
+			consultation = new EObjectContainmentWithInverseEList<Consultation>(Consultation.class, this, OparlPackage.PAPER__CONSULTATION, OparlPackage.CONSULTATION__PAPER);
+		}
+		return consultation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/Paper";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return super.getName();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case OparlPackage.PAPER__BODY:
-				if (body != null)
-					msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__PAPER, Body.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetBody((Body)otherEnd, msgs);
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSuperordinatedPaper()).basicAdd(otherEnd, msgs);
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getSubordinatedPaper()).basicAdd(otherEnd, msgs);
+			case OparlPackage.PAPER__LOCATION:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getLocation()).basicAdd(otherEnd, msgs);
 			case OparlPackage.PAPER__CONSULTATION:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getConsultation()).basicAdd(otherEnd, msgs);
 		}
@@ -667,6 +560,16 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 		switch (featureID) {
 			case OparlPackage.PAPER__BODY:
 				return basicSetBody(null, msgs);
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				return ((InternalEList<?>)getSuperordinatedPaper()).basicRemove(otherEnd, msgs);
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				return ((InternalEList<?>)getSubordinatedPaper()).basicRemove(otherEnd, msgs);
+			case OparlPackage.PAPER__MAIN_FILE:
+				return basicSetMainFile(null, msgs);
+			case OparlPackage.PAPER__AUXILIARY_FILE:
+				return ((InternalEList<?>)getAuxiliaryFile()).basicRemove(otherEnd, msgs);
+			case OparlPackage.PAPER__LOCATION:
+				return ((InternalEList<?>)getLocation()).basicRemove(otherEnd, msgs);
 			case OparlPackage.PAPER__CONSULTATION:
 				return ((InternalEList<?>)getConsultation()).basicRemove(otherEnd, msgs);
 		}
@@ -679,17 +582,25 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case OparlPackage.PAPER__BODY:
+				return eInternalContainer().eInverseRemove(this, OparlPackage.BODY__PAPER, Body.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.PAPER__ID:
-				return getId();
-			case OparlPackage.PAPER__TYPE:
-				return getType();
 			case OparlPackage.PAPER__BODY:
 				if (resolve) return getBody();
 				return basicGetBody();
-			case OparlPackage.PAPER__NAME:
-				return getName();
 			case OparlPackage.PAPER__REFERENCE:
 				return getReference();
 			case OparlPackage.PAPER__PUBLISHED_DATE:
@@ -698,23 +609,24 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 				return getPaperType();
 			case OparlPackage.PAPER__RELATED_PAPER:
 				return getRelatedPaper();
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				return getSuperordinatedPaper();
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				return getSubordinatedPaper();
 			case OparlPackage.PAPER__MAIN_FILE:
-				if (resolve) return getMainFile();
-				return basicGetMainFile();
+				return getMainFile();
 			case OparlPackage.PAPER__AUXILIARY_FILE:
 				return getAuxiliaryFile();
 			case OparlPackage.PAPER__LOCATION:
 				return getLocation();
-			case OparlPackage.PAPER__ORIGINATOR:
-				return getOriginator();
-			case OparlPackage.PAPER__CONSULTATION:
-				return getConsultation();
-			case OparlPackage.PAPER__MODIFIED:
-				return getModified();
-			case OparlPackage.PAPER__KEYWORD:
-				return getKeyword();
+			case OparlPackage.PAPER__ORIGINATOR_PERSON:
+				return getOriginatorPerson();
 			case OparlPackage.PAPER__UNDER_DIRECTIONOF:
 				return getUnderDirectionof();
+			case OparlPackage.PAPER__ORIGINATOR_ORGANIZATION:
+				return getOriginatorOrganization();
+			case OparlPackage.PAPER__CONSULTATION:
+				return getConsultation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -728,17 +640,8 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.PAPER__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.PAPER__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.PAPER__BODY:
 				setBody((Body)newValue);
-				return;
-			case OparlPackage.PAPER__NAME:
-				setName((String)newValue);
 				return;
 			case OparlPackage.PAPER__REFERENCE:
 				setReference((String)newValue);
@@ -753,6 +656,14 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 				getRelatedPaper().clear();
 				getRelatedPaper().addAll((Collection<? extends Paper>)newValue);
 				return;
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				getSuperordinatedPaper().clear();
+				getSuperordinatedPaper().addAll((Collection<? extends Paper>)newValue);
+				return;
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				getSubordinatedPaper().clear();
+				getSubordinatedPaper().addAll((Collection<? extends Paper>)newValue);
+				return;
 			case OparlPackage.PAPER__MAIN_FILE:
 				setMainFile((File)newValue);
 				return;
@@ -762,26 +673,23 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 				return;
 			case OparlPackage.PAPER__LOCATION:
 				getLocation().clear();
-				getLocation().addAll((Collection<? extends Location>)newValue);
+				getLocation().addAll((Collection<? extends PaperLocation>)newValue);
 				return;
-			case OparlPackage.PAPER__ORIGINATOR:
-				getOriginator().clear();
-				getOriginator().addAll((Collection<? extends PersonOrOrganization>)newValue);
-				return;
-			case OparlPackage.PAPER__CONSULTATION:
-				getConsultation().clear();
-				getConsultation().addAll((Collection<? extends Consultation>)newValue);
-				return;
-			case OparlPackage.PAPER__MODIFIED:
-				setModified((Date)newValue);
-				return;
-			case OparlPackage.PAPER__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
+			case OparlPackage.PAPER__ORIGINATOR_PERSON:
+				getOriginatorPerson().clear();
+				getOriginatorPerson().addAll((Collection<? extends Person>)newValue);
 				return;
 			case OparlPackage.PAPER__UNDER_DIRECTIONOF:
 				getUnderDirectionof().clear();
 				getUnderDirectionof().addAll((Collection<? extends Organization>)newValue);
+				return;
+			case OparlPackage.PAPER__ORIGINATOR_ORGANIZATION:
+				getOriginatorOrganization().clear();
+				getOriginatorOrganization().addAll((Collection<? extends Organization>)newValue);
+				return;
+			case OparlPackage.PAPER__CONSULTATION:
+				getConsultation().clear();
+				getConsultation().addAll((Collection<? extends Consultation>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -795,17 +703,8 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.PAPER__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.PAPER__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.PAPER__BODY:
 				setBody((Body)null);
-				return;
-			case OparlPackage.PAPER__NAME:
-				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.PAPER__REFERENCE:
 				setReference(REFERENCE_EDEFAULT);
@@ -819,6 +718,12 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 			case OparlPackage.PAPER__RELATED_PAPER:
 				getRelatedPaper().clear();
 				return;
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				getSuperordinatedPaper().clear();
+				return;
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				getSubordinatedPaper().clear();
+				return;
 			case OparlPackage.PAPER__MAIN_FILE:
 				setMainFile((File)null);
 				return;
@@ -828,20 +733,17 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 			case OparlPackage.PAPER__LOCATION:
 				getLocation().clear();
 				return;
-			case OparlPackage.PAPER__ORIGINATOR:
-				getOriginator().clear();
-				return;
-			case OparlPackage.PAPER__CONSULTATION:
-				getConsultation().clear();
-				return;
-			case OparlPackage.PAPER__MODIFIED:
-				setModified(MODIFIED_EDEFAULT);
-				return;
-			case OparlPackage.PAPER__KEYWORD:
-				getKeyword().clear();
+			case OparlPackage.PAPER__ORIGINATOR_PERSON:
+				getOriginatorPerson().clear();
 				return;
 			case OparlPackage.PAPER__UNDER_DIRECTIONOF:
 				getUnderDirectionof().clear();
+				return;
+			case OparlPackage.PAPER__ORIGINATOR_ORGANIZATION:
+				getOriginatorOrganization().clear();
+				return;
+			case OparlPackage.PAPER__CONSULTATION:
+				getConsultation().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -855,14 +757,8 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.PAPER__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.PAPER__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.PAPER__BODY:
-				return body != null;
-			case OparlPackage.PAPER__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+				return basicGetBody() != null;
 			case OparlPackage.PAPER__REFERENCE:
 				return REFERENCE_EDEFAULT == null ? reference != null : !REFERENCE_EDEFAULT.equals(reference);
 			case OparlPackage.PAPER__PUBLISHED_DATE:
@@ -871,24 +767,64 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 				return PAPER_TYPE_EDEFAULT == null ? paperType != null : !PAPER_TYPE_EDEFAULT.equals(paperType);
 			case OparlPackage.PAPER__RELATED_PAPER:
 				return relatedPaper != null && !relatedPaper.isEmpty();
+			case OparlPackage.PAPER__SUPERORDINATED_PAPER:
+				return superordinatedPaper != null && !superordinatedPaper.isEmpty();
+			case OparlPackage.PAPER__SUBORDINATED_PAPER:
+				return subordinatedPaper != null && !subordinatedPaper.isEmpty();
 			case OparlPackage.PAPER__MAIN_FILE:
 				return mainFile != null;
 			case OparlPackage.PAPER__AUXILIARY_FILE:
 				return auxiliaryFile != null && !auxiliaryFile.isEmpty();
 			case OparlPackage.PAPER__LOCATION:
 				return location != null && !location.isEmpty();
-			case OparlPackage.PAPER__ORIGINATOR:
-				return originator != null && !originator.isEmpty();
-			case OparlPackage.PAPER__CONSULTATION:
-				return consultation != null && !consultation.isEmpty();
-			case OparlPackage.PAPER__MODIFIED:
-				return MODIFIED_EDEFAULT == null ? modified != null : !MODIFIED_EDEFAULT.equals(modified);
-			case OparlPackage.PAPER__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
+			case OparlPackage.PAPER__ORIGINATOR_PERSON:
+				return originatorPerson != null && !originatorPerson.isEmpty();
 			case OparlPackage.PAPER__UNDER_DIRECTIONOF:
 				return underDirectionof != null && !underDirectionof.isEmpty();
+			case OparlPackage.PAPER__ORIGINATOR_ORGANIZATION:
+				return originatorOrganization != null && !originatorOrganization.isEmpty();
+			case OparlPackage.PAPER__CONSULTATION:
+				return consultation != null && !consultation.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Typed.class) {
+			switch (baseOperationID) {
+				case OparlPackage.TYPED___GET_TYPE: return OparlPackage.PAPER___GET_TYPE;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == Named.class) {
+			switch (baseOperationID) {
+				case OparlPackage.NAMED___GET_NAME: return OparlPackage.PAPER___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.PAPER___GET_TYPE:
+				return getType();
+			case OparlPackage.PAPER___GET_NAME:
+				return getName();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -901,22 +837,12 @@ public class PaperImpl extends MinimalEObjectImpl.Container implements Paper {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", name: ");
-		result.append(name);
-		result.append(", reference: ");
+		result.append(" (reference: ");
 		result.append(reference);
 		result.append(", publishedDate: ");
 		result.append(publishedDate);
 		result.append(", paperType: ");
 		result.append(paperType);
-		result.append(", modified: ");
-		result.append(modified);
-		result.append(", keyword: ");
-		result.append(keyword);
 		result.append(')');
 		return result.toString();
 	}

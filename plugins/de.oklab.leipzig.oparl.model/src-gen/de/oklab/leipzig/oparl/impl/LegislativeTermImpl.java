@@ -6,14 +6,19 @@ import de.oklab.leipzig.oparl.Body;
 import de.oklab.leipzig.oparl.LegislativeTerm;
 import de.oklab.leipzig.oparl.OparlPackage;
 
+import java.lang.reflect.InvocationTargetException;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -23,67 +28,15 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.LegislativeTermImpl#getEndDate <em>End Date</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements LegislativeTerm {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected Body body;
-
+public class LegislativeTermImpl extends InnerOParlElementImpl implements LegislativeTerm {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -168,108 +121,6 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Body getBody() {
-		if (body != null && body.eIsProxy()) {
-			InternalEObject oldBody = (InternalEObject)body;
-			body = (Body)eResolveProxy(oldBody);
-			if (body != oldBody) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.LEGISLATIVE_TERM__BODY, oldBody, body));
-			}
-		}
-		return body;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Body basicGetBody() {
-		return body;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetBody(Body newBody, NotificationChain msgs) {
-		Body oldBody = body;
-		body = newBody;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__BODY, oldBody, newBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setBody(Body newBody) {
-		if (newBody != body) {
-			NotificationChain msgs = null;
-			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__LEGISLATIVE_TERM, Body.class, msgs);
-			if (newBody != null)
-				msgs = ((InternalEObject)newBody).eInverseAdd(this, OparlPackage.BODY__LEGISLATIVE_TERM, Body.class, msgs);
-			msgs = basicSetBody(newBody, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__BODY, newBody, newBody));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getName() {
 		return name;
 	}
@@ -284,6 +135,57 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__NAME, oldName, name));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Body getBody() {
+		if (eContainerFeatureID() != OparlPackage.LEGISLATIVE_TERM__BODY) return null;
+		return (Body)eContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Body basicGetBody() {
+		if (eContainerFeatureID() != OparlPackage.LEGISLATIVE_TERM__BODY) return null;
+		return (Body)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetBody(Body newBody, NotificationChain msgs) {
+		msgs = eBasicSetContainer((InternalEObject)newBody, OparlPackage.LEGISLATIVE_TERM__BODY, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setBody(Body newBody) {
+		if (newBody != eInternalContainer() || (eContainerFeatureID() != OparlPackage.LEGISLATIVE_TERM__BODY && newBody != null)) {
+			if (EcoreUtil.isAncestor(this, newBody))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newBody != null)
+				msgs = ((InternalEObject)newBody).eInverseAdd(this, OparlPackage.BODY__LEGISLATIVE_TERM, Body.class, msgs);
+			msgs = basicSetBody(newBody, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LEGISLATIVE_TERM__BODY, newBody, newBody));
 	}
 
 	/**
@@ -333,12 +235,21 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/LegislativeTerm";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case OparlPackage.LEGISLATIVE_TERM__BODY:
-				if (body != null)
-					msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__LEGISLATIVE_TERM, Body.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetBody((Body)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -364,17 +275,27 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case OparlPackage.LEGISLATIVE_TERM__BODY:
+				return eInternalContainer().eInverseRemove(this, OparlPackage.BODY__LEGISLATIVE_TERM, Body.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.LEGISLATIVE_TERM__ID:
-				return getId();
-			case OparlPackage.LEGISLATIVE_TERM__TYPE:
-				return getType();
+			case OparlPackage.LEGISLATIVE_TERM__NAME:
+				return getName();
 			case OparlPackage.LEGISLATIVE_TERM__BODY:
 				if (resolve) return getBody();
 				return basicGetBody();
-			case OparlPackage.LEGISLATIVE_TERM__NAME:
-				return getName();
 			case OparlPackage.LEGISLATIVE_TERM__START_DATE:
 				return getStartDate();
 			case OparlPackage.LEGISLATIVE_TERM__END_DATE:
@@ -391,17 +312,11 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.LEGISLATIVE_TERM__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.LEGISLATIVE_TERM__TYPE:
-				setType((String)newValue);
+			case OparlPackage.LEGISLATIVE_TERM__NAME:
+				setName((String)newValue);
 				return;
 			case OparlPackage.LEGISLATIVE_TERM__BODY:
 				setBody((Body)newValue);
-				return;
-			case OparlPackage.LEGISLATIVE_TERM__NAME:
-				setName((String)newValue);
 				return;
 			case OparlPackage.LEGISLATIVE_TERM__START_DATE:
 				setStartDate((String)newValue);
@@ -421,17 +336,11 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.LEGISLATIVE_TERM__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.LEGISLATIVE_TERM__TYPE:
-				setType(TYPE_EDEFAULT);
+			case OparlPackage.LEGISLATIVE_TERM__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.LEGISLATIVE_TERM__BODY:
 				setBody((Body)null);
-				return;
-			case OparlPackage.LEGISLATIVE_TERM__NAME:
-				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.LEGISLATIVE_TERM__START_DATE:
 				setStartDate(START_DATE_EDEFAULT);
@@ -451,14 +360,10 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.LEGISLATIVE_TERM__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.LEGISLATIVE_TERM__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case OparlPackage.LEGISLATIVE_TERM__BODY:
-				return body != null;
 			case OparlPackage.LEGISLATIVE_TERM__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case OparlPackage.LEGISLATIVE_TERM__BODY:
+				return basicGetBody() != null;
 			case OparlPackage.LEGISLATIVE_TERM__START_DATE:
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case OparlPackage.LEGISLATIVE_TERM__END_DATE:
@@ -473,15 +378,25 @@ public class LegislativeTermImpl extends MinimalEObjectImpl.Container implements
 	 * @generated
 	 */
 	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.LEGISLATIVE_TERM___GET_TYPE:
+				return getType();
+		}
+		return super.eInvoke(operationID, arguments);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public String toString() {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", name: ");
+		result.append(" (name: ");
 		result.append(name);
 		result.append(", startDate: ");
 		result.append(startDate);

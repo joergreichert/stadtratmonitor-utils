@@ -2,16 +2,21 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import de.oklab.leipzig.oparl.AddressableOParlElement;
 import de.oklab.leipzig.oparl.AgendaItem;
 import de.oklab.leipzig.oparl.AuxiliaryFile;
 import de.oklab.leipzig.oparl.InvitationFile;
-import de.oklab.leipzig.oparl.Location;
 import de.oklab.leipzig.oparl.Meeting;
+import de.oklab.leipzig.oparl.MeetingLocation;
+import de.oklab.leipzig.oparl.MeetingOrganization;
+import de.oklab.leipzig.oparl.Named;
 import de.oklab.leipzig.oparl.OparlPackage;
-import de.oklab.leipzig.oparl.Organization;
 import de.oklab.leipzig.oparl.Person;
 import de.oklab.leipzig.oparl.ResultsProtocol;
+import de.oklab.leipzig.oparl.Typed;
 import de.oklab.leipzig.oparl.VerbatimProtocol;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -25,9 +30,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
@@ -41,91 +44,63 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getMeetingState <em>Meeting State</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#isCancelled <em>Cancelled</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getStart <em>Start</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getEnd <em>End</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getStreetAddress <em>Street Address</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getPostalCode <em>Postal Code</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getLocality <em>Locality</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getRoom <em>Room</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getLocation <em>Location</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getOrganization <em>Organization</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getChairPerson <em>Chair Person</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getScribe <em>Scribe</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getParticipant <em>Participant</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getInvitation <em>Invitation</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getResultsProtocol <em>Results Protocol</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getVerbatimProtocol <em>Verbatim Protocol</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getAuxiliaryFile <em>Auxiliary File</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getAgendaItem <em>Agenda Item</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getKeyword <em>Keyword</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getCreated <em>Created</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MeetingImpl#getModified <em>Modified</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting {
+public class MeetingImpl extends AddressableOParlElementImpl implements Meeting {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The default value of the '{@link #getMeetingState() <em>Meeting State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getMeetingState()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String ID_EDEFAULT = null;
+	protected static final String MEETING_STATE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * The cached value of the '{@link #getMeetingState() <em>Meeting State</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getId()
+	 * @see #getMeetingState()
 	 * @generated
 	 * @ordered
 	 */
-	protected String id = ID_EDEFAULT;
+	protected String meetingState = MEETING_STATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * The default value of the '{@link #isCancelled() <em>Cancelled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
+	 * @see #isCancelled()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String TYPE_EDEFAULT = null;
+	protected static final boolean CANCELLED_EDEFAULT = false;
 
 	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+	 * The cached value of the '{@link #isCancelled() <em>Cancelled</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getType()
+	 * @see #isCancelled()
 	 * @generated
 	 * @ordered
 	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
+	protected boolean cancelled = CANCELLED_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getStart() <em>Start</em>}' attribute.
@@ -168,74 +143,34 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	protected Date end = END_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getStreetAddress() <em>Street Address</em>}' attribute.
+	 * The default value of the '{@link #getRoom() <em>Room</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getStreetAddress()
+	 * @see #getRoom()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String STREET_ADDRESS_EDEFAULT = null;
+	protected static final String ROOM_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getStreetAddress() <em>Street Address</em>}' attribute.
+	 * The cached value of the '{@link #getRoom() <em>Room</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getStreetAddress()
+	 * @see #getRoom()
 	 * @generated
 	 * @ordered
 	 */
-	protected String streetAddress = STREET_ADDRESS_EDEFAULT;
+	protected String room = ROOM_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getPostalCode() <em>Postal Code</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPostalCode()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String POSTAL_CODE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPostalCode() <em>Postal Code</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPostalCode()
-	 * @generated
-	 * @ordered
-	 */
-	protected String postalCode = POSTAL_CODE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getLocality() <em>Locality</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLocality()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String LOCALITY_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getLocality() <em>Locality</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getLocality()
-	 * @generated
-	 * @ordered
-	 */
-	protected String locality = LOCALITY_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getLocation() <em>Location</em>}' reference.
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getLocation()
 	 * @generated
 	 * @ordered
 	 */
-	protected Location location;
+	protected MeetingLocation location;
 
 	/**
 	 * The cached value of the '{@link #getOrganization() <em>Organization</em>}' reference list.
@@ -245,27 +180,7 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Organization> organization;
-
-	/**
-	 * The cached value of the '{@link #getChairPerson() <em>Chair Person</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getChairPerson()
-	 * @generated
-	 * @ordered
-	 */
-	protected Person chairPerson;
-
-	/**
-	 * The cached value of the '{@link #getScribe() <em>Scribe</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getScribe()
-	 * @generated
-	 * @ordered
-	 */
-	protected Person scribe;
+	protected EList<MeetingOrganization> organization;
 
 	/**
 	 * The cached value of the '{@link #getParticipant() <em>Participant</em>}' reference list.
@@ -308,14 +223,14 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	protected VerbatimProtocol verbatimProtocol;
 
 	/**
-	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' containment reference.
+	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getAuxiliaryFile()
 	 * @generated
 	 * @ordered
 	 */
-	protected AuxiliaryFile auxiliaryFile;
+	protected EList<AuxiliaryFile> auxiliaryFile;
 
 	/**
 	 * The cached value of the '{@link #getAgendaItem() <em>Agenda Item</em>}' containment reference list.
@@ -326,56 +241,6 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * @ordered
 	 */
 	protected EList<AgendaItem> agendaItem;
-
-	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> keyword;
-
-	/**
-	 * The default value of the '{@link #getCreated() <em>Created</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreated()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date CREATED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getCreated() <em>Created</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreated()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date created = CREATED_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date MODIFIED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date modified = MODIFIED_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -401,8 +266,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getMeetingState() {
+		return meetingState;
 	}
 
 	/**
@@ -410,11 +275,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setMeetingState(String newMeetingState) {
+		String oldMeetingState = meetingState;
+		meetingState = newMeetingState;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__ID, oldId, id));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__MEETING_STATE, oldMeetingState, meetingState));
 	}
 
 	/**
@@ -422,8 +287,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getType() {
-		return type;
+	public boolean isCancelled() {
+		return cancelled;
 	}
 
 	/**
@@ -431,32 +296,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
+	public void setCancelled(boolean newCancelled) {
+		boolean oldCancelled = cancelled;
+		cancelled = newCancelled;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__NAME, oldName, name));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__CANCELLED, oldCancelled, cancelled));
 	}
 
 	/**
@@ -506,8 +350,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getStreetAddress() {
-		return streetAddress;
+	public String getRoom() {
+		return room;
 	}
 
 	/**
@@ -515,11 +359,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setStreetAddress(String newStreetAddress) {
-		String oldStreetAddress = streetAddress;
-		streetAddress = newStreetAddress;
+	public void setRoom(String newRoom) {
+		String oldRoom = room;
+		room = newRoom;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__STREET_ADDRESS, oldStreetAddress, streetAddress));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__ROOM, oldRoom, room));
 	}
 
 	/**
@@ -527,57 +371,7 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPostalCode(String newPostalCode) {
-		String oldPostalCode = postalCode;
-		postalCode = newPostalCode;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__POSTAL_CODE, oldPostalCode, postalCode));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getLocality() {
-		return locality;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setLocality(String newLocality) {
-		String oldLocality = locality;
-		locality = newLocality;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__LOCALITY, oldLocality, locality));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Location getLocation() {
-		if (location != null && location.eIsProxy()) {
-			InternalEObject oldLocation = (InternalEObject)location;
-			location = (Location)eResolveProxy(oldLocation);
-			if (location != oldLocation) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEETING__LOCATION, oldLocation, location));
-			}
-		}
+	public MeetingLocation getLocation() {
 		return location;
 	}
 
@@ -586,20 +380,14 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Location basicGetLocation() {
-		return location;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setLocation(Location newLocation) {
-		Location oldLocation = location;
+	public NotificationChain basicSetLocation(MeetingLocation newLocation, NotificationChain msgs) {
+		MeetingLocation oldLocation = location;
 		location = newLocation;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__LOCATION, oldLocation, location));
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__LOCATION, oldLocation, newLocation);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
 	}
 
 	/**
@@ -607,87 +395,30 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Organization> getOrganization() {
+	public void setLocation(MeetingLocation newLocation) {
+		if (newLocation != location) {
+			NotificationChain msgs = null;
+			if (location != null)
+				msgs = ((InternalEObject)location).eInverseRemove(this, OparlPackage.MEETING_LOCATION__MEETING, MeetingLocation.class, msgs);
+			if (newLocation != null)
+				msgs = ((InternalEObject)newLocation).eInverseAdd(this, OparlPackage.MEETING_LOCATION__MEETING, MeetingLocation.class, msgs);
+			msgs = basicSetLocation(newLocation, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__LOCATION, newLocation, newLocation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<MeetingOrganization> getOrganization() {
 		if (organization == null) {
-			organization = new EObjectWithInverseResolvingEList.ManyInverse<Organization>(Organization.class, this, OparlPackage.MEETING__ORGANIZATION, OparlPackage.ORGANIZATION__MEETING);
+			organization = new EObjectWithInverseResolvingEList<MeetingOrganization>(MeetingOrganization.class, this, OparlPackage.MEETING__ORGANIZATION, OparlPackage.MEETING_ORGANIZATION__MEETING);
 		}
 		return organization;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Person getChairPerson() {
-		if (chairPerson != null && chairPerson.eIsProxy()) {
-			InternalEObject oldChairPerson = (InternalEObject)chairPerson;
-			chairPerson = (Person)eResolveProxy(oldChairPerson);
-			if (chairPerson != oldChairPerson) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEETING__CHAIR_PERSON, oldChairPerson, chairPerson));
-			}
-		}
-		return chairPerson;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Person basicGetChairPerson() {
-		return chairPerson;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setChairPerson(Person newChairPerson) {
-		Person oldChairPerson = chairPerson;
-		chairPerson = newChairPerson;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__CHAIR_PERSON, oldChairPerson, chairPerson));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Person getScribe() {
-		if (scribe != null && scribe.eIsProxy()) {
-			InternalEObject oldScribe = (InternalEObject)scribe;
-			scribe = (Person)eResolveProxy(oldScribe);
-			if (scribe != oldScribe) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEETING__SCRIBE, oldScribe, scribe));
-			}
-		}
-		return scribe;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Person basicGetScribe() {
-		return scribe;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setScribe(Person newScribe) {
-		Person oldScribe = scribe;
-		scribe = newScribe;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__SCRIBE, oldScribe, scribe));
 	}
 
 	/**
@@ -836,42 +567,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AuxiliaryFile getAuxiliaryFile() {
+	public EList<AuxiliaryFile> getAuxiliaryFile() {
+		if (auxiliaryFile == null) {
+			auxiliaryFile = new EObjectContainmentWithInverseEList<AuxiliaryFile>(AuxiliaryFile.class, this, OparlPackage.MEETING__AUXILIARY_FILE, OparlPackage.AUXILIARY_FILE__MEETING);
+		}
 		return auxiliaryFile;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetAuxiliaryFile(AuxiliaryFile newAuxiliaryFile, NotificationChain msgs) {
-		AuxiliaryFile oldAuxiliaryFile = auxiliaryFile;
-		auxiliaryFile = newAuxiliaryFile;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__AUXILIARY_FILE, oldAuxiliaryFile, newAuxiliaryFile);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setAuxiliaryFile(AuxiliaryFile newAuxiliaryFile) {
-		if (newAuxiliaryFile != auxiliaryFile) {
-			NotificationChain msgs = null;
-			if (auxiliaryFile != null)
-				msgs = ((InternalEObject)auxiliaryFile).eInverseRemove(this, OparlPackage.AUXILIARY_FILE__MEETING, AuxiliaryFile.class, msgs);
-			if (newAuxiliaryFile != null)
-				msgs = ((InternalEObject)newAuxiliaryFile).eInverseAdd(this, OparlPackage.AUXILIARY_FILE__MEETING, AuxiliaryFile.class, msgs);
-			msgs = basicSetAuxiliaryFile(newAuxiliaryFile, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__AUXILIARY_FILE, newAuxiliaryFile, newAuxiliaryFile));
 	}
 
 	/**
@@ -891,11 +591,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.MEETING__KEYWORD);
-		}
-		return keyword;
+	public String getType() {
+		return "https://oparl.org/schema/1.0/Meeting";
 	}
 
 	/**
@@ -903,8 +600,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getCreated() {
-		return created;
+	public String getName() {
+		return super.getName();
 	}
 
 	/**
@@ -912,11 +609,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCreated(Date newCreated) {
-		Date oldCreated = created;
-		created = newCreated;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__CREATED, oldCreated, created));
+	public String getStreetAddress() {
+		return super.getStreetAddress();
 	}
 
 	/**
@@ -924,8 +618,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getModified() {
-		return modified;
+	public String getPostalCode() {
+		return super.getPostalCode();
 	}
 
 	/**
@@ -933,11 +627,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setModified(Date newModified) {
-		Date oldModified = modified;
-		modified = newModified;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEETING__MODIFIED, oldModified, modified));
+	public String getLocality() {
+		return super.getLocality();
 	}
 
 	/**
@@ -949,6 +640,10 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case OparlPackage.MEETING__LOCATION:
+				if (location != null)
+					msgs = ((InternalEObject)location).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.MEETING__LOCATION, null, msgs);
+				return basicSetLocation((MeetingLocation)otherEnd, msgs);
 			case OparlPackage.MEETING__ORGANIZATION:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOrganization()).basicAdd(otherEnd, msgs);
 			case OparlPackage.MEETING__INVITATION:
@@ -964,9 +659,7 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 					msgs = ((InternalEObject)verbatimProtocol).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.MEETING__VERBATIM_PROTOCOL, null, msgs);
 				return basicSetVerbatimProtocol((VerbatimProtocol)otherEnd, msgs);
 			case OparlPackage.MEETING__AUXILIARY_FILE:
-				if (auxiliaryFile != null)
-					msgs = ((InternalEObject)auxiliaryFile).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.MEETING__AUXILIARY_FILE, null, msgs);
-				return basicSetAuxiliaryFile((AuxiliaryFile)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuxiliaryFile()).basicAdd(otherEnd, msgs);
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAgendaItem()).basicAdd(otherEnd, msgs);
 		}
@@ -981,6 +674,8 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
+			case OparlPackage.MEETING__LOCATION:
+				return basicSetLocation(null, msgs);
 			case OparlPackage.MEETING__ORGANIZATION:
 				return ((InternalEList<?>)getOrganization()).basicRemove(otherEnd, msgs);
 			case OparlPackage.MEETING__INVITATION:
@@ -990,7 +685,7 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 			case OparlPackage.MEETING__VERBATIM_PROTOCOL:
 				return basicSetVerbatimProtocol(null, msgs);
 			case OparlPackage.MEETING__AUXILIARY_FILE:
-				return basicSetAuxiliaryFile(null, msgs);
+				return ((InternalEList<?>)getAuxiliaryFile()).basicRemove(otherEnd, msgs);
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				return ((InternalEList<?>)getAgendaItem()).basicRemove(otherEnd, msgs);
 		}
@@ -1005,33 +700,20 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.MEETING__ID:
-				return getId();
-			case OparlPackage.MEETING__TYPE:
-				return getType();
-			case OparlPackage.MEETING__NAME:
-				return getName();
+			case OparlPackage.MEETING__MEETING_STATE:
+				return getMeetingState();
+			case OparlPackage.MEETING__CANCELLED:
+				return isCancelled();
 			case OparlPackage.MEETING__START:
 				return getStart();
 			case OparlPackage.MEETING__END:
 				return getEnd();
-			case OparlPackage.MEETING__STREET_ADDRESS:
-				return getStreetAddress();
-			case OparlPackage.MEETING__POSTAL_CODE:
-				return getPostalCode();
-			case OparlPackage.MEETING__LOCALITY:
-				return getLocality();
+			case OparlPackage.MEETING__ROOM:
+				return getRoom();
 			case OparlPackage.MEETING__LOCATION:
-				if (resolve) return getLocation();
-				return basicGetLocation();
+				return getLocation();
 			case OparlPackage.MEETING__ORGANIZATION:
 				return getOrganization();
-			case OparlPackage.MEETING__CHAIR_PERSON:
-				if (resolve) return getChairPerson();
-				return basicGetChairPerson();
-			case OparlPackage.MEETING__SCRIBE:
-				if (resolve) return getScribe();
-				return basicGetScribe();
 			case OparlPackage.MEETING__PARTICIPANT:
 				return getParticipant();
 			case OparlPackage.MEETING__INVITATION:
@@ -1044,12 +726,6 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 				return getAuxiliaryFile();
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				return getAgendaItem();
-			case OparlPackage.MEETING__KEYWORD:
-				return getKeyword();
-			case OparlPackage.MEETING__CREATED:
-				return getCreated();
-			case OparlPackage.MEETING__MODIFIED:
-				return getModified();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -1063,14 +739,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.MEETING__ID:
-				setId((String)newValue);
+			case OparlPackage.MEETING__MEETING_STATE:
+				setMeetingState((String)newValue);
 				return;
-			case OparlPackage.MEETING__TYPE:
-				setType((String)newValue);
-				return;
-			case OparlPackage.MEETING__NAME:
-				setName((String)newValue);
+			case OparlPackage.MEETING__CANCELLED:
+				setCancelled((Boolean)newValue);
 				return;
 			case OparlPackage.MEETING__START:
 				setStart((Date)newValue);
@@ -1078,27 +751,15 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 			case OparlPackage.MEETING__END:
 				setEnd((Date)newValue);
 				return;
-			case OparlPackage.MEETING__STREET_ADDRESS:
-				setStreetAddress((String)newValue);
-				return;
-			case OparlPackage.MEETING__POSTAL_CODE:
-				setPostalCode((String)newValue);
-				return;
-			case OparlPackage.MEETING__LOCALITY:
-				setLocality((String)newValue);
+			case OparlPackage.MEETING__ROOM:
+				setRoom((String)newValue);
 				return;
 			case OparlPackage.MEETING__LOCATION:
-				setLocation((Location)newValue);
+				setLocation((MeetingLocation)newValue);
 				return;
 			case OparlPackage.MEETING__ORGANIZATION:
 				getOrganization().clear();
-				getOrganization().addAll((Collection<? extends Organization>)newValue);
-				return;
-			case OparlPackage.MEETING__CHAIR_PERSON:
-				setChairPerson((Person)newValue);
-				return;
-			case OparlPackage.MEETING__SCRIBE:
-				setScribe((Person)newValue);
+				getOrganization().addAll((Collection<? extends MeetingOrganization>)newValue);
 				return;
 			case OparlPackage.MEETING__PARTICIPANT:
 				getParticipant().clear();
@@ -1114,21 +775,12 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 				setVerbatimProtocol((VerbatimProtocol)newValue);
 				return;
 			case OparlPackage.MEETING__AUXILIARY_FILE:
-				setAuxiliaryFile((AuxiliaryFile)newValue);
+				getAuxiliaryFile().clear();
+				getAuxiliaryFile().addAll((Collection<? extends AuxiliaryFile>)newValue);
 				return;
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				getAgendaItem().clear();
 				getAgendaItem().addAll((Collection<? extends AgendaItem>)newValue);
-				return;
-			case OparlPackage.MEETING__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
-				return;
-			case OparlPackage.MEETING__CREATED:
-				setCreated((Date)newValue);
-				return;
-			case OparlPackage.MEETING__MODIFIED:
-				setModified((Date)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -1142,14 +794,11 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.MEETING__ID:
-				setId(ID_EDEFAULT);
+			case OparlPackage.MEETING__MEETING_STATE:
+				setMeetingState(MEETING_STATE_EDEFAULT);
 				return;
-			case OparlPackage.MEETING__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
-			case OparlPackage.MEETING__NAME:
-				setName(NAME_EDEFAULT);
+			case OparlPackage.MEETING__CANCELLED:
+				setCancelled(CANCELLED_EDEFAULT);
 				return;
 			case OparlPackage.MEETING__START:
 				setStart(START_EDEFAULT);
@@ -1157,26 +806,14 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 			case OparlPackage.MEETING__END:
 				setEnd(END_EDEFAULT);
 				return;
-			case OparlPackage.MEETING__STREET_ADDRESS:
-				setStreetAddress(STREET_ADDRESS_EDEFAULT);
-				return;
-			case OparlPackage.MEETING__POSTAL_CODE:
-				setPostalCode(POSTAL_CODE_EDEFAULT);
-				return;
-			case OparlPackage.MEETING__LOCALITY:
-				setLocality(LOCALITY_EDEFAULT);
+			case OparlPackage.MEETING__ROOM:
+				setRoom(ROOM_EDEFAULT);
 				return;
 			case OparlPackage.MEETING__LOCATION:
-				setLocation((Location)null);
+				setLocation((MeetingLocation)null);
 				return;
 			case OparlPackage.MEETING__ORGANIZATION:
 				getOrganization().clear();
-				return;
-			case OparlPackage.MEETING__CHAIR_PERSON:
-				setChairPerson((Person)null);
-				return;
-			case OparlPackage.MEETING__SCRIBE:
-				setScribe((Person)null);
 				return;
 			case OparlPackage.MEETING__PARTICIPANT:
 				getParticipant().clear();
@@ -1191,19 +828,10 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 				setVerbatimProtocol((VerbatimProtocol)null);
 				return;
 			case OparlPackage.MEETING__AUXILIARY_FILE:
-				setAuxiliaryFile((AuxiliaryFile)null);
+				getAuxiliaryFile().clear();
 				return;
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				getAgendaItem().clear();
-				return;
-			case OparlPackage.MEETING__KEYWORD:
-				getKeyword().clear();
-				return;
-			case OparlPackage.MEETING__CREATED:
-				setCreated(CREATED_EDEFAULT);
-				return;
-			case OparlPackage.MEETING__MODIFIED:
-				setModified(MODIFIED_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1217,30 +845,20 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.MEETING__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.MEETING__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case OparlPackage.MEETING__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case OparlPackage.MEETING__MEETING_STATE:
+				return MEETING_STATE_EDEFAULT == null ? meetingState != null : !MEETING_STATE_EDEFAULT.equals(meetingState);
+			case OparlPackage.MEETING__CANCELLED:
+				return cancelled != CANCELLED_EDEFAULT;
 			case OparlPackage.MEETING__START:
 				return START_EDEFAULT == null ? start != null : !START_EDEFAULT.equals(start);
 			case OparlPackage.MEETING__END:
 				return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
-			case OparlPackage.MEETING__STREET_ADDRESS:
-				return STREET_ADDRESS_EDEFAULT == null ? streetAddress != null : !STREET_ADDRESS_EDEFAULT.equals(streetAddress);
-			case OparlPackage.MEETING__POSTAL_CODE:
-				return POSTAL_CODE_EDEFAULT == null ? postalCode != null : !POSTAL_CODE_EDEFAULT.equals(postalCode);
-			case OparlPackage.MEETING__LOCALITY:
-				return LOCALITY_EDEFAULT == null ? locality != null : !LOCALITY_EDEFAULT.equals(locality);
+			case OparlPackage.MEETING__ROOM:
+				return ROOM_EDEFAULT == null ? room != null : !ROOM_EDEFAULT.equals(room);
 			case OparlPackage.MEETING__LOCATION:
 				return location != null;
 			case OparlPackage.MEETING__ORGANIZATION:
 				return organization != null && !organization.isEmpty();
-			case OparlPackage.MEETING__CHAIR_PERSON:
-				return chairPerson != null;
-			case OparlPackage.MEETING__SCRIBE:
-				return scribe != null;
 			case OparlPackage.MEETING__PARTICIPANT:
 				return participant != null && !participant.isEmpty();
 			case OparlPackage.MEETING__INVITATION:
@@ -1250,17 +868,63 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 			case OparlPackage.MEETING__VERBATIM_PROTOCOL:
 				return verbatimProtocol != null;
 			case OparlPackage.MEETING__AUXILIARY_FILE:
-				return auxiliaryFile != null;
+				return auxiliaryFile != null && !auxiliaryFile.isEmpty();
 			case OparlPackage.MEETING__AGENDA_ITEM:
 				return agendaItem != null && !agendaItem.isEmpty();
-			case OparlPackage.MEETING__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
-			case OparlPackage.MEETING__CREATED:
-				return CREATED_EDEFAULT == null ? created != null : !CREATED_EDEFAULT.equals(created);
-			case OparlPackage.MEETING__MODIFIED:
-				return MODIFIED_EDEFAULT == null ? modified != null : !MODIFIED_EDEFAULT.equals(modified);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Typed.class) {
+			switch (baseOperationID) {
+				case OparlPackage.TYPED___GET_TYPE: return OparlPackage.MEETING___GET_TYPE;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == Named.class) {
+			switch (baseOperationID) {
+				case OparlPackage.NAMED___GET_NAME: return OparlPackage.MEETING___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == AddressableOParlElement.class) {
+			switch (baseOperationID) {
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_STREET_ADDRESS: return OparlPackage.MEETING___GET_STREET_ADDRESS;
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_POSTAL_CODE: return OparlPackage.MEETING___GET_POSTAL_CODE;
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_LOCALITY: return OparlPackage.MEETING___GET_LOCALITY;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.MEETING___GET_TYPE:
+				return getType();
+			case OparlPackage.MEETING___GET_NAME:
+				return getName();
+			case OparlPackage.MEETING___GET_STREET_ADDRESS:
+				return getStreetAddress();
+			case OparlPackage.MEETING___GET_POSTAL_CODE:
+				return getPostalCode();
+			case OparlPackage.MEETING___GET_LOCALITY:
+				return getLocality();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -1273,28 +937,16 @@ public class MeetingImpl extends MinimalEObjectImpl.Container implements Meeting
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", name: ");
-		result.append(name);
+		result.append(" (meetingState: ");
+		result.append(meetingState);
+		result.append(", cancelled: ");
+		result.append(cancelled);
 		result.append(", start: ");
 		result.append(start);
 		result.append(", end: ");
 		result.append(end);
-		result.append(", streetAddress: ");
-		result.append(streetAddress);
-		result.append(", postalCode: ");
-		result.append(postalCode);
-		result.append(", locality: ");
-		result.append(locality);
-		result.append(", keyword: ");
-		result.append(keyword);
-		result.append(", created: ");
-		result.append(created);
-		result.append(", modified: ");
-		result.append(modified);
+		result.append(", room: ");
+		result.append(room);
 		result.append(')');
 		return result.toString();
 	}

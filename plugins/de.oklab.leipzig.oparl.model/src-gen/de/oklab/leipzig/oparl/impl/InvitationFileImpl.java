@@ -2,18 +2,25 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import de.oklab.leipzig.oparl.AgendaItem;
 import de.oklab.leipzig.oparl.InvitationFile;
 import de.oklab.leipzig.oparl.Meeting;
 import de.oklab.leipzig.oparl.OparlPackage;
+import de.oklab.leipzig.oparl.Paper;
+
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
@@ -25,11 +32,33 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * <ul>
  *   <li>{@link de.oklab.leipzig.oparl.impl.InvitationFileImpl#getMeeting <em>Meeting</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.InvitationFileImpl#getAgendaItem <em>Agenda Item</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.InvitationFileImpl#getPaper <em>Paper</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class InvitationFileImpl extends FileImpl implements InvitationFile {
+	/**
+	 * The cached value of the '{@link #getAgendaItem() <em>Agenda Item</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getAgendaItem()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<AgendaItem> agendaItem;
+
+	/**
+	 * The cached value of the '{@link #getPaper() <em>Paper</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPaper()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<Paper> paper;
+
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -105,6 +134,30 @@ public class InvitationFileImpl extends FileImpl implements InvitationFile {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EList<AgendaItem> getAgendaItem() {
+		if (agendaItem == null) {
+			agendaItem = new EObjectResolvingEList<AgendaItem>(AgendaItem.class, this, OparlPackage.INVITATION_FILE__AGENDA_ITEM);
+		}
+		return agendaItem;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<Paper> getPaper() {
+		if (paper == null) {
+			paper = new EObjectResolvingEList<Paper>(Paper.class, this, OparlPackage.INVITATION_FILE__PAPER);
+		}
+		return paper;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -155,6 +208,10 @@ public class InvitationFileImpl extends FileImpl implements InvitationFile {
 			case OparlPackage.INVITATION_FILE__MEETING:
 				if (resolve) return getMeeting();
 				return basicGetMeeting();
+			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+				return getAgendaItem();
+			case OparlPackage.INVITATION_FILE__PAPER:
+				return getPaper();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -164,11 +221,20 @@ public class InvitationFileImpl extends FileImpl implements InvitationFile {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case OparlPackage.INVITATION_FILE__MEETING:
 				setMeeting((Meeting)newValue);
+				return;
+			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+				getAgendaItem().clear();
+				getAgendaItem().addAll((Collection<? extends AgendaItem>)newValue);
+				return;
+			case OparlPackage.INVITATION_FILE__PAPER:
+				getPaper().clear();
+				getPaper().addAll((Collection<? extends Paper>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -185,6 +251,12 @@ public class InvitationFileImpl extends FileImpl implements InvitationFile {
 			case OparlPackage.INVITATION_FILE__MEETING:
 				setMeeting((Meeting)null);
 				return;
+			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+				getAgendaItem().clear();
+				return;
+			case OparlPackage.INVITATION_FILE__PAPER:
+				getPaper().clear();
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -199,6 +271,10 @@ public class InvitationFileImpl extends FileImpl implements InvitationFile {
 		switch (featureID) {
 			case OparlPackage.INVITATION_FILE__MEETING:
 				return basicGetMeeting() != null;
+			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+				return agendaItem != null && !agendaItem.isEmpty();
+			case OparlPackage.INVITATION_FILE__PAPER:
+				return paper != null && !paper.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}

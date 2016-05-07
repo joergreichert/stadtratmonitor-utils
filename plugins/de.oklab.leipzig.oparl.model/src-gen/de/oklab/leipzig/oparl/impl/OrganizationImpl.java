@@ -2,11 +2,16 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import de.oklab.leipzig.oparl.AddressableOParlElement;
 import de.oklab.leipzig.oparl.Body;
-import de.oklab.leipzig.oparl.Meeting;
+import de.oklab.leipzig.oparl.MeetingOrganization;
 import de.oklab.leipzig.oparl.Membership;
 import de.oklab.leipzig.oparl.OparlPackage;
 import de.oklab.leipzig.oparl.Organization;
+import de.oklab.leipzig.oparl.OrganizationLocation;
+import de.oklab.leipzig.oparl.Typed;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -22,7 +27,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
@@ -33,99 +39,25 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getBody <em>Body</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getMembership <em>Membership</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getMeeting <em>Meeting</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getShortName <em>Short Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getPost <em>Post</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getSubOrganizationOf <em>Sub Organization Of</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getOrganizationType <em>Organization Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getClassification <em>Classification</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getEndDate <em>End Date</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getCreated <em>Created</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getModified <em>Modified</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getWebsite <em>Website</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getRoom <em>Room</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.OrganizationImpl#getLocation <em>Location</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class OrganizationImpl extends PersonOrOrganizationImpl implements Organization {
 	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getBody() <em>Body</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getBody()
-	 * @generated
-	 * @ordered
-	 */
-	protected Body body;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getMembership() <em>Membership</em>}' reference list.
+	 * The cached value of the '{@link #getMembership() <em>Membership</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMembership()
@@ -135,34 +67,14 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	protected EList<Membership> membership;
 
 	/**
-	 * The cached value of the '{@link #getMeeting() <em>Meeting</em>}' reference list.
+	 * The cached value of the '{@link #getMeeting() <em>Meeting</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getMeeting()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Meeting> meeting;
-
-	/**
-	 * The default value of the '{@link #getShortName() <em>Short Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getShortName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String SHORT_NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getShortName() <em>Short Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getShortName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String shortName = SHORT_NAME_EDEFAULT;
+	protected EList<MeetingOrganization> meeting;
 
 	/**
 	 * The cached value of the '{@link #getPost() <em>Post</em>}' attribute list.
@@ -185,6 +97,26 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	protected Organization subOrganizationOf;
 
 	/**
+	 * The default value of the '{@link #getOrganizationType() <em>Organization Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOrganizationType()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ORGANIZATION_TYPE_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getOrganizationType() <em>Organization Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOrganizationType()
+	 * @generated
+	 * @ordered
+	 */
+	protected String organizationType = ORGANIZATION_TYPE_EDEFAULT;
+
+	/**
 	 * The default value of the '{@link #getClassification() <em>Classification</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -203,16 +135,6 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @ordered
 	 */
 	protected String classification = CLASSIFICATION_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> keyword;
 
 	/**
 	 * The default value of the '{@link #getStartDate() <em>Start Date</em>}' attribute.
@@ -255,46 +177,6 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	protected Date endDate = END_DATE_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getCreated() <em>Created</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreated()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date CREATED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getCreated() <em>Created</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCreated()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date created = CREATED_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date MODIFIED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date modified = MODIFIED_EDEFAULT;
-
-	/**
 	 * The default value of the '{@link #getWebsite() <em>Website</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -313,6 +195,36 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @ordered
 	 */
 	protected String website = WEBSITE_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getRoom() <em>Room</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRoom()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String ROOM_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getRoom() <em>Room</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getRoom()
+	 * @generated
+	 * @ordered
+	 */
+	protected String room = ROOM_EDEFAULT;
+
+	/**
+	 * The cached value of the '{@link #getLocation() <em>Location</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getLocation()
+	 * @generated
+	 * @ordered
+	 */
+	protected OrganizationLocation location;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -338,58 +250,9 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Body getBody() {
-		if (body != null && body.eIsProxy()) {
-			InternalEObject oldBody = (InternalEObject)body;
-			body = (Body)eResolveProxy(oldBody);
-			if (body != oldBody) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.ORGANIZATION__BODY, oldBody, body));
-			}
-		}
-		return body;
+		if (eContainerFeatureID() != OparlPackage.ORGANIZATION__BODY) return null;
+		return (Body)eContainer();
 	}
 
 	/**
@@ -398,7 +261,8 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @generated
 	 */
 	public Body basicGetBody() {
-		return body;
+		if (eContainerFeatureID() != OparlPackage.ORGANIZATION__BODY) return null;
+		return (Body)eInternalContainer();
 	}
 
 	/**
@@ -407,12 +271,7 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @generated
 	 */
 	public NotificationChain basicSetBody(Body newBody, NotificationChain msgs) {
-		Body oldBody = body;
-		body = newBody;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__BODY, oldBody, newBody);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newBody, OparlPackage.ORGANIZATION__BODY, msgs);
 		return msgs;
 	}
 
@@ -422,10 +281,12 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @generated
 	 */
 	public void setBody(Body newBody) {
-		if (newBody != body) {
+		if (newBody != eInternalContainer() || (eContainerFeatureID() != OparlPackage.ORGANIZATION__BODY && newBody != null)) {
+			if (EcoreUtil.isAncestor(this, newBody))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (body != null)
-				msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__ORGANIZATION, Body.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newBody != null)
 				msgs = ((InternalEObject)newBody).eInverseAdd(this, OparlPackage.BODY__ORGANIZATION, Body.class, msgs);
 			msgs = basicSetBody(newBody, msgs);
@@ -440,30 +301,9 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EList<Membership> getMembership() {
 		if (membership == null) {
-			membership = new EObjectWithInverseResolvingEList<Membership>(Membership.class, this, OparlPackage.ORGANIZATION__MEMBERSHIP, OparlPackage.MEMBERSHIP__ORGANIZATION);
+			membership = new EObjectContainmentWithInverseEList<Membership>(Membership.class, this, OparlPackage.ORGANIZATION__MEMBERSHIP, OparlPackage.MEMBERSHIP__ORGANIZATION);
 		}
 		return membership;
 	}
@@ -473,32 +313,11 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Meeting> getMeeting() {
+	public EList<MeetingOrganization> getMeeting() {
 		if (meeting == null) {
-			meeting = new EObjectWithInverseResolvingEList.ManyInverse<Meeting>(Meeting.class, this, OparlPackage.ORGANIZATION__MEETING, OparlPackage.MEETING__ORGANIZATION);
+			meeting = new EObjectContainmentWithInverseEList<MeetingOrganization>(MeetingOrganization.class, this, OparlPackage.ORGANIZATION__MEETING, OparlPackage.MEETING_ORGANIZATION__ORGANIZATION);
 		}
 		return meeting;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getShortName() {
-		return shortName;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setShortName(String newShortName) {
-		String oldShortName = shortName;
-		shortName = newShortName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__SHORT_NAME, oldShortName, shortName));
 	}
 
 	/**
@@ -556,6 +375,27 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getOrganizationType() {
+		return organizationType;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOrganizationType(String newOrganizationType) {
+		String oldOrganizationType = organizationType;
+		organizationType = newOrganizationType;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__ORGANIZATION_TYPE, oldOrganizationType, organizationType));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getClassification() {
 		return classification;
 	}
@@ -570,18 +410,6 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 		classification = newClassification;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__CLASSIFICATION, oldClassification, classification));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.ORGANIZATION__KEYWORD);
-		}
-		return keyword;
 	}
 
 	/**
@@ -631,48 +459,6 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getCreated() {
-		return created;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCreated(Date newCreated) {
-		Date oldCreated = created;
-		created = newCreated;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__CREATED, oldCreated, created));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getModified() {
-		return modified;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModified(Date newModified) {
-		Date oldModified = modified;
-		modified = newModified;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__MODIFIED, oldModified, modified));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getWebsite() {
 		return website;
 	}
@@ -694,18 +480,122 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getRoom() {
+		return room;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setRoom(String newRoom) {
+		String oldRoom = room;
+		room = newRoom;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__ROOM, oldRoom, room));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public OrganizationLocation getLocation() {
+		return location;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetLocation(OrganizationLocation newLocation, NotificationChain msgs) {
+		OrganizationLocation oldLocation = location;
+		location = newLocation;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__LOCATION, oldLocation, newLocation);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setLocation(OrganizationLocation newLocation) {
+		if (newLocation != location) {
+			NotificationChain msgs = null;
+			if (location != null)
+				msgs = ((InternalEObject)location).eInverseRemove(this, OparlPackage.ORGANIZATION_LOCATION__ORGANZIATION, OrganizationLocation.class, msgs);
+			if (newLocation != null)
+				msgs = ((InternalEObject)newLocation).eInverseAdd(this, OparlPackage.ORGANIZATION_LOCATION__ORGANZIATION, OrganizationLocation.class, msgs);
+			msgs = basicSetLocation(newLocation, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.ORGANIZATION__LOCATION, newLocation, newLocation));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/Organization$";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getStreetAddress() {
+		return super.getStreetAddress();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getPostalCode() {
+		return super.getPostalCode();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getLocality() {
+		return super.getLocality();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case OparlPackage.ORGANIZATION__BODY:
-				if (body != null)
-					msgs = ((InternalEObject)body).eInverseRemove(this, OparlPackage.BODY__ORGANIZATION, Body.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetBody((Body)otherEnd, msgs);
 			case OparlPackage.ORGANIZATION__MEMBERSHIP:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMembership()).basicAdd(otherEnd, msgs);
 			case OparlPackage.ORGANIZATION__MEETING:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMeeting()).basicAdd(otherEnd, msgs);
+			case OparlPackage.ORGANIZATION__LOCATION:
+				if (location != null)
+					msgs = ((InternalEObject)location).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.ORGANIZATION__LOCATION, null, msgs);
+				return basicSetLocation((OrganizationLocation)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -724,6 +614,8 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 				return ((InternalEList<?>)getMembership()).basicRemove(otherEnd, msgs);
 			case OparlPackage.ORGANIZATION__MEETING:
 				return ((InternalEList<?>)getMeeting()).basicRemove(otherEnd, msgs);
+			case OparlPackage.ORGANIZATION__LOCATION:
+				return basicSetLocation(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -734,42 +626,48 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case OparlPackage.ORGANIZATION__BODY:
+				return eInternalContainer().eInverseRemove(this, OparlPackage.BODY__ORGANIZATION, Body.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.ORGANIZATION__ID:
-				return getId();
-			case OparlPackage.ORGANIZATION__TYPE:
-				return getType();
 			case OparlPackage.ORGANIZATION__BODY:
 				if (resolve) return getBody();
 				return basicGetBody();
-			case OparlPackage.ORGANIZATION__NAME:
-				return getName();
 			case OparlPackage.ORGANIZATION__MEMBERSHIP:
 				return getMembership();
 			case OparlPackage.ORGANIZATION__MEETING:
 				return getMeeting();
-			case OparlPackage.ORGANIZATION__SHORT_NAME:
-				return getShortName();
 			case OparlPackage.ORGANIZATION__POST:
 				return getPost();
 			case OparlPackage.ORGANIZATION__SUB_ORGANIZATION_OF:
 				if (resolve) return getSubOrganizationOf();
 				return basicGetSubOrganizationOf();
+			case OparlPackage.ORGANIZATION__ORGANIZATION_TYPE:
+				return getOrganizationType();
 			case OparlPackage.ORGANIZATION__CLASSIFICATION:
 				return getClassification();
-			case OparlPackage.ORGANIZATION__KEYWORD:
-				return getKeyword();
 			case OparlPackage.ORGANIZATION__START_DATE:
 				return getStartDate();
 			case OparlPackage.ORGANIZATION__END_DATE:
 				return getEndDate();
-			case OparlPackage.ORGANIZATION__CREATED:
-				return getCreated();
-			case OparlPackage.ORGANIZATION__MODIFIED:
-				return getModified();
 			case OparlPackage.ORGANIZATION__WEBSITE:
 				return getWebsite();
+			case OparlPackage.ORGANIZATION__ROOM:
+				return getRoom();
+			case OparlPackage.ORGANIZATION__LOCATION:
+				return getLocation();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -783,17 +681,8 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.ORGANIZATION__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.ORGANIZATION__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.ORGANIZATION__BODY:
 				setBody((Body)newValue);
-				return;
-			case OparlPackage.ORGANIZATION__NAME:
-				setName((String)newValue);
 				return;
 			case OparlPackage.ORGANIZATION__MEMBERSHIP:
 				getMembership().clear();
@@ -801,10 +690,7 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 				return;
 			case OparlPackage.ORGANIZATION__MEETING:
 				getMeeting().clear();
-				getMeeting().addAll((Collection<? extends Meeting>)newValue);
-				return;
-			case OparlPackage.ORGANIZATION__SHORT_NAME:
-				setShortName((String)newValue);
+				getMeeting().addAll((Collection<? extends MeetingOrganization>)newValue);
 				return;
 			case OparlPackage.ORGANIZATION__POST:
 				getPost().clear();
@@ -813,12 +699,11 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 			case OparlPackage.ORGANIZATION__SUB_ORGANIZATION_OF:
 				setSubOrganizationOf((Organization)newValue);
 				return;
+			case OparlPackage.ORGANIZATION__ORGANIZATION_TYPE:
+				setOrganizationType((String)newValue);
+				return;
 			case OparlPackage.ORGANIZATION__CLASSIFICATION:
 				setClassification((String)newValue);
-				return;
-			case OparlPackage.ORGANIZATION__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
 				return;
 			case OparlPackage.ORGANIZATION__START_DATE:
 				setStartDate((Date)newValue);
@@ -826,14 +711,14 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 			case OparlPackage.ORGANIZATION__END_DATE:
 				setEndDate((Date)newValue);
 				return;
-			case OparlPackage.ORGANIZATION__CREATED:
-				setCreated((Date)newValue);
-				return;
-			case OparlPackage.ORGANIZATION__MODIFIED:
-				setModified((Date)newValue);
-				return;
 			case OparlPackage.ORGANIZATION__WEBSITE:
 				setWebsite((String)newValue);
+				return;
+			case OparlPackage.ORGANIZATION__ROOM:
+				setRoom((String)newValue);
+				return;
+			case OparlPackage.ORGANIZATION__LOCATION:
+				setLocation((OrganizationLocation)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -847,17 +732,8 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.ORGANIZATION__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.ORGANIZATION__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.ORGANIZATION__BODY:
 				setBody((Body)null);
-				return;
-			case OparlPackage.ORGANIZATION__NAME:
-				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.ORGANIZATION__MEMBERSHIP:
 				getMembership().clear();
@@ -865,20 +741,17 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 			case OparlPackage.ORGANIZATION__MEETING:
 				getMeeting().clear();
 				return;
-			case OparlPackage.ORGANIZATION__SHORT_NAME:
-				setShortName(SHORT_NAME_EDEFAULT);
-				return;
 			case OparlPackage.ORGANIZATION__POST:
 				getPost().clear();
 				return;
 			case OparlPackage.ORGANIZATION__SUB_ORGANIZATION_OF:
 				setSubOrganizationOf((Organization)null);
 				return;
+			case OparlPackage.ORGANIZATION__ORGANIZATION_TYPE:
+				setOrganizationType(ORGANIZATION_TYPE_EDEFAULT);
+				return;
 			case OparlPackage.ORGANIZATION__CLASSIFICATION:
 				setClassification(CLASSIFICATION_EDEFAULT);
-				return;
-			case OparlPackage.ORGANIZATION__KEYWORD:
-				getKeyword().clear();
 				return;
 			case OparlPackage.ORGANIZATION__START_DATE:
 				setStartDate(START_DATE_EDEFAULT);
@@ -886,14 +759,14 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 			case OparlPackage.ORGANIZATION__END_DATE:
 				setEndDate(END_DATE_EDEFAULT);
 				return;
-			case OparlPackage.ORGANIZATION__CREATED:
-				setCreated(CREATED_EDEFAULT);
-				return;
-			case OparlPackage.ORGANIZATION__MODIFIED:
-				setModified(MODIFIED_EDEFAULT);
-				return;
 			case OparlPackage.ORGANIZATION__WEBSITE:
 				setWebsite(WEBSITE_EDEFAULT);
+				return;
+			case OparlPackage.ORGANIZATION__ROOM:
+				setRoom(ROOM_EDEFAULT);
+				return;
+			case OparlPackage.ORGANIZATION__LOCATION:
+				setLocation((OrganizationLocation)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -907,40 +780,76 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.ORGANIZATION__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.ORGANIZATION__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.ORGANIZATION__BODY:
-				return body != null;
-			case OparlPackage.ORGANIZATION__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+				return basicGetBody() != null;
 			case OparlPackage.ORGANIZATION__MEMBERSHIP:
 				return membership != null && !membership.isEmpty();
 			case OparlPackage.ORGANIZATION__MEETING:
 				return meeting != null && !meeting.isEmpty();
-			case OparlPackage.ORGANIZATION__SHORT_NAME:
-				return SHORT_NAME_EDEFAULT == null ? shortName != null : !SHORT_NAME_EDEFAULT.equals(shortName);
 			case OparlPackage.ORGANIZATION__POST:
 				return post != null && !post.isEmpty();
 			case OparlPackage.ORGANIZATION__SUB_ORGANIZATION_OF:
 				return subOrganizationOf != null;
+			case OparlPackage.ORGANIZATION__ORGANIZATION_TYPE:
+				return ORGANIZATION_TYPE_EDEFAULT == null ? organizationType != null : !ORGANIZATION_TYPE_EDEFAULT.equals(organizationType);
 			case OparlPackage.ORGANIZATION__CLASSIFICATION:
 				return CLASSIFICATION_EDEFAULT == null ? classification != null : !CLASSIFICATION_EDEFAULT.equals(classification);
-			case OparlPackage.ORGANIZATION__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
 			case OparlPackage.ORGANIZATION__START_DATE:
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case OparlPackage.ORGANIZATION__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
-			case OparlPackage.ORGANIZATION__CREATED:
-				return CREATED_EDEFAULT == null ? created != null : !CREATED_EDEFAULT.equals(created);
-			case OparlPackage.ORGANIZATION__MODIFIED:
-				return MODIFIED_EDEFAULT == null ? modified != null : !MODIFIED_EDEFAULT.equals(modified);
 			case OparlPackage.ORGANIZATION__WEBSITE:
 				return WEBSITE_EDEFAULT == null ? website != null : !WEBSITE_EDEFAULT.equals(website);
+			case OparlPackage.ORGANIZATION__ROOM:
+				return ROOM_EDEFAULT == null ? room != null : !ROOM_EDEFAULT.equals(room);
+			case OparlPackage.ORGANIZATION__LOCATION:
+				return location != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Typed.class) {
+			switch (baseOperationID) {
+				case OparlPackage.TYPED___GET_TYPE: return OparlPackage.ORGANIZATION___GET_TYPE;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == AddressableOParlElement.class) {
+			switch (baseOperationID) {
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_STREET_ADDRESS: return OparlPackage.ORGANIZATION___GET_STREET_ADDRESS;
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_POSTAL_CODE: return OparlPackage.ORGANIZATION___GET_POSTAL_CODE;
+				case OparlPackage.ADDRESSABLE_OPARL_ELEMENT___GET_LOCALITY: return OparlPackage.ORGANIZATION___GET_LOCALITY;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.ORGANIZATION___GET_TYPE:
+				return getType();
+			case OparlPackage.ORGANIZATION___GET_STREET_ADDRESS:
+				return getStreetAddress();
+			case OparlPackage.ORGANIZATION___GET_POSTAL_CODE:
+				return getPostalCode();
+			case OparlPackage.ORGANIZATION___GET_LOCALITY:
+				return getLocality();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -953,30 +862,20 @@ public class OrganizationImpl extends PersonOrOrganizationImpl implements Organi
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", name: ");
-		result.append(name);
-		result.append(", shortName: ");
-		result.append(shortName);
-		result.append(", post: ");
+		result.append(" (post: ");
 		result.append(post);
+		result.append(", organizationType: ");
+		result.append(organizationType);
 		result.append(", classification: ");
 		result.append(classification);
-		result.append(", keyword: ");
-		result.append(keyword);
 		result.append(", startDate: ");
 		result.append(startDate);
 		result.append(", endDate: ");
 		result.append(endDate);
-		result.append(", created: ");
-		result.append(created);
-		result.append(", modified: ");
-		result.append(modified);
 		result.append(", website: ");
 		result.append(website);
+		result.append(", room: ");
+		result.append(room);
 		result.append(')');
 		return result.toString();
 	}

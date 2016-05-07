@@ -3,10 +3,13 @@
 package de.oklab.leipzig.oparl.impl;
 
 import de.oklab.leipzig.oparl.AgendaItem;
+import de.oklab.leipzig.oparl.AgendaItemAuxiliaryFile;
+import de.oklab.leipzig.oparl.AgendaItemResolutionFile;
 import de.oklab.leipzig.oparl.Consultation;
-import de.oklab.leipzig.oparl.File;
 import de.oklab.leipzig.oparl.Meeting;
 import de.oklab.leipzig.oparl.OparlPackage;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -20,11 +23,10 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,64 +36,22 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getType <em>Type</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getMeeting <em>Meeting</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getMeeting <em>Meeting</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getNumber <em>Number</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getResolution <em>Resolution</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getAuxiliaryFile <em>Auxiliary File</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#isPublic <em>Public</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getConsultation <em>Consultation</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getResult <em>Result</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getCreated <em>Created</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getModified <em>Modified</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getResolutionText <em>Resolution Text</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getResolutionFile <em>Resolution File</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getAuxiliaryFile <em>Auxiliary File</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getStart <em>Start</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.AgendaItemImpl#getEnd <em>End</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class AgendaItemImpl extends MinimalEObjectImpl.Container implements AgendaItem {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
+public class AgendaItemImpl extends InnerOParlElementImpl implements AgendaItem {
 	/**
 	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -131,46 +91,6 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * @ordered
 	 */
 	protected String number = NUMBER_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getResolution() <em>Resolution</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResolution()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String RESOLUTION_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getResolution() <em>Resolution</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getResolution()
-	 * @generated
-	 * @ordered
-	 */
-	protected String resolution = RESOLUTION_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAuxiliaryFile()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<File> auxiliaryFile;
-
-	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> keyword;
 
 	/**
 	 * The default value of the '{@link #isPublic() <em>Public</em>}' attribute.
@@ -223,44 +143,84 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	protected String result = RESULT_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getCreated() <em>Created</em>}' attribute.
+	 * The default value of the '{@link #getResolutionText() <em>Resolution Text</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCreated()
+	 * @see #getResolutionText()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Date CREATED_EDEFAULT = null;
+	protected static final String RESOLUTION_TEXT_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getCreated() <em>Created</em>}' attribute.
+	 * The cached value of the '{@link #getResolutionText() <em>Resolution Text</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getCreated()
+	 * @see #getResolutionText()
 	 * @generated
 	 * @ordered
 	 */
-	protected Date created = CREATED_EDEFAULT;
+	protected String resolutionText = RESOLUTION_TEXT_EDEFAULT;
 
 	/**
-	 * The default value of the '{@link #getModified() <em>Modified</em>}' attribute.
+	 * The cached value of the '{@link #getResolutionFile() <em>Resolution File</em>}' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModified()
+	 * @see #getResolutionFile()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final Date MODIFIED_EDEFAULT = null;
+	protected AgendaItemResolutionFile resolutionFile;
 
 	/**
-	 * The cached value of the '{@link #getModified() <em>Modified</em>}' attribute.
+	 * The cached value of the '{@link #getAuxiliaryFile() <em>Auxiliary File</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getModified()
+	 * @see #getAuxiliaryFile()
 	 * @generated
 	 * @ordered
 	 */
-	protected Date modified = MODIFIED_EDEFAULT;
+	protected EList<AgendaItemAuxiliaryFile> auxiliaryFile;
+
+	/**
+	 * The default value of the '{@link #getStart() <em>Start</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStart()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date START_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getStart() <em>Start</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getStart()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date start = START_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEnd()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final Date END_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getEnd()
+	 * @generated
+	 * @ordered
+	 */
+	protected Date end = END_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -286,8 +246,8 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -295,32 +255,11 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__TYPE, oldType, type));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__NAME, oldName, name));
 	}
 
 	/**
@@ -379,27 +318,6 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getNumber() {
 		return number;
 	}
@@ -414,51 +332,6 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 		number = newNumber;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__NUMBER, oldNumber, number));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getResolution() {
-		return resolution;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setResolution(String newResolution) {
-		String oldResolution = resolution;
-		resolution = newResolution;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__RESOLUTION, oldResolution, resolution));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<File> getAuxiliaryFile() {
-		if (auxiliaryFile == null) {
-			auxiliaryFile = new EObjectResolvingEList<File>(File.class, this, OparlPackage.AGENDA_ITEM__AUXILIARY_FILE);
-		}
-		return auxiliaryFile;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.AGENDA_ITEM__KEYWORD);
-		}
-		return keyword;
 	}
 
 	/**
@@ -568,8 +441,8 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getCreated() {
-		return created;
+	public String getResolutionText() {
+		return resolutionText;
 	}
 
 	/**
@@ -577,11 +450,11 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setCreated(Date newCreated) {
-		Date oldCreated = created;
-		created = newCreated;
+	public void setResolutionText(String newResolutionText) {
+		String oldResolutionText = resolutionText;
+		resolutionText = newResolutionText;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__CREATED, oldCreated, created));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__RESOLUTION_TEXT, oldResolutionText, resolutionText));
 	}
 
 	/**
@@ -589,8 +462,8 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Date getModified() {
-		return modified;
+	public AgendaItemResolutionFile getResolutionFile() {
+		return resolutionFile;
 	}
 
 	/**
@@ -598,11 +471,66 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setModified(Date newModified) {
-		Date oldModified = modified;
-		modified = newModified;
+	public NotificationChain basicSetResolutionFile(AgendaItemResolutionFile newResolutionFile, NotificationChain msgs) {
+		AgendaItemResolutionFile oldResolutionFile = resolutionFile;
+		resolutionFile = newResolutionFile;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__RESOLUTION_FILE, oldResolutionFile, newResolutionFile);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setResolutionFile(AgendaItemResolutionFile newResolutionFile) {
+		if (newResolutionFile != resolutionFile) {
+			NotificationChain msgs = null;
+			if (resolutionFile != null)
+				msgs = ((InternalEObject)resolutionFile).eInverseRemove(this, OparlPackage.AGENDA_ITEM_RESOLUTION_FILE__AGENDA_ITEM, AgendaItemResolutionFile.class, msgs);
+			if (newResolutionFile != null)
+				msgs = ((InternalEObject)newResolutionFile).eInverseAdd(this, OparlPackage.AGENDA_ITEM_RESOLUTION_FILE__AGENDA_ITEM, AgendaItemResolutionFile.class, msgs);
+			msgs = basicSetResolutionFile(newResolutionFile, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__RESOLUTION_FILE, newResolutionFile, newResolutionFile));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<AgendaItemAuxiliaryFile> getAuxiliaryFile() {
+		if (auxiliaryFile == null) {
+			auxiliaryFile = new EObjectContainmentWithInverseEList<AgendaItemAuxiliaryFile>(AgendaItemAuxiliaryFile.class, this, OparlPackage.AGENDA_ITEM__AUXILIARY_FILE, OparlPackage.AGENDA_ITEM_AUXILIARY_FILE__AGENDA_ITEM);
+		}
+		return auxiliaryFile;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Date getStart() {
+		return start;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setStart(Date newStart) {
+		Date oldStart = start;
+		start = newStart;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__MODIFIED, oldModified, modified));
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__START, oldStart, start));
 	}
 
 	/**
@@ -610,6 +538,37 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Date getEnd() {
+		return end;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setEnd(Date newEnd) {
+		Date oldEnd = end;
+		end = newEnd;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.AGENDA_ITEM__END, oldEnd, end));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/AgendaItem";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -621,6 +580,12 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 				if (consultation != null)
 					msgs = ((InternalEObject)consultation).eInverseRemove(this, OparlPackage.CONSULTATION__AGENDA_ITEM, Consultation.class, msgs);
 				return basicSetConsultation((Consultation)otherEnd, msgs);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				if (resolutionFile != null)
+					msgs = ((InternalEObject)resolutionFile).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - OparlPackage.AGENDA_ITEM__RESOLUTION_FILE, null, msgs);
+				return basicSetResolutionFile((AgendaItemResolutionFile)otherEnd, msgs);
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAuxiliaryFile()).basicAdd(otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -637,6 +602,10 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 				return basicSetMeeting(null, msgs);
 			case OparlPackage.AGENDA_ITEM__CONSULTATION:
 				return basicSetConsultation(null, msgs);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				return basicSetResolutionFile(null, msgs);
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				return ((InternalEList<?>)getAuxiliaryFile()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -663,23 +632,13 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.AGENDA_ITEM__ID:
-				return getId();
-			case OparlPackage.AGENDA_ITEM__TYPE:
-				return getType();
+			case OparlPackage.AGENDA_ITEM__NAME:
+				return getName();
 			case OparlPackage.AGENDA_ITEM__MEETING:
 				if (resolve) return getMeeting();
 				return basicGetMeeting();
-			case OparlPackage.AGENDA_ITEM__NAME:
-				return getName();
 			case OparlPackage.AGENDA_ITEM__NUMBER:
 				return getNumber();
-			case OparlPackage.AGENDA_ITEM__RESOLUTION:
-				return getResolution();
-			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
-				return getAuxiliaryFile();
-			case OparlPackage.AGENDA_ITEM__KEYWORD:
-				return getKeyword();
 			case OparlPackage.AGENDA_ITEM__PUBLIC:
 				return isPublic();
 			case OparlPackage.AGENDA_ITEM__CONSULTATION:
@@ -687,10 +646,16 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 				return basicGetConsultation();
 			case OparlPackage.AGENDA_ITEM__RESULT:
 				return getResult();
-			case OparlPackage.AGENDA_ITEM__CREATED:
-				return getCreated();
-			case OparlPackage.AGENDA_ITEM__MODIFIED:
-				return getModified();
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_TEXT:
+				return getResolutionText();
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				return getResolutionFile();
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				return getAuxiliaryFile();
+			case OparlPackage.AGENDA_ITEM__START:
+				return getStart();
+			case OparlPackage.AGENDA_ITEM__END:
+				return getEnd();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -704,31 +669,14 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.AGENDA_ITEM__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.AGENDA_ITEM__TYPE:
-				setType((String)newValue);
+			case OparlPackage.AGENDA_ITEM__NAME:
+				setName((String)newValue);
 				return;
 			case OparlPackage.AGENDA_ITEM__MEETING:
 				setMeeting((Meeting)newValue);
 				return;
-			case OparlPackage.AGENDA_ITEM__NAME:
-				setName((String)newValue);
-				return;
 			case OparlPackage.AGENDA_ITEM__NUMBER:
 				setNumber((String)newValue);
-				return;
-			case OparlPackage.AGENDA_ITEM__RESOLUTION:
-				setResolution((String)newValue);
-				return;
-			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
-				getAuxiliaryFile().clear();
-				getAuxiliaryFile().addAll((Collection<? extends File>)newValue);
-				return;
-			case OparlPackage.AGENDA_ITEM__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
 				return;
 			case OparlPackage.AGENDA_ITEM__PUBLIC:
 				setPublic((Boolean)newValue);
@@ -739,11 +687,21 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 			case OparlPackage.AGENDA_ITEM__RESULT:
 				setResult((String)newValue);
 				return;
-			case OparlPackage.AGENDA_ITEM__CREATED:
-				setCreated((Date)newValue);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_TEXT:
+				setResolutionText((String)newValue);
 				return;
-			case OparlPackage.AGENDA_ITEM__MODIFIED:
-				setModified((Date)newValue);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				setResolutionFile((AgendaItemResolutionFile)newValue);
+				return;
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				getAuxiliaryFile().clear();
+				getAuxiliaryFile().addAll((Collection<? extends AgendaItemAuxiliaryFile>)newValue);
+				return;
+			case OparlPackage.AGENDA_ITEM__START:
+				setStart((Date)newValue);
+				return;
+			case OparlPackage.AGENDA_ITEM__END:
+				setEnd((Date)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -757,29 +715,14 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.AGENDA_ITEM__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.AGENDA_ITEM__TYPE:
-				setType(TYPE_EDEFAULT);
+			case OparlPackage.AGENDA_ITEM__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.AGENDA_ITEM__MEETING:
 				setMeeting((Meeting)null);
 				return;
-			case OparlPackage.AGENDA_ITEM__NAME:
-				setName(NAME_EDEFAULT);
-				return;
 			case OparlPackage.AGENDA_ITEM__NUMBER:
 				setNumber(NUMBER_EDEFAULT);
-				return;
-			case OparlPackage.AGENDA_ITEM__RESOLUTION:
-				setResolution(RESOLUTION_EDEFAULT);
-				return;
-			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
-				getAuxiliaryFile().clear();
-				return;
-			case OparlPackage.AGENDA_ITEM__KEYWORD:
-				getKeyword().clear();
 				return;
 			case OparlPackage.AGENDA_ITEM__PUBLIC:
 				setPublic(PUBLIC_EDEFAULT);
@@ -790,11 +733,20 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 			case OparlPackage.AGENDA_ITEM__RESULT:
 				setResult(RESULT_EDEFAULT);
 				return;
-			case OparlPackage.AGENDA_ITEM__CREATED:
-				setCreated(CREATED_EDEFAULT);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_TEXT:
+				setResolutionText(RESOLUTION_TEXT_EDEFAULT);
 				return;
-			case OparlPackage.AGENDA_ITEM__MODIFIED:
-				setModified(MODIFIED_EDEFAULT);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				setResolutionFile((AgendaItemResolutionFile)null);
+				return;
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				getAuxiliaryFile().clear();
+				return;
+			case OparlPackage.AGENDA_ITEM__START:
+				setStart(START_EDEFAULT);
+				return;
+			case OparlPackage.AGENDA_ITEM__END:
+				setEnd(END_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -808,34 +760,44 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.AGENDA_ITEM__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.AGENDA_ITEM__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
-			case OparlPackage.AGENDA_ITEM__MEETING:
-				return basicGetMeeting() != null;
 			case OparlPackage.AGENDA_ITEM__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case OparlPackage.AGENDA_ITEM__MEETING:
+				return basicGetMeeting() != null;
 			case OparlPackage.AGENDA_ITEM__NUMBER:
 				return NUMBER_EDEFAULT == null ? number != null : !NUMBER_EDEFAULT.equals(number);
-			case OparlPackage.AGENDA_ITEM__RESOLUTION:
-				return RESOLUTION_EDEFAULT == null ? resolution != null : !RESOLUTION_EDEFAULT.equals(resolution);
-			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
-				return auxiliaryFile != null && !auxiliaryFile.isEmpty();
-			case OparlPackage.AGENDA_ITEM__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
 			case OparlPackage.AGENDA_ITEM__PUBLIC:
 				return public_ != PUBLIC_EDEFAULT;
 			case OparlPackage.AGENDA_ITEM__CONSULTATION:
 				return consultation != null;
 			case OparlPackage.AGENDA_ITEM__RESULT:
 				return RESULT_EDEFAULT == null ? result != null : !RESULT_EDEFAULT.equals(result);
-			case OparlPackage.AGENDA_ITEM__CREATED:
-				return CREATED_EDEFAULT == null ? created != null : !CREATED_EDEFAULT.equals(created);
-			case OparlPackage.AGENDA_ITEM__MODIFIED:
-				return MODIFIED_EDEFAULT == null ? modified != null : !MODIFIED_EDEFAULT.equals(modified);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_TEXT:
+				return RESOLUTION_TEXT_EDEFAULT == null ? resolutionText != null : !RESOLUTION_TEXT_EDEFAULT.equals(resolutionText);
+			case OparlPackage.AGENDA_ITEM__RESOLUTION_FILE:
+				return resolutionFile != null;
+			case OparlPackage.AGENDA_ITEM__AUXILIARY_FILE:
+				return auxiliaryFile != null && !auxiliaryFile.isEmpty();
+			case OparlPackage.AGENDA_ITEM__START:
+				return START_EDEFAULT == null ? start != null : !START_EDEFAULT.equals(start);
+			case OparlPackage.AGENDA_ITEM__END:
+				return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.AGENDA_ITEM___GET_TYPE:
+				return getType();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -848,26 +810,20 @@ public class AgendaItemImpl extends MinimalEObjectImpl.Container implements Agen
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", name: ");
+		result.append(" (name: ");
 		result.append(name);
 		result.append(", number: ");
 		result.append(number);
-		result.append(", resolution: ");
-		result.append(resolution);
-		result.append(", keyword: ");
-		result.append(keyword);
 		result.append(", public: ");
 		result.append(public_);
 		result.append(", result: ");
 		result.append(result);
-		result.append(", created: ");
-		result.append(created);
-		result.append(", modified: ");
-		result.append(modified);
+		result.append(", resolutionText: ");
+		result.append(resolutionText);
+		result.append(", start: ");
+		result.append(start);
+		result.append(", end: ");
+		result.append(end);
 		result.append(')');
 		return result.toString();
 	}

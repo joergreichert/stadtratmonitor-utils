@@ -7,16 +7,21 @@ import de.oklab.leipzig.oparl.OparlPackage;
 import de.oklab.leipzig.oparl.Organization;
 import de.oklab.leipzig.oparl.Person;
 
+import java.lang.reflect.InvocationTargetException;
+
 import java.util.Date;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,81 +31,18 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getPerson <em>Person</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getOrganization <em>Organization</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getRole <em>Role</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getPost <em>Post</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getOnBehalfOf <em>On Behalf Of</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#isVotingRight <em>Voting Right</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getEndDate <em>End Date</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.MembershipImpl#getOnBehalfOf <em>On Behalf Of</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class MembershipImpl extends MinimalEObjectImpl.Container implements Membership {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getPerson() <em>Person</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPerson()
-	 * @generated
-	 * @ordered
-	 */
-	protected Person person;
-
-	/**
-	 * The cached value of the '{@link #getOrganization() <em>Organization</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOrganization()
-	 * @generated
-	 * @ordered
-	 */
-	protected Organization organization;
-
+public class MembershipImpl extends InnerOParlElementImpl implements Membership {
 	/**
 	 * The default value of the '{@link #getRole() <em>Role</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -120,46 +62,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @ordered
 	 */
 	protected String role = ROLE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getPost() <em>Post</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPost()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String POST_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getPost() <em>Post</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPost()
-	 * @generated
-	 * @ordered
-	 */
-	protected String post = POST_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getOnBehalfOf() <em>On Behalf Of</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOnBehalfOf()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ON_BEHALF_OF_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getOnBehalfOf() <em>On Behalf Of</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOnBehalfOf()
-	 * @generated
-	 * @ordered
-	 */
-	protected String onBehalfOf = ON_BEHALF_OF_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #isVotingRight() <em>Voting Right</em>}' attribute.
@@ -222,6 +124,16 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	protected Date endDate = END_DATE_EDEFAULT;
 
 	/**
+	 * The cached value of the '{@link #getOnBehalfOf() <em>On Behalf Of</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOnBehalfOf()
+	 * @generated
+	 * @ordered
+	 */
+	protected Organization onBehalfOf;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -245,58 +157,9 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public Person getPerson() {
-		if (person != null && person.eIsProxy()) {
-			InternalEObject oldPerson = (InternalEObject)person;
-			person = (Person)eResolveProxy(oldPerson);
-			if (person != oldPerson) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEMBERSHIP__PERSON, oldPerson, person));
-			}
-		}
-		return person;
+		if (eContainerFeatureID() != OparlPackage.MEMBERSHIP__PERSON) return null;
+		return (Person)eContainer();
 	}
 
 	/**
@@ -305,7 +168,8 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public Person basicGetPerson() {
-		return person;
+		if (eContainerFeatureID() != OparlPackage.MEMBERSHIP__PERSON) return null;
+		return (Person)eInternalContainer();
 	}
 
 	/**
@@ -314,12 +178,7 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public NotificationChain basicSetPerson(Person newPerson, NotificationChain msgs) {
-		Person oldPerson = person;
-		person = newPerson;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__PERSON, oldPerson, newPerson);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newPerson, OparlPackage.MEMBERSHIP__PERSON, msgs);
 		return msgs;
 	}
 
@@ -329,10 +188,12 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public void setPerson(Person newPerson) {
-		if (newPerson != person) {
+		if (newPerson != eInternalContainer() || (eContainerFeatureID() != OparlPackage.MEMBERSHIP__PERSON && newPerson != null)) {
+			if (EcoreUtil.isAncestor(this, newPerson))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (person != null)
-				msgs = ((InternalEObject)person).eInverseRemove(this, OparlPackage.PERSON__MEMBERSHIP, Person.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newPerson != null)
 				msgs = ((InternalEObject)newPerson).eInverseAdd(this, OparlPackage.PERSON__MEMBERSHIP, Person.class, msgs);
 			msgs = basicSetPerson(newPerson, msgs);
@@ -348,15 +209,8 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public Organization getOrganization() {
-		if (organization != null && organization.eIsProxy()) {
-			InternalEObject oldOrganization = (InternalEObject)organization;
-			organization = (Organization)eResolveProxy(oldOrganization);
-			if (organization != oldOrganization) {
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEMBERSHIP__ORGANIZATION, oldOrganization, organization));
-			}
-		}
-		return organization;
+		if (eContainerFeatureID() != OparlPackage.MEMBERSHIP__ORGANIZATION) return null;
+		return (Organization)eContainer();
 	}
 
 	/**
@@ -365,7 +219,8 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public Organization basicGetOrganization() {
-		return organization;
+		if (eContainerFeatureID() != OparlPackage.MEMBERSHIP__ORGANIZATION) return null;
+		return (Organization)eInternalContainer();
 	}
 
 	/**
@@ -374,12 +229,7 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public NotificationChain basicSetOrganization(Organization newOrganization, NotificationChain msgs) {
-		Organization oldOrganization = organization;
-		organization = newOrganization;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__ORGANIZATION, oldOrganization, newOrganization);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newOrganization, OparlPackage.MEMBERSHIP__ORGANIZATION, msgs);
 		return msgs;
 	}
 
@@ -389,10 +239,12 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	public void setOrganization(Organization newOrganization) {
-		if (newOrganization != organization) {
+		if (newOrganization != eInternalContainer() || (eContainerFeatureID() != OparlPackage.MEMBERSHIP__ORGANIZATION && newOrganization != null)) {
+			if (EcoreUtil.isAncestor(this, newOrganization))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
 			NotificationChain msgs = null;
-			if (organization != null)
-				msgs = ((InternalEObject)organization).eInverseRemove(this, OparlPackage.ORGANIZATION__MEMBERSHIP, Organization.class, msgs);
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOrganization != null)
 				msgs = ((InternalEObject)newOrganization).eInverseAdd(this, OparlPackage.ORGANIZATION__MEMBERSHIP, Organization.class, msgs);
 			msgs = basicSetOrganization(newOrganization, msgs);
@@ -421,48 +273,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 		role = newRole;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__ROLE, oldRole, role));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getPost() {
-		return post;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setPost(String newPost) {
-		String oldPost = post;
-		post = newPost;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__POST, oldPost, post));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getOnBehalfOf() {
-		return onBehalfOf;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setOnBehalfOf(String newOnBehalfOf) {
-		String oldOnBehalfOf = onBehalfOf;
-		onBehalfOf = newOnBehalfOf;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__ON_BEHALF_OF, oldOnBehalfOf, onBehalfOf));
 	}
 
 	/**
@@ -533,16 +343,63 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public Organization getOnBehalfOf() {
+		if (onBehalfOf != null && onBehalfOf.eIsProxy()) {
+			InternalEObject oldOnBehalfOf = (InternalEObject)onBehalfOf;
+			onBehalfOf = (Organization)eResolveProxy(oldOnBehalfOf);
+			if (onBehalfOf != oldOnBehalfOf) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OparlPackage.MEMBERSHIP__ON_BEHALF_OF, oldOnBehalfOf, onBehalfOf));
+			}
+		}
+		return onBehalfOf;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Organization basicGetOnBehalfOf() {
+		return onBehalfOf;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setOnBehalfOf(Organization newOnBehalfOf) {
+		Organization oldOnBehalfOf = onBehalfOf;
+		onBehalfOf = newOnBehalfOf;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.MEMBERSHIP__ON_BEHALF_OF, oldOnBehalfOf, onBehalfOf));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/Membership";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
 			case OparlPackage.MEMBERSHIP__PERSON:
-				if (person != null)
-					msgs = ((InternalEObject)person).eInverseRemove(this, OparlPackage.PERSON__MEMBERSHIP, Person.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetPerson((Person)otherEnd, msgs);
 			case OparlPackage.MEMBERSHIP__ORGANIZATION:
-				if (organization != null)
-					msgs = ((InternalEObject)organization).eInverseRemove(this, OparlPackage.ORGANIZATION__MEMBERSHIP, Organization.class, msgs);
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOrganization((Organization)otherEnd, msgs);
 		}
 		return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -570,12 +427,24 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	 * @generated
 	 */
 	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+		switch (eContainerFeatureID()) {
+			case OparlPackage.MEMBERSHIP__PERSON:
+				return eInternalContainer().eInverseRemove(this, OparlPackage.PERSON__MEMBERSHIP, Person.class, msgs);
+			case OparlPackage.MEMBERSHIP__ORGANIZATION:
+				return eInternalContainer().eInverseRemove(this, OparlPackage.ORGANIZATION__MEMBERSHIP, Organization.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.MEMBERSHIP__ID:
-				return getId();
-			case OparlPackage.MEMBERSHIP__TYPE:
-				return getType();
 			case OparlPackage.MEMBERSHIP__PERSON:
 				if (resolve) return getPerson();
 				return basicGetPerson();
@@ -584,16 +453,15 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 				return basicGetOrganization();
 			case OparlPackage.MEMBERSHIP__ROLE:
 				return getRole();
-			case OparlPackage.MEMBERSHIP__POST:
-				return getPost();
-			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
-				return getOnBehalfOf();
 			case OparlPackage.MEMBERSHIP__VOTING_RIGHT:
 				return isVotingRight();
 			case OparlPackage.MEMBERSHIP__START_DATE:
 				return getStartDate();
 			case OparlPackage.MEMBERSHIP__END_DATE:
 				return getEndDate();
+			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
+				if (resolve) return getOnBehalfOf();
+				return basicGetOnBehalfOf();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -606,12 +474,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.MEMBERSHIP__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.MEMBERSHIP__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.MEMBERSHIP__PERSON:
 				setPerson((Person)newValue);
 				return;
@@ -621,12 +483,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 			case OparlPackage.MEMBERSHIP__ROLE:
 				setRole((String)newValue);
 				return;
-			case OparlPackage.MEMBERSHIP__POST:
-				setPost((String)newValue);
-				return;
-			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
-				setOnBehalfOf((String)newValue);
-				return;
 			case OparlPackage.MEMBERSHIP__VOTING_RIGHT:
 				setVotingRight((Boolean)newValue);
 				return;
@@ -635,6 +491,9 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 				return;
 			case OparlPackage.MEMBERSHIP__END_DATE:
 				setEndDate((Date)newValue);
+				return;
+			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
+				setOnBehalfOf((Organization)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -648,12 +507,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.MEMBERSHIP__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.MEMBERSHIP__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.MEMBERSHIP__PERSON:
 				setPerson((Person)null);
 				return;
@@ -663,12 +516,6 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 			case OparlPackage.MEMBERSHIP__ROLE:
 				setRole(ROLE_EDEFAULT);
 				return;
-			case OparlPackage.MEMBERSHIP__POST:
-				setPost(POST_EDEFAULT);
-				return;
-			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
-				setOnBehalfOf(ON_BEHALF_OF_EDEFAULT);
-				return;
 			case OparlPackage.MEMBERSHIP__VOTING_RIGHT:
 				setVotingRight(VOTING_RIGHT_EDEFAULT);
 				return;
@@ -677,6 +524,9 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 				return;
 			case OparlPackage.MEMBERSHIP__END_DATE:
 				setEndDate(END_DATE_EDEFAULT);
+				return;
+			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
+				setOnBehalfOf((Organization)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -690,28 +540,36 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.MEMBERSHIP__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.MEMBERSHIP__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.MEMBERSHIP__PERSON:
-				return person != null;
+				return basicGetPerson() != null;
 			case OparlPackage.MEMBERSHIP__ORGANIZATION:
-				return organization != null;
+				return basicGetOrganization() != null;
 			case OparlPackage.MEMBERSHIP__ROLE:
 				return ROLE_EDEFAULT == null ? role != null : !ROLE_EDEFAULT.equals(role);
-			case OparlPackage.MEMBERSHIP__POST:
-				return POST_EDEFAULT == null ? post != null : !POST_EDEFAULT.equals(post);
-			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
-				return ON_BEHALF_OF_EDEFAULT == null ? onBehalfOf != null : !ON_BEHALF_OF_EDEFAULT.equals(onBehalfOf);
 			case OparlPackage.MEMBERSHIP__VOTING_RIGHT:
 				return votingRight != VOTING_RIGHT_EDEFAULT;
 			case OparlPackage.MEMBERSHIP__START_DATE:
 				return START_DATE_EDEFAULT == null ? startDate != null : !START_DATE_EDEFAULT.equals(startDate);
 			case OparlPackage.MEMBERSHIP__END_DATE:
 				return END_DATE_EDEFAULT == null ? endDate != null : !END_DATE_EDEFAULT.equals(endDate);
+			case OparlPackage.MEMBERSHIP__ON_BEHALF_OF:
+				return onBehalfOf != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.MEMBERSHIP___GET_TYPE:
+				return getType();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -724,16 +582,8 @@ public class MembershipImpl extends MinimalEObjectImpl.Container implements Memb
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", role: ");
+		result.append(" (role: ");
 		result.append(role);
-		result.append(", post: ");
-		result.append(post);
-		result.append(", onBehalfOf: ");
-		result.append(onBehalfOf);
 		result.append(", votingRight: ");
 		result.append(votingRight);
 		result.append(", startDate: ");

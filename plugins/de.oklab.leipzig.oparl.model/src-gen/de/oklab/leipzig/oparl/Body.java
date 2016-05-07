@@ -6,193 +6,143 @@ import java.util.Date;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Body</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * Der Objekttyp `oparl:Body` dient dazu, eine Körperschaft und damit ein Parlament zu repräsentieren, zu dem der Server Informationen
- * bereithält. Eine Körperschaft kann beispielsweise eine Gemeinde, ein Landkreis oder  ein kommunaler Zweckverband sein.
- * 
- * Hätte das System beispielsweise den Zweck, Informationen über das kommunale Parlament der Stadt Köln, namentlich den Rat der Stadt
- * Köln, abzubilden, dann müsste dieses System dazu ein Objekt vom Typ `oparl:Body` führen, welches die Stadt Köln repräsentiert.
- * 
- * Vom OParl-Server wird erwartet, dass er mindestens ein Objekt vom Typ `oparl:Body` bereithält. Teilen sich mehrere Körperschaften
- * dasselbe technische System, können auf demselben Server auch mehrere Objekte vom Typ `oparl:Body` beherbergt werden.
- * 
- * Über die Zuordnung zu einem bestimmten `oparl:Body`-Objekt zeigen andere Objekte, wie beispielsweise Gremien oder Drucksachen,
- * ihre Zugehörigkeit zu einer bestimmten Körperschaft und damit implizit zu einem bestimmten Parlament an.
+ *  <p>
+ * Der Objekttyp oparl:Body dient dazu, eine Körperschaft zu repräsentieren. Eine Körperschaft ist in den meisten
+ * Fällen eine Gemeinde, eine Stadt oder ein Landkreis.
+ * </p><p>
+ * In der Regel sind auf einem OParl-Server Daten von genau einer Körperschaft gespeichert und es wird daher auch
+ * nur ein Body-Objekt ausgegeben. Sind auf dem Server jedoch Daten von mehreren Körperschaften gespeichert, muss
+ * für jede Körperschaft ein eigenes Body-Objekt ausgegeben werden.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ * {
+ *   "id": "https://oparl.example.org/body/0",
+ *   "type": "https://oparl.org/schema/1.0/Body",
+ *   "system": "https://oparl.example.org/",
+ *   "contactEmail": "ris@beispielstadt.de",
+ *   "contactName": "RIS-Betreuung",
+ *   "ags": "05315000",
+ *   "rgs": "053150000000",
+ *   "equivalentBody": [
+ *       "http://d-nb.info/gnd/2015732-0",
+ *       "http://dbpedia.org/resource/Cologne"
+ *   ],
+ *   "shortName": "Köln",
+ *   "name": "Stadt Köln, kreisfreie Stadt",
+ *   "website": "http://www.beispielstadt.de/",
+ *   "license": "http://creativecommons.org/licenses/by/4.0/",
+ *   "licenseValidSince": "2014-01-01",
+ *   "organization": "https://oparl.example.org/body/0/organizations/",
+ *   "person": "https://oparl.example.org/body/0/people/",
+ *   "meeting": "https://oparl.example.org/body/0/meetings/",
+ *   "paper": "https://oparl.example.org/body/0/papers/",
+ *   "legislativeTerm": [
+ *       {
+ *           "id": "https://oparl.example.org/term/21",
+ *           "type": "https://oparl.org/schema/1.0/LegislativeTerm",
+ *           "body": "https://oparl.example.org/body/0",
+ *           "name": "21. Wahlperiode",
+ *           "startDate": "2010-12-03",
+ *           "endDate": "2013-12-03"
+ *       }
+ *   ],
+ *   "location": {
+ *       "id:": "https://oparl.example.org/location/0",
+ *       "type": "https://oparl.org/schema/1.0/Location",
+ *       "description": "Rathaus der Beispielstadt, Ratshausplatz 1, 12345 Beispielstadt",
+ *       "geometry": {
+ *           "type": "Feature",
+ *           "geometry": {
+ *               "type": "Point",
+ *               "coordinates": [
+ *                   50.1234,
+ *                   10.4321
+ *               ]
+ *           },
+ *           "properties": {
+ *               "name": "Rathausplatz"
+ *           }
+ *       }
+ *   },
+ *   "classification": "Kreisfreie Stadt",
+ *   "created": "2014-01-08T14:28:31.568+0100",
+ *   "modified": "2014-01-08T14:28:31.568+0100"
+ * }
+ * </pre>
+ * </p>
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getSystem <em>System</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getShortName <em>Short Name</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getName <em>Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getWebsite <em>Website</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getLicense <em>License</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getLicenseValidSince <em>License Valid Since</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getOparlSince <em>Oparl Since</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getAgs <em>Ags</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getRgs <em>Rgs</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getEquivalentBody <em>Equivalent Body</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getContactEmail <em>Contact Email</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getContactName <em>Contact Name</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getPaper <em>Paper</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getMember <em>Member</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getMeeting <em>Meeting</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getOrganization <em>Organization</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getPerson <em>Person</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getMeeting <em>Meeting</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getPaper <em>Paper</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getLegislativeTerm <em>Legislative Term</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Body#getClassification <em>Classification</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getKeyword <em>Keyword</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getCreated <em>Created</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Body#getModified <em>Modified</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Body#getLocation <em>Location</em>}</li>
  * </ul>
  *
  * @see de.oklab.leipzig.oparl.OparlPackage#getBody()
- * @model
+ * @model features="_contactEmail" 
+ *        _contactEmailUnique="false" _contactEmailDataType="org.eclipse.emf.ecore.EString" _contactEmailSuppressedGetVisibility="true" _contactEmailSuppressedSetVisibility="true"
  * @generated
  */
-public interface Body extends EObject {
+public interface Body extends AddressableOParlElement {
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Id()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Pattern("^http://oparl\\.org/schema/1\\.0/Body$")
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Type()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getType();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-	void setType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>System</b></em>' reference.
+	 * Returns the value of the '<em><b>System</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.System#getBodies <em>Bodies</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  System, zu dem dieses Objekt gehört.
+	 *  <p>
+	 * System, zu dem dieses Objekt gehört.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>System</em>' reference.
+	 * @return the value of the '<em>System</em>' container reference.
 	 * @see #setSystem(de.oklab.leipzig.oparl.System)
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_System()
 	 * @see de.oklab.leipzig.oparl.System#getBodies
-	 * @model opposite="bodies"
+	 * @model opposite="bodies" transient="false"
 	 * @generated
 	 */
 	de.oklab.leipzig.oparl.System getSystem();
 
 	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getSystem <em>System</em>}' reference.
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getSystem <em>System</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>System</em>' reference.
+	 * @param value the new value of the '<em>System</em>' container reference.
 	 * @see #getSystem()
 	 * @generated
 	 */
 	void setSystem(de.oklab.leipzig.oparl.System value);
 
 	/**
-	 * Returns the value of the '<em><b>Short Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Kurzer Name der Körperschaft.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Short Name</em>' attribute.
-	 * @see #setShortName(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_ShortName()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getShortName();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getShortName <em>Short Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Short Name</em>' attribute.
-	 * @see #getShortName()
-	 * @generated
-	 */
-	void setShortName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Der offizielle lange Name der Körperschaft.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Name()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
-	/**
 	 * Returns the value of the '<em><b>Website</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Allgemeine Website der Körperschaft.
+	 *  <p>
+	 * Allgemeine Website der Körperschaft.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Website</em>' attribute.
 	 * @see #setWebsite(String)
@@ -213,38 +163,14 @@ public interface Body extends EObject {
 	void setWebsite(String value);
 
 	/**
-	 * Returns the value of the '<em><b>License</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Lizenz, die für die Daten, die über diese API abgerufen werden können, gilt, sofern nicht am einzelnen Objekt anders angegeben.
-	 * Siehe dazu auch die übergreifende Beschreibung zur Eigenschaft [`license`](#eigenschaft_license).
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>License</em>' attribute.
-	 * @see #setLicense(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_License()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
-	 * @generated
-	 */
-	String getLicense();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getLicense <em>License</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>License</em>' attribute.
-	 * @see #getLicense()
-	 * @generated
-	 */
-	void setLicense(String value);
-
-	/**
 	 * Returns the value of the '<em><b>License Valid Since</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Zeitpunkt, seit dem die unter `license` angegebene Lizenz gilt. Vorsicht bei Änderungen der Lizenz die zu restriktiveren
-	 * Bedingungen führen.
+	 *  <p>
+	 * Zeitpunkt, seit dem die unter {@link Body#license} angegebene Lizenz gilt. Vorsicht bei Änderungen der Lizenz
+	 * die zu restriktiveren Bedingungen führen.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>License Valid Since</em>' attribute.
 	 * @see #setLicenseValidSince(Date)
@@ -265,13 +191,74 @@ public interface Body extends EObject {
 	void setLicenseValidSince(Date value);
 
 	/**
+	 * Returns the value of the '<em><b>Oparl Since</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Zeitpunkt, ab dem OParl für dieses Body bereitgestellt wurde. Dies hilft, um die Datenvalidität einzuschätzen,
+	 * erst ab der Einrichtung für OParl kann sichergestellt werden, dass sämtliche Werte korrekt in der
+	 * Original-Quelle vorliegen.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Oparl Since</em>' attribute.
+	 * @see #setOparlSince(Date)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_OparlSince()
+	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+	 * @generated
+	 */
+	Date getOparlSince();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getOparlSince <em>Oparl Since</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Oparl Since</em>' attribute.
+	 * @see #getOparlSince()
+	 * @generated
+	 */
+	void setOparlSince(Date value);
+
+	/**
+	 * Returns the value of the '<em><b>Ags</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Der achtstellige Amtliche Gemeindeschlüssel
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Ags</em>' attribute.
+	 * @see #setAgs(String)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Ags()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getAgs();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getAgs <em>Ags</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Ags</em>' attribute.
+	 * @see #getAgs()
+	 * @generated
+	 */
+	void setAgs(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Rgs</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Regionalschlüssel der Körperschaft als zwölfstellige Zeichenkette^[Regionalschlüssel können im [Gemeindeverzeichnis (GV-ISys)
-	 * des Statistischen Bundesamtes](https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html)
-	 * eingesehen werden].
+	 *  <p>
+	 * Der zwölfstellige Regionalschlüssel. Der Regionalschlüssel wird in Zukunft voraussichtlich den
+	 * Amtlichen Gemeindeschlüssel ersetzen.
+	 * </p>
+	 * <p>
+	 * Regionalschlüssel können im <a href="https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html">Gemeindeverzeichnis (GV-ISys) des Statistischen Bundesamtes</a>
+	 * eingesehen werden.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Rgs</em>' attribute.
 	 * @see #setRgs(String)
@@ -292,54 +279,37 @@ public interface Body extends EObject {
 	void setRgs(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Equivalent Body</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Equivalent Body</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.Body}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Dient der Angabe beliebig vieler zusätzlicher URLs, die dieselbe Körperschaft repräsentieren. Hier können beispielsweise, sofern
-	 * vorhanden, der entsprechende Eintrag der Gemeinsamen Normdatei der Deutschen Nationalbibliothek^[Gemeinsame Normdatei <http://www.dnb.de/gnd>]
-	 * oder der DBPedia^[DBPedia <http://www.dbpedia.org/>] oder der Wikipedia^[Wikipedia <http://de.wikipedia.org/>] angegeben werden.
+	 *  <p>
+	 * Dient der Angabe beliebig vieler zusätzlicher URLs, die dieselbe Körperschaft repräsentieren.
+	 * </p><p>
+	 * Hier können beispielsweise, sofern vorhanden, der entsprechende Eintrag der <a href="http://www.dnb.de/gnd">
+	 * Gemeinsamen Normdatei der Deutschen Nationalbibliothek</a> oder der <a href="http://www.dbpedia.org/">
+	 * DBPedia</a> oder der <a href="http://www.dbpedia.org/">Wikipedia</a>.
+	 * angegeben werden.
+	 * </p><p>
+	 * Body- oder System-Objekte mit anderen OParl-Versionen <b>dürfen</b> nicht Teil der Liste sein.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Equivalent Body</em>' attribute list.
+	 * @return the value of the '<em>Equivalent Body</em>' containment reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_EquivalentBody()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
+	 * @model containment="true"
 	 * @generated
 	 */
-	EList<String> getEquivalentBody();
-
-	/**
-	 * Returns the value of the '<em><b>Contact Email</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Dient der Angabe einer Kontakt-E-Mail-Adresse mit \"mailto:\"-Schema. Die Adresse soll die Kontaktaufnahme zu einer für die Körperschaft
-	 * und idealerweise das parlamentarische Informationssystem zuständigen Stelle ermöglichen.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Contact Email</em>' attribute.
-	 * @see #setContactEmail(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_ContactEmail()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getContactEmail();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getContactEmail <em>Contact Email</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Contact Email</em>' attribute.
-	 * @see #getContactEmail()
-	 * @generated
-	 */
-	void setContactEmail(String value);
+	EList<Body> getEquivalentBody();
 
 	/**
 	 * Returns the value of the '<em><b>Contact Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Name oder Bezeichnung der mit `contactEmail` erreichbaren Stelle.
+	 *  <p>
+	 * Name oder Bezeichnung der mit {@link Body#contactEmail} erreichbaren Stelle.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Contact Name</em>' attribute.
 	 * @see #setContactName(String)
@@ -360,84 +330,94 @@ public interface Body extends EObject {
 	void setContactName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Paper</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getBody <em>Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Drucksachen unter dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Paper</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Paper()
-	 * @see de.oklab.leipzig.oparl.Paper#getBody
-	 * @model opposite="body"
-	 * @generated
-	 */
-	EList<Paper> getPaper();
-
-	/**
-	 * Returns the value of the '<em><b>Member</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Person#getBody <em>Body</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Personen in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Member</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Member()
-	 * @see de.oklab.leipzig.oparl.Person#getBody
-	 * @model opposite="body"
-	 * @generated
-	 */
-	EList<Person> getMember();
-
-	/**
-	 * Returns the value of the '<em><b>Meeting</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Meeting}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Sitzungen dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Meeting</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Meeting()
-	 * @model
-	 * @generated
-	 */
-	EList<Meeting> getMeeting();
-
-	/**
-	 * Returns the value of the '<em><b>Organization</b></em>' reference list.
+	 * Returns the value of the '<em><b>Organization</b></em>' containment reference list.
 	 * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
 	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Organization#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Gruppierungen in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
+	 *  <p>
+	 * Link zur Objektliste mit allen Gruppierungen der Körperschaft.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Organization</em>' reference list.
+	 * @return the value of the '<em>Organization</em>' containment reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Organization()
 	 * @see de.oklab.leipzig.oparl.Organization#getBody
-	 * @model opposite="body"
+	 * @model opposite="body" containment="true"
 	 * @generated
 	 */
 	EList<Organization> getOrganization();
 
 	/**
-	 * Returns the value of the '<em><b>Legislative Term</b></em>' reference list.
+	 * Returns the value of the '<em><b>Person</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Person#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Link zur Objektliste mit allen Personen der Körperschaft.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Person</em>' containment reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Person()
+	 * @see de.oklab.leipzig.oparl.Person#getBody
+	 * @model opposite="body" containment="true"
+	 * @generated
+	 */
+	EList<Person> getPerson();
+
+	/**
+	 * Returns the value of the '<em><b>Meeting</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.Meeting}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Link zur Objektliste mit allen Sitzungen der Körperschaft.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Meeting</em>' containment reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Meeting()
+	 * @model containment="true"
+	 * @generated
+	 */
+	EList<Meeting> getMeeting();
+
+	/**
+	 * Returns the value of the '<em><b>Paper</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getBody <em>Body</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Link zur Objektliste mit allen Drucksachen der Körperschaft.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Paper</em>' containment reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Paper()
+	 * @see de.oklab.leipzig.oparl.Paper#getBody
+	 * @model opposite="body" containment="true"
+	 * @generated
+	 */
+	EList<Paper> getPaper();
+
+	/**
+	 * Returns the value of the '<em><b>Legislative Term</b></em>' containment reference list.
 	 * The list contents are of type {@link de.oklab.leipzig.oparl.LegislativeTerm}.
 	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.LegislativeTerm#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Wahlperioden in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
+	 *  <p>
+	 * Objektliste mit allen Wahlperioden der Körperschaft in dem Zeitraum, für den OParl bereitgestellt wird.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Legislative Term</em>' reference list.
+	 * @return the value of the '<em>Legislative Term</em>' containment reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_LegislativeTerm()
 	 * @see de.oklab.leipzig.oparl.LegislativeTerm#getBody
-	 * @model opposite="body"
+	 * @model opposite="body" containment="true"
 	 * @generated
 	 */
 	EList<LegislativeTerm> getLegislativeTerm();
@@ -447,7 +427,9 @@ public interface Body extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Art der Körperschaft.
+	 *  <p>
+	 * Art der Körperschaft.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Classification</em>' attribute.
 	 * @see #setClassification(String)
@@ -468,70 +450,110 @@ public interface Body extends EObject {
 	void setClassification(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Keyword</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
+	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.BodyLocation#getBody <em>Body</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * @Nullable
+	 *  <p>
+	 * Ort, an dem die Körperschaft beheimatet ist. Wenn möglich die Stadtgrenzen, ansonsten die Stadtmitte.
+	 * (Die Ortsangabe kann sowohl über diese Eigenschaft, als auch über die vorangegangenen Einzeleigenschaften
+	 * erfolgen, sollte aber übereinstimmen, falls beide Ausgabeoptionen genutzt werden.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Keyword</em>' attribute list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Keyword()
-	 * @model unique="false"
+	 * @return the value of the '<em>Location</em>' containment reference.
+	 * @see #setLocation(BodyLocation)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Location()
+	 * @see de.oklab.leipzig.oparl.BodyLocation#getBody
+	 * @model opposite="body" containment="true"
 	 * @generated
 	 */
-	EList<String> getKeyword();
+	BodyLocation getLocation();
 
 	/**
-	 * Returns the value of the '<em><b>Created</b></em>' attribute.
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getLocation <em>Location</em>}' containment reference.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Created</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' containment reference.
+	 * @see #getLocation()
+	 * @generated
+	 */
+	void setLocation(BodyLocation value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Body\";'"
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Dient der Angabe einer Kontakt-E-Mail-Adresse mit \"mailto:\"-Schema. Die Adresse soll die Kontaktaufnahme
+	 * zu einer für die Körperschaft und idealerweise das parlamentarische Informationssystem zuständigen Stelle
+	 * ermöglichen.
 	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Created</em>' attribute.
-	 * @see #setCreated(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Created()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return ((<%de.oklab.leipzig.oparl.impl.BodyImpl%>) this)._contactEmail;'"
 	 * @generated
 	 */
-	Date getCreated();
+	String getContactEmail();
 
 	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getCreated <em>Created</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Created</em>' attribute.
-	 * @see #getCreated()
+	 * @model contactEmailUnique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='boolean _notEquals = (!<%com.google.common.base.Objects%>.equal(contactEmail, null));\nif (_notEquals)\n{\n\tfinal <%java.lang.String%> patternStr = \"^^http://oparl\\\\.org/specs/1\\\\.0/$\";\n\tfinal <%java.util.regex.Pattern%> pattern = <%java.util.regex.Pattern%>.compile(patternStr);\n\tfinal <%java.util.regex.Matcher%> matcher = pattern.matcher(contactEmail);\n\tboolean _find = matcher.find();\n\tboolean _not = (!_find);\n\tif (_not)\n\t{\n\t\t<%java.lang.String%> _format = <%java.lang.String%>.format(\"%s doesn\\\'t follow pattern %s\", contactEmail, patternStr);\n\t\tthrow new <%java.lang.IllegalArgumentException%>(_format);\n\t}\n}\n((<%de.oklab.leipzig.oparl.impl.BodyImpl%>) this)._contactEmail = contactEmail;'"
 	 * @generated
 	 */
-	void setCreated(Date value);
+	void setContactEmail(String contactEmail);
 
 	/**
-	 * Returns the value of the '<em><b>Modified</b></em>' attribute.
 	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Modified</em>' attribute isn't clear,
-	 * there really should be more of a description here...
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Straße und Hausnummer der Körperschaft.
 	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Modified</em>' attribute.
-	 * @see #setModified(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getBody_Modified()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getStreetAddress();'"
 	 * @generated
 	 */
-	Date getModified();
+	String getStreetAddress();
 
 	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Body#getModified <em>Modified</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Modified</em>' attribute.
-	 * @see #getModified()
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Postleitzahl der Körperschaft.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getPostalCode();'"
 	 * @generated
 	 */
-	void setModified(Date value);
+	String getPostalCode();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Ortsangabe der Körperschaft.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getLocality();'"
+	 * @generated
+	 */
+	String getLocality();
 
 } // Body

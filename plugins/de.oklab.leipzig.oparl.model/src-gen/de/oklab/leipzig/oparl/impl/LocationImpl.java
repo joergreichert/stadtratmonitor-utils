@@ -2,21 +2,29 @@
  */
 package de.oklab.leipzig.oparl.impl;
 
+import de.oklab.leipzig.oparl.BodyLocation;
 import de.oklab.leipzig.oparl.Location;
+import de.oklab.leipzig.oparl.MeetingLocation;
 import de.oklab.leipzig.oparl.OparlPackage;
+import de.oklab.leipzig.oparl.OrganizationLocation;
+import de.oklab.leipzig.oparl.PaperLocation;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,56 +34,17 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getGeometry <em>Geometry</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getKeyword <em>Keyword</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getBodies <em>Bodies</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getOrganizations <em>Organizations</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getMeetings <em>Meetings</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.LocationImpl#getPapers <em>Papers</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LocationImpl extends MinimalEObjectImpl.Container implements Location {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
+public class LocationImpl extends OParlElementImpl implements Location {
 	/**
 	 * The default value of the '{@link #getDescription() <em>Description</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -117,14 +86,44 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	protected String geometry = GEOMETRY_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
+	 * The cached value of the '{@link #getBodies() <em>Bodies</em>}' reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
+	 * @see #getBodies()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<String> keyword;
+	protected EList<BodyLocation> bodies;
+
+	/**
+	 * The cached value of the '{@link #getOrganizations() <em>Organizations</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOrganizations()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<OrganizationLocation> organizations;
+
+	/**
+	 * The cached value of the '{@link #getMeetings() <em>Meetings</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getMeetings()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<MeetingLocation> meetings;
+
+	/**
+	 * The cached value of the '{@link #getPapers() <em>Papers</em>}' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getPapers()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<PaperLocation> papers;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -143,48 +142,6 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	@Override
 	protected EClass eStaticClass() {
 		return OparlPackage.Literals.LOCATION;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LOCATION__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.LOCATION__TYPE, oldType, type));
 	}
 
 	/**
@@ -234,11 +191,97 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.LOCATION__KEYWORD);
+	public EList<BodyLocation> getBodies() {
+		if (bodies == null) {
+			bodies = new EObjectWithInverseResolvingEList<BodyLocation>(BodyLocation.class, this, OparlPackage.LOCATION__BODIES, OparlPackage.BODY_LOCATION__LOCATION);
 		}
-		return keyword;
+		return bodies;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<OrganizationLocation> getOrganizations() {
+		if (organizations == null) {
+			organizations = new EObjectWithInverseResolvingEList<OrganizationLocation>(OrganizationLocation.class, this, OparlPackage.LOCATION__ORGANIZATIONS, OparlPackage.ORGANIZATION_LOCATION__LOCATION);
+		}
+		return organizations;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<MeetingLocation> getMeetings() {
+		if (meetings == null) {
+			meetings = new EObjectWithInverseResolvingEList<MeetingLocation>(MeetingLocation.class, this, OparlPackage.LOCATION__MEETINGS, OparlPackage.MEETING_LOCATION__LOCATION);
+		}
+		return meetings;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<PaperLocation> getPapers() {
+		if (papers == null) {
+			papers = new EObjectWithInverseResolvingEList<PaperLocation>(PaperLocation.class, this, OparlPackage.LOCATION__PAPERS, OparlPackage.PAPER_LOCATION__LOCATION);
+		}
+		return papers;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/Location";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case OparlPackage.LOCATION__BODIES:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getBodies()).basicAdd(otherEnd, msgs);
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOrganizations()).basicAdd(otherEnd, msgs);
+			case OparlPackage.LOCATION__MEETINGS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getMeetings()).basicAdd(otherEnd, msgs);
+			case OparlPackage.LOCATION__PAPERS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getPapers()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+		switch (featureID) {
+			case OparlPackage.LOCATION__BODIES:
+				return ((InternalEList<?>)getBodies()).basicRemove(otherEnd, msgs);
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				return ((InternalEList<?>)getOrganizations()).basicRemove(otherEnd, msgs);
+			case OparlPackage.LOCATION__MEETINGS:
+				return ((InternalEList<?>)getMeetings()).basicRemove(otherEnd, msgs);
+			case OparlPackage.LOCATION__PAPERS:
+				return ((InternalEList<?>)getPapers()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
 
 	/**
@@ -249,16 +292,18 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.LOCATION__ID:
-				return getId();
-			case OparlPackage.LOCATION__TYPE:
-				return getType();
 			case OparlPackage.LOCATION__DESCRIPTION:
 				return getDescription();
 			case OparlPackage.LOCATION__GEOMETRY:
 				return getGeometry();
-			case OparlPackage.LOCATION__KEYWORD:
-				return getKeyword();
+			case OparlPackage.LOCATION__BODIES:
+				return getBodies();
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				return getOrganizations();
+			case OparlPackage.LOCATION__MEETINGS:
+				return getMeetings();
+			case OparlPackage.LOCATION__PAPERS:
+				return getPapers();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -272,21 +317,27 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.LOCATION__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.LOCATION__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.LOCATION__DESCRIPTION:
 				setDescription((String)newValue);
 				return;
 			case OparlPackage.LOCATION__GEOMETRY:
 				setGeometry((String)newValue);
 				return;
-			case OparlPackage.LOCATION__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
+			case OparlPackage.LOCATION__BODIES:
+				getBodies().clear();
+				getBodies().addAll((Collection<? extends BodyLocation>)newValue);
+				return;
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				getOrganizations().clear();
+				getOrganizations().addAll((Collection<? extends OrganizationLocation>)newValue);
+				return;
+			case OparlPackage.LOCATION__MEETINGS:
+				getMeetings().clear();
+				getMeetings().addAll((Collection<? extends MeetingLocation>)newValue);
+				return;
+			case OparlPackage.LOCATION__PAPERS:
+				getPapers().clear();
+				getPapers().addAll((Collection<? extends PaperLocation>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -300,20 +351,23 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.LOCATION__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.LOCATION__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.LOCATION__DESCRIPTION:
 				setDescription(DESCRIPTION_EDEFAULT);
 				return;
 			case OparlPackage.LOCATION__GEOMETRY:
 				setGeometry(GEOMETRY_EDEFAULT);
 				return;
-			case OparlPackage.LOCATION__KEYWORD:
-				getKeyword().clear();
+			case OparlPackage.LOCATION__BODIES:
+				getBodies().clear();
+				return;
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				getOrganizations().clear();
+				return;
+			case OparlPackage.LOCATION__MEETINGS:
+				getMeetings().clear();
+				return;
+			case OparlPackage.LOCATION__PAPERS:
+				getPapers().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -327,18 +381,34 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.LOCATION__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.LOCATION__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.LOCATION__DESCRIPTION:
 				return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
 			case OparlPackage.LOCATION__GEOMETRY:
 				return GEOMETRY_EDEFAULT == null ? geometry != null : !GEOMETRY_EDEFAULT.equals(geometry);
-			case OparlPackage.LOCATION__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
+			case OparlPackage.LOCATION__BODIES:
+				return bodies != null && !bodies.isEmpty();
+			case OparlPackage.LOCATION__ORGANIZATIONS:
+				return organizations != null && !organizations.isEmpty();
+			case OparlPackage.LOCATION__MEETINGS:
+				return meetings != null && !meetings.isEmpty();
+			case OparlPackage.LOCATION__PAPERS:
+				return papers != null && !papers.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.LOCATION___GET_TYPE:
+				return getType();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -351,16 +421,10 @@ public class LocationImpl extends MinimalEObjectImpl.Container implements Locati
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", description: ");
+		result.append(" (description: ");
 		result.append(description);
 		result.append(", geometry: ");
 		result.append(geometry);
-		result.append(", keyword: ");
-		result.append(keyword);
 		result.append(')');
 		return result.toString();
 	}

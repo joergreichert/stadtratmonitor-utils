@@ -22,13 +22,76 @@ public interface OparlFactory extends EFactory {
 	OparlFactory eINSTANCE = de.oklab.leipzig.oparl.impl.OparlFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Agenda Item</em>'.
+	 * Returns a new object of class '<em>System</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Agenda Item</em>'.
+	 * @return a new object of class '<em>System</em>'.
 	 * @generated
 	 */
-	AgendaItem createAgendaItem();
+	System createSystem();
+
+	/**
+	 * Returns a new object of class '<em>Body</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Body</em>'.
+	 * @generated
+	 */
+	Body createBody();
+
+	/**
+	 * Returns a new object of class '<em>Addressable OParl Element</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Addressable OParl Element</em>'.
+	 * @generated
+	 */
+	AddressableOParlElement createAddressableOParlElement();
+
+	/**
+	 * Returns a new object of class '<em>Legislative Term</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Legislative Term</em>'.
+	 * @generated
+	 */
+	LegislativeTerm createLegislativeTerm();
+
+	/**
+	 * Returns a new object of class '<em>Organization</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Organization</em>'.
+	 * @generated
+	 */
+	Organization createOrganization();
+
+	/**
+	 * Returns a new object of class '<em>Meeting Organization</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Meeting Organization</em>'.
+	 * @generated
+	 */
+	MeetingOrganization createMeetingOrganization();
+
+	/**
+	 * Returns a new object of class '<em>Person</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Person</em>'.
+	 * @generated
+	 */
+	Person createPerson();
+
+	/**
+	 * Returns a new object of class '<em>Membership</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Membership</em>'.
+	 * @generated
+	 */
+	Membership createMembership();
 
 	/**
 	 * Returns a new object of class '<em>Meeting</em>'.
@@ -40,6 +103,24 @@ public interface OparlFactory extends EFactory {
 	Meeting createMeeting();
 
 	/**
+	 * Returns a new object of class '<em>Agenda Item</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Agenda Item</em>'.
+	 * @generated
+	 */
+	AgendaItem createAgendaItem();
+
+	/**
+	 * Returns a new object of class '<em>Paper</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Paper</em>'.
+	 * @generated
+	 */
+	Paper createPaper();
+
+	/**
 	 * Returns a new object of class '<em>Consultation</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -47,6 +128,60 @@ public interface OparlFactory extends EFactory {
 	 * @generated
 	 */
 	Consultation createConsultation();
+
+	/**
+	 * Returns a new object of class '<em>File</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>File</em>'.
+	 * @generated
+	 */
+	File createFile();
+
+	/**
+	 * Returns a new object of class '<em>Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Location</em>'.
+	 * @generated
+	 */
+	Location createLocation();
+
+	/**
+	 * Returns a new object of class '<em>Body Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Body Location</em>'.
+	 * @generated
+	 */
+	BodyLocation createBodyLocation();
+
+	/**
+	 * Returns a new object of class '<em>Organization Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Organization Location</em>'.
+	 * @generated
+	 */
+	OrganizationLocation createOrganizationLocation();
+
+	/**
+	 * Returns a new object of class '<em>Meeting Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Meeting Location</em>'.
+	 * @generated
+	 */
+	MeetingLocation createMeetingLocation();
+
+	/**
+	 * Returns a new object of class '<em>Paper Location</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Paper Location</em>'.
+	 * @generated
+	 */
+	PaperLocation createPaperLocation();
 
 	/**
 	 * Returns a new object of class '<em>Invitation File</em>'.
@@ -85,85 +220,31 @@ public interface OparlFactory extends EFactory {
 	AuxiliaryFile createAuxiliaryFile();
 
 	/**
-	 * Returns a new object of class '<em>File</em>'.
+	 * Returns a new object of class '<em>Agenda Item Resolution File</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>File</em>'.
+	 * @return a new object of class '<em>Agenda Item Resolution File</em>'.
 	 * @generated
 	 */
-	File createFile();
+	AgendaItemResolutionFile createAgendaItemResolutionFile();
 
 	/**
-	 * Returns a new object of class '<em>Location</em>'.
+	 * Returns a new object of class '<em>Agenda Item Auxiliary File</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Location</em>'.
+	 * @return a new object of class '<em>Agenda Item Auxiliary File</em>'.
 	 * @generated
 	 */
-	Location createLocation();
+	AgendaItemAuxiliaryFile createAgendaItemAuxiliaryFile();
 
 	/**
-	 * Returns a new object of class '<em>Organization</em>'.
+	 * Returns a new object of class '<em>Resolution File</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Organization</em>'.
+	 * @return a new object of class '<em>Resolution File</em>'.
 	 * @generated
 	 */
-	Organization createOrganization();
-
-	/**
-	 * Returns a new object of class '<em>Person</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Person</em>'.
-	 * @generated
-	 */
-	Person createPerson();
-
-	/**
-	 * Returns a new object of class '<em>Membership</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Membership</em>'.
-	 * @generated
-	 */
-	Membership createMembership();
-
-	/**
-	 * Returns a new object of class '<em>Paper</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Paper</em>'.
-	 * @generated
-	 */
-	Paper createPaper();
-
-	/**
-	 * Returns a new object of class '<em>Body</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Body</em>'.
-	 * @generated
-	 */
-	Body createBody();
-
-	/**
-	 * Returns a new object of class '<em>System</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>System</em>'.
-	 * @generated
-	 */
-	System createSystem();
-
-	/**
-	 * Returns a new object of class '<em>Legislative Term</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Legislative Term</em>'.
-	 * @generated
-	 */
-	LegislativeTerm createLegislativeTerm();
+	ResolutionFile createResolutionFile();
 
 	/**
 	 * Returns the package supported by this factory.

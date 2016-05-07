@@ -3,8 +3,11 @@
 package de.oklab.leipzig.oparl.impl;
 
 import de.oklab.leipzig.oparl.File;
+import de.oklab.leipzig.oparl.Named;
 import de.oklab.leipzig.oparl.OparlPackage;
-import de.oklab.leipzig.oparl.Paper;
+import de.oklab.leipzig.oparl.Typed;
+
+import java.lang.reflect.InvocationTargetException;
 
 import java.util.Collection;
 import java.util.Date;
@@ -18,10 +21,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.EObjectWithInverseResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -33,69 +33,23 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getFileName <em>File Name</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getMimeType <em>Mime Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getDate <em>Date</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getModified <em>Modified</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getSize <em>Size</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getSha1Checksum <em>Sha1 Checksum</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getText <em>Text</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getAccessUrl <em>Access Url</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getDownloadUrl <em>Download Url</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getPaper <em>Paper</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getExternalServiceUrl <em>External Service Url</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getMasterFile <em>Master File</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getDerivativeFile <em>Derivative File</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getLicense <em>License</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getFileRole <em>File Role</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getKeyword <em>Keyword</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.impl.FileImpl#getFileLicense <em>File License</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class FileImpl extends MinimalEObjectImpl.Container implements File {
-	/**
-	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String ID_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getId()
-	 * @generated
-	 * @ordered
-	 */
-	protected String id = ID_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String TYPE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getType()
-	 * @generated
-	 * @ordered
-	 */
-	protected String type = TYPE_EDEFAULT;
-
+public class FileImpl extends OParlElementImpl implements File {
 	/**
 	 * The default value of the '{@link #getFileName() <em>File Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -115,26 +69,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	 * @ordered
 	 */
 	protected String fileName = FILE_NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String NAME_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getName()
-	 * @generated
-	 * @ordered
-	 */
-	protected String name = NAME_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getMimeType() <em>Mime Type</em>}' attribute.
@@ -175,26 +109,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	 * @ordered
 	 */
 	protected Date date = DATE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final Date MODIFIED_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getModified() <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getModified()
-	 * @generated
-	 * @ordered
-	 */
-	protected Date modified = MODIFIED_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getSize() <em>Size</em>}' attribute.
@@ -297,14 +211,24 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	protected String downloadUrl = DOWNLOAD_URL_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getPaper() <em>Paper</em>}' reference list.
+	 * The default value of the '{@link #getExternalServiceUrl() <em>External Service Url</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getPaper()
+	 * @see #getExternalServiceUrl()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<Paper> paper;
+	protected static final String EXTERNAL_SERVICE_URL_EDEFAULT = null;
+
+	/**
+	 * The cached value of the '{@link #getExternalServiceUrl() <em>External Service Url</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getExternalServiceUrl()
+	 * @generated
+	 * @ordered
+	 */
+	protected String externalServiceUrl = EXTERNAL_SERVICE_URL_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getMasterFile() <em>Master File</em>}' reference.
@@ -327,54 +251,24 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	protected EList<File> derivativeFile;
 
 	/**
-	 * The default value of the '{@link #getLicense() <em>License</em>}' attribute.
+	 * The default value of the '{@link #getFileLicense() <em>File License</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLicense()
+	 * @see #getFileLicense()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String LICENSE_EDEFAULT = null;
+	protected static final String FILE_LICENSE_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getLicense() <em>License</em>}' attribute.
+	 * The cached value of the '{@link #getFileLicense() <em>File License</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getLicense()
+	 * @see #getFileLicense()
 	 * @generated
 	 * @ordered
 	 */
-	protected String license = LICENSE_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getFileRole() <em>File Role</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFileRole()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final String FILE_ROLE_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getFileRole() <em>File Role</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFileRole()
-	 * @generated
-	 * @ordered
-	 */
-	protected String fileRole = FILE_ROLE_EDEFAULT;
-
-	/**
-	 * The cached value of the '{@link #getKeyword() <em>Keyword</em>}' attribute list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getKeyword()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<String> keyword;
+	protected String fileLicense = FILE_LICENSE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -400,48 +294,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getId() {
-		return id;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setId(String newId) {
-		String oldId = id;
-		id = newId;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__ID, oldId, id));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getType() {
-		return type;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setType(String newType) {
-		String oldType = type;
-		type = newType;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__TYPE, oldType, type));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public String getFileName() {
 		return fileName;
 	}
@@ -456,27 +308,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 		fileName = newFileName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__FILE_NAME, oldFileName, fileName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setName(String newName) {
-		String oldName = name;
-		name = newName;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__NAME, oldName, name));
 	}
 
 	/**
@@ -519,27 +350,6 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 		date = newDate;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__DATE, oldDate, date));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Date getModified() {
-		return modified;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setModified(Date newModified) {
-		Date oldModified = modified;
-		modified = newModified;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__MODIFIED, oldModified, modified));
 	}
 
 	/**
@@ -652,11 +462,20 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<Paper> getPaper() {
-		if (paper == null) {
-			paper = new EObjectResolvingEList<Paper>(Paper.class, this, OparlPackage.FILE__PAPER);
-		}
-		return paper;
+	public String getExternalServiceUrl() {
+		return externalServiceUrl;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setExternalServiceUrl(String newExternalServiceUrl) {
+		String oldExternalServiceUrl = externalServiceUrl;
+		externalServiceUrl = newExternalServiceUrl;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__EXTERNAL_SERVICE_URL, oldExternalServiceUrl, externalServiceUrl));
 	}
 
 	/**
@@ -736,53 +555,47 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getFileLicense() {
+		return fileLicense;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setFileLicense(String newFileLicense) {
+		String oldFileLicense = fileLicense;
+		fileLicense = newFileLicense;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__FILE_LICENSE, oldFileLicense, fileLicense));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getType() {
+		return "https://oparl.org/schema/1.0/File";
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String getName() {
+		return super.getName();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public String getLicense() {
-		return license;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setLicense(String newLicense) {
-		String oldLicense = license;
-		license = newLicense;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__LICENSE, oldLicense, license));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public String getFileRole() {
-		return fileRole;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setFileRole(String newFileRole) {
-		String oldFileRole = fileRole;
-		fileRole = newFileRole;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.FILE__FILE_ROLE, oldFileRole, fileRole));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<String> getKeyword() {
-		if (keyword == null) {
-			keyword = new EDataTypeEList<String>(String.class, this, OparlPackage.FILE__KEYWORD);
-		}
-		return keyword;
+		return super.getLicense();
 	}
 
 	/**
@@ -828,20 +641,12 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case OparlPackage.FILE__ID:
-				return getId();
-			case OparlPackage.FILE__TYPE:
-				return getType();
 			case OparlPackage.FILE__FILE_NAME:
 				return getFileName();
-			case OparlPackage.FILE__NAME:
-				return getName();
 			case OparlPackage.FILE__MIME_TYPE:
 				return getMimeType();
 			case OparlPackage.FILE__DATE:
 				return getDate();
-			case OparlPackage.FILE__MODIFIED:
-				return getModified();
 			case OparlPackage.FILE__SIZE:
 				return getSize();
 			case OparlPackage.FILE__SHA1_CHECKSUM:
@@ -852,19 +657,15 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 				return getAccessUrl();
 			case OparlPackage.FILE__DOWNLOAD_URL:
 				return getDownloadUrl();
-			case OparlPackage.FILE__PAPER:
-				return getPaper();
+			case OparlPackage.FILE__EXTERNAL_SERVICE_URL:
+				return getExternalServiceUrl();
 			case OparlPackage.FILE__MASTER_FILE:
 				if (resolve) return getMasterFile();
 				return basicGetMasterFile();
 			case OparlPackage.FILE__DERIVATIVE_FILE:
 				return getDerivativeFile();
-			case OparlPackage.FILE__LICENSE:
-				return getLicense();
-			case OparlPackage.FILE__FILE_ROLE:
-				return getFileRole();
-			case OparlPackage.FILE__KEYWORD:
-				return getKeyword();
+			case OparlPackage.FILE__FILE_LICENSE:
+				return getFileLicense();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -878,26 +679,14 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case OparlPackage.FILE__ID:
-				setId((String)newValue);
-				return;
-			case OparlPackage.FILE__TYPE:
-				setType((String)newValue);
-				return;
 			case OparlPackage.FILE__FILE_NAME:
 				setFileName((String)newValue);
-				return;
-			case OparlPackage.FILE__NAME:
-				setName((String)newValue);
 				return;
 			case OparlPackage.FILE__MIME_TYPE:
 				setMimeType((String)newValue);
 				return;
 			case OparlPackage.FILE__DATE:
 				setDate((Date)newValue);
-				return;
-			case OparlPackage.FILE__MODIFIED:
-				setModified((Date)newValue);
 				return;
 			case OparlPackage.FILE__SIZE:
 				setSize((Integer)newValue);
@@ -914,9 +703,8 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 			case OparlPackage.FILE__DOWNLOAD_URL:
 				setDownloadUrl((String)newValue);
 				return;
-			case OparlPackage.FILE__PAPER:
-				getPaper().clear();
-				getPaper().addAll((Collection<? extends Paper>)newValue);
+			case OparlPackage.FILE__EXTERNAL_SERVICE_URL:
+				setExternalServiceUrl((String)newValue);
 				return;
 			case OparlPackage.FILE__MASTER_FILE:
 				setMasterFile((File)newValue);
@@ -925,15 +713,8 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 				getDerivativeFile().clear();
 				getDerivativeFile().addAll((Collection<? extends File>)newValue);
 				return;
-			case OparlPackage.FILE__LICENSE:
-				setLicense((String)newValue);
-				return;
-			case OparlPackage.FILE__FILE_ROLE:
-				setFileRole((String)newValue);
-				return;
-			case OparlPackage.FILE__KEYWORD:
-				getKeyword().clear();
-				getKeyword().addAll((Collection<? extends String>)newValue);
+			case OparlPackage.FILE__FILE_LICENSE:
+				setFileLicense((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -947,26 +728,14 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case OparlPackage.FILE__ID:
-				setId(ID_EDEFAULT);
-				return;
-			case OparlPackage.FILE__TYPE:
-				setType(TYPE_EDEFAULT);
-				return;
 			case OparlPackage.FILE__FILE_NAME:
 				setFileName(FILE_NAME_EDEFAULT);
-				return;
-			case OparlPackage.FILE__NAME:
-				setName(NAME_EDEFAULT);
 				return;
 			case OparlPackage.FILE__MIME_TYPE:
 				setMimeType(MIME_TYPE_EDEFAULT);
 				return;
 			case OparlPackage.FILE__DATE:
 				setDate(DATE_EDEFAULT);
-				return;
-			case OparlPackage.FILE__MODIFIED:
-				setModified(MODIFIED_EDEFAULT);
 				return;
 			case OparlPackage.FILE__SIZE:
 				setSize(SIZE_EDEFAULT);
@@ -983,8 +752,8 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 			case OparlPackage.FILE__DOWNLOAD_URL:
 				setDownloadUrl(DOWNLOAD_URL_EDEFAULT);
 				return;
-			case OparlPackage.FILE__PAPER:
-				getPaper().clear();
+			case OparlPackage.FILE__EXTERNAL_SERVICE_URL:
+				setExternalServiceUrl(EXTERNAL_SERVICE_URL_EDEFAULT);
 				return;
 			case OparlPackage.FILE__MASTER_FILE:
 				setMasterFile((File)null);
@@ -992,14 +761,8 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 			case OparlPackage.FILE__DERIVATIVE_FILE:
 				getDerivativeFile().clear();
 				return;
-			case OparlPackage.FILE__LICENSE:
-				setLicense(LICENSE_EDEFAULT);
-				return;
-			case OparlPackage.FILE__FILE_ROLE:
-				setFileRole(FILE_ROLE_EDEFAULT);
-				return;
-			case OparlPackage.FILE__KEYWORD:
-				getKeyword().clear();
+			case OparlPackage.FILE__FILE_LICENSE:
+				setFileLicense(FILE_LICENSE_EDEFAULT);
 				return;
 		}
 		super.eUnset(featureID);
@@ -1013,20 +776,12 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case OparlPackage.FILE__ID:
-				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-			case OparlPackage.FILE__TYPE:
-				return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
 			case OparlPackage.FILE__FILE_NAME:
 				return FILE_NAME_EDEFAULT == null ? fileName != null : !FILE_NAME_EDEFAULT.equals(fileName);
-			case OparlPackage.FILE__NAME:
-				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case OparlPackage.FILE__MIME_TYPE:
 				return MIME_TYPE_EDEFAULT == null ? mimeType != null : !MIME_TYPE_EDEFAULT.equals(mimeType);
 			case OparlPackage.FILE__DATE:
 				return DATE_EDEFAULT == null ? date != null : !DATE_EDEFAULT.equals(date);
-			case OparlPackage.FILE__MODIFIED:
-				return MODIFIED_EDEFAULT == null ? modified != null : !MODIFIED_EDEFAULT.equals(modified);
 			case OparlPackage.FILE__SIZE:
 				return SIZE_EDEFAULT == null ? size != null : !SIZE_EDEFAULT.equals(size);
 			case OparlPackage.FILE__SHA1_CHECKSUM:
@@ -1037,20 +792,56 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 				return ACCESS_URL_EDEFAULT == null ? accessUrl != null : !ACCESS_URL_EDEFAULT.equals(accessUrl);
 			case OparlPackage.FILE__DOWNLOAD_URL:
 				return DOWNLOAD_URL_EDEFAULT == null ? downloadUrl != null : !DOWNLOAD_URL_EDEFAULT.equals(downloadUrl);
-			case OparlPackage.FILE__PAPER:
-				return paper != null && !paper.isEmpty();
+			case OparlPackage.FILE__EXTERNAL_SERVICE_URL:
+				return EXTERNAL_SERVICE_URL_EDEFAULT == null ? externalServiceUrl != null : !EXTERNAL_SERVICE_URL_EDEFAULT.equals(externalServiceUrl);
 			case OparlPackage.FILE__MASTER_FILE:
 				return masterFile != null;
 			case OparlPackage.FILE__DERIVATIVE_FILE:
 				return derivativeFile != null && !derivativeFile.isEmpty();
-			case OparlPackage.FILE__LICENSE:
-				return LICENSE_EDEFAULT == null ? license != null : !LICENSE_EDEFAULT.equals(license);
-			case OparlPackage.FILE__FILE_ROLE:
-				return FILE_ROLE_EDEFAULT == null ? fileRole != null : !FILE_ROLE_EDEFAULT.equals(fileRole);
-			case OparlPackage.FILE__KEYWORD:
-				return keyword != null && !keyword.isEmpty();
+			case OparlPackage.FILE__FILE_LICENSE:
+				return FILE_LICENSE_EDEFAULT == null ? fileLicense != null : !FILE_LICENSE_EDEFAULT.equals(fileLicense);
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public int eDerivedOperationID(int baseOperationID, Class<?> baseClass) {
+		if (baseClass == Typed.class) {
+			switch (baseOperationID) {
+				case OparlPackage.TYPED___GET_TYPE: return OparlPackage.FILE___GET_TYPE;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		if (baseClass == Named.class) {
+			switch (baseOperationID) {
+				case OparlPackage.NAMED___GET_NAME: return OparlPackage.FILE___GET_NAME;
+				default: return super.eDerivedOperationID(baseOperationID, baseClass);
+			}
+		}
+		return super.eDerivedOperationID(baseOperationID, baseClass);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case OparlPackage.FILE___GET_TYPE:
+				return getType();
+			case OparlPackage.FILE___GET_NAME:
+				return getName();
+			case OparlPackage.FILE___GET_LICENSE:
+				return getLicense();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
@@ -1063,20 +854,12 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (id: ");
-		result.append(id);
-		result.append(", type: ");
-		result.append(type);
-		result.append(", fileName: ");
+		result.append(" (fileName: ");
 		result.append(fileName);
-		result.append(", name: ");
-		result.append(name);
 		result.append(", mimeType: ");
 		result.append(mimeType);
 		result.append(", date: ");
 		result.append(date);
-		result.append(", modified: ");
-		result.append(modified);
 		result.append(", size: ");
 		result.append(size);
 		result.append(", sha1Checksum: ");
@@ -1087,12 +870,10 @@ public class FileImpl extends MinimalEObjectImpl.Container implements File {
 		result.append(accessUrl);
 		result.append(", downloadUrl: ");
 		result.append(downloadUrl);
-		result.append(", license: ");
-		result.append(license);
-		result.append(", fileRole: ");
-		result.append(fileRole);
-		result.append(", keyword: ");
-		result.append(keyword);
+		result.append(", externalServiceUrl: ");
+		result.append(externalServiceUrl);
+		result.append(", fileLicense: ");
+		result.append(fileLicense);
 		result.append(')');
 		return result.toString();
 	}

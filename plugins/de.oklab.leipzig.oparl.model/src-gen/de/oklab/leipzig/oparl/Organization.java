@@ -12,32 +12,73 @@ import org.eclipse.emf.common.util.EList;
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * Dieser Objekttyp dient dazu, Gruppierungen von Personen abzubilden, die in der parlamentarischen Arbeit eine Rolle spielen.
- * Dazu zählen in der Praxis insbesondere Fraktionen und Gremien.^[Ein Teil der Eigenschaften ist der \"Organization\"
- *  Ontologie (kurz: `org:Organization`) des W3C entnommen. Quelle: The Organization Ontology, W3C Recommendation 16 January 2014,
- * <http://www.w3.org/TR/vocab-org/>. Deren Bezeichnungen wurden deshalb beibehalten. Das betrifft z.B. die Verwendung von `classification`.]
+ *  <p>
+ * Dieser Objekttyp dient dazu, Gruppierungen von Personen abzubilden, die in der parlamentarischen Arbeit eine
+ * Rolle spielen. Dazu zählen in der Praxis insbesondere Fraktionen und Gremien.
+ * </p>
+ * <p>
+ * Beispiel:
+ * <pre>
+ * {
+ *   "id": "https://oparl.example.org/organization/34",
+ *   "type": "https://oparl.org/schema/1.0/Organization",
+ *   "body": "https://oparl.example.org/bodies/1",
+ *   "name": "Ausschuss für Haushalt und Finanzen",
+ *   "shortName": "Finanzausschuss",
+ *   "startDate": "2012-07-17T00:00:00+02:00",
+ *   "organizationType": "Gremium",
+ *   "post": [
+ *       "Vorsitzender",
+ *       "1. Stellvertreter",
+ *       "Mitglied"
+ *   ],
+ *   "meeting": [
+ *       "https://oparl.example.org/meeting/27",
+ *       "https://oparl.example.org/meeting/36",
+ *       "https://oparl.example.org/meeting/45",
+ *       "https://oparl.example.org/meeting/53",
+ *       "https://oparl.example.org/meeting/63",
+ *       "https://oparl.example.org/meeting/72",
+ *       "https://oparl.example.org/meeting/81",
+ *       "https://oparl.example.org/meeting/92",
+ *       "https://oparl.example.org/meeting/101",
+ *       "https://oparl.example.org/meeting/111",
+ *       "https://oparl.example.org/meeting/120",
+ *       "https://oparl.example.org/meeting/133"
+ *   ],
+ *   "membership": [
+ *       "https://oparl.example.org/memberships/27",
+ *       "https://oparl.example.org/memberships/48",
+ *       "https://oparl.example.org/memberships/57"
+ *   ],
+ *   "classification": "Ausschuss",
+ *   "keyword": [
+ *       "finanzen",
+ *       "haushalt"
+ *   ],
+ *   "created": "2012-07-16T16:01:44+02:00",
+ *   "modified": "2012-08-16T14:05:27+02:00"
+ * }
+ * </pre>
+ * </p>
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getBody <em>Body</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getName <em>Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getMembership <em>Membership</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getMeeting <em>Meeting</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getShortName <em>Short Name</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getPost <em>Post</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getSubOrganizationOf <em>Sub Organization Of</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Organization#getOrganizationType <em>Organization Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getClassification <em>Classification</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getKeyword <em>Keyword</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getStartDate <em>Start Date</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getEndDate <em>End Date</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getCreated <em>Created</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Organization#getModified <em>Modified</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Organization#getWebsite <em>Website</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Organization#getRoom <em>Room</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Organization#getLocation <em>Location</em>}</li>
  * </ul>
  *
  * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization()
@@ -46,169 +87,72 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Organization extends PersonOrOrganization {
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Id()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * Pattern("^http://oparl\\.org/schema/1\\.0/Organization$")
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Type()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getType();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-	void setType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Body</b></em>' reference.
+	 * Returns the value of the '<em><b>Body</b></em>' container reference.
 	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Body#getOrganization <em>Organization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Körperschaft, zu der diese Gruppierung gehört.
+	 *  <p>
+	 * Körperschaft, zu der diese Gruppierung gehört.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Body</em>' reference.
+	 * @return the value of the '<em>Body</em>' container reference.
 	 * @see #setBody(Body)
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Body()
 	 * @see de.oklab.leipzig.oparl.Body#getOrganization
-	 * @model opposite="organization"
+	 * @model opposite="organization" transient="false"
 	 * @generated
 	 */
 	Body getBody();
 
 	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getBody <em>Body</em>}' reference.
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getBody <em>Body</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Body</em>' reference.
+	 * @param value the new value of the '<em>Body</em>' container reference.
 	 * @see #getBody()
 	 * @generated
 	 */
 	void setBody(Body value);
 
 	/**
-	 * Returns the value of the '<em><b>Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Offizielle (lange) Form des Namens der Gruppierung.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Name</em>' attribute.
-	 * @see #setName(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Name()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getName();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getName <em>Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name</em>' attribute.
-	 * @see #getName()
-	 * @generated
-	 */
-	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Membership</b></em>' reference list.
+	 * Returns the value of the '<em><b>Membership</b></em>' containment reference list.
 	 * The list contents are of type {@link de.oklab.leipzig.oparl.Membership}.
 	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Membership#getOrganization <em>Organization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Mitgliedschaften dieser Gruppierung.
+	 *  <p>
+	 * Mitgliedschaften dieser Gruppierung.
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Membership</em>' reference list.
+	 * @return the value of the '<em>Membership</em>' containment reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Membership()
 	 * @see de.oklab.leipzig.oparl.Membership#getOrganization
-	 * @model opposite="organization"
+	 * @model opposite="organization" containment="true"
 	 * @generated
 	 */
 	EList<Membership> getMembership();
 
 	/**
-	 * Returns the value of the '<em><b>Meeting</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Meeting}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Meeting#getOrganization <em>Organization</em>}'.
+	 * Returns the value of the '<em><b>Meeting</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.MeetingOrganization}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.MeetingOrganization#getOrganization <em>Organization</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Sitzungen dieser Gruppierung. Invers zur Eigenschaft `organization` der Klasse `oparl:Meeting`. Da die Anzahl der
-	 * Sitzungen stetig wachsen kann, wird EMPFOHLEN, die Liste über eine eigene URL verfügbar zu machen und damit
-	 * Paginierung sowie die Filterung mittels startDate und endDate Parametern zu ermöglichen. Siehe dazu auch
-	 * [Objektlisten](#objektlisten).
+	 *  <p>
+	 * URL auf eine externe Objektliste mit den Sitzungen dieser Gruppierung. Invers zur Eigenschaft organization
+	 * der Klasse oparl:Meeting
+	 * </p>
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Meeting</em>' reference list.
+	 * @return the value of the '<em>Meeting</em>' containment reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Meeting()
-	 * @see de.oklab.leipzig.oparl.Meeting#getOrganization
-	 * @model opposite="organization"
+	 * @see de.oklab.leipzig.oparl.MeetingOrganization#getOrganization
+	 * @model opposite="organization" containment="true"
 	 * @generated
 	 */
-	EList<Meeting> getMeeting();
-
-	/**
-	 * Returns the value of the '<em><b>Short Name</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  Der Name der Gruppierung als Kurzform.
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Short Name</em>' attribute.
-	 * @see #setShortName(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_ShortName()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getShortName();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getShortName <em>Short Name</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Short Name</em>' attribute.
-	 * @see #getShortName()
-	 * @generated
-	 */
-	void setShortName(String value);
+	EList<MeetingOrganization> getMeeting();
 
 	/**
 	 * Returns the value of the '<em><b>Post</b></em>' attribute list.
@@ -216,18 +160,13 @@ public interface Organization extends PersonOrOrganization {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Positionen, die für diese Gruppierung vorgesehen sind. Die Werte dieser Eigenschaft funktioniert wie in
-	 * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben entweder als URL zu einem `skos:Concept`
-	 * oder als String. Die Strings bzw. `prefLabel`-Eigenschaften der Objekte SOLLEN sowohl die männliche als auch die
-	 * weibliche Form enthalten, und zwar in dem Muster \"männliche Form | weibliche Form\" (genau in der Reihenfolge mit
-	 * einem Leerzeichen vor und nach dem \"|\"). Wenn sich beide Formen nicht unterscheiden, dann DARF die Form nur einmal
-	 * verwendet werden: \"Mitglied\" und nicht \"Mitglied | Mitglied\". Weitere Beispiele: \"Vorsitzender | Vorsitzende\",
-	 * \"1. Stellvertreter | 1. Stellvertreterin\", \"2. Stellvertreter | 2. Stellvertreterin\", \"Schriftführer |
-	 * Schriftführerin\", \"Stellvertretender Schriftführer | Stellvertretende Schriftführerin
+	 *  <p>
+	 * Positionen, die für diese Gruppierung vorgesehen sind.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Post</em>' attribute list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Post()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
+	 * @model unique="false"
 	 * @generated
 	 */
 	EList<String> getPost();
@@ -237,7 +176,9 @@ public interface Organization extends PersonOrOrganization {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Ggf. URL der übergeordneten Gruppierung.
+	 *  <p>
+	 * URL der übergeordneten Gruppierung.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Sub Organization Of</em>' reference.
 	 * @see #setSubOrganizationOf(Organization)
@@ -258,13 +199,45 @@ public interface Organization extends PersonOrOrganization {
 	void setSubOrganizationOf(Organization value);
 
 	/**
+	 * Returns the value of the '<em><b>Organization Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Grobe Kategorisierung der Gruppierung. Mögliche Werte sind "Gremium", "Partei", "Fraktion",
+	 * "Verwaltungsbereich", "externes Gremium", "Institution" und "Sonstiges".
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Organization Type</em>' attribute.
+	 * @see #setOrganizationType(String)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_OrganizationType()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getOrganizationType();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getOrganizationType <em>Organization Type</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Organization Type</em>' attribute.
+	 * @see #getOrganizationType()
+	 * @generated
+	 */
+	void setOrganizationType(String value);
+
+	/**
 	 * Returns the value of the '<em><b>Classification</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Die Art der Gruppierung. In Frage kommen z.B. \"Rat\", \"Hauptausschuss\", \"Ausschuss\", \"Beirat\",
-	 * \"Projektbeirat\", \"Kommission\", \"AG\", \"Verwaltungsrat\". Die Angabe soll möglichst präzise erfolgen.
-	 * Vgl. [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung).
+	 *  <p>
+	 * Die Art der Gruppierung. In Frage kommen z.B. "Parlament", "Ausschuss", "Beirat", "Projektbeirat",
+	 * "Kommission", "AG", "Verwaltungsrat", "Fraktion" oder "Partei". Die Angabe <b>sollte</b> möglichst
+	 * präzise erfolgen. Außerdem <b>sollten</b> Abkürzungen vermieden werden. Für die höchste demokratische
+	 * Instanz in der Kommune <b>sollte</b> immer der Begriff "Parlament" verwendet werden, nicht "Rat" oder
+	 * "Hauptausschuss".
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Classification</em>' attribute.
 	 * @see #setClassification(String)
@@ -285,26 +258,13 @@ public interface Organization extends PersonOrOrganization {
 	void setClassification(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Keyword</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * @Nullable
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Keyword</em>' attribute list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Keyword()
-	 * @model unique="false"
-	 * @generated
-	 */
-	EList<String> getKeyword();
-
-	/**
 	 * Returns the value of the '<em><b>Start Date</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Gründungsdatum der Gruppierung. Kann z. B. das Datum der konstituierenden Sitzung sein.
+	 *  <p>
+	 * Gründungsdatum der Gruppierung. Kann z. B. das Datum der konstituierenden Sitzung sein.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Start Date</em>' attribute.
 	 * @see #setStartDate(Date)
@@ -329,7 +289,9 @@ public interface Organization extends PersonOrOrganization {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Datum des letzten Tages der Existenz der Gruppierung.
+	 *  <p>
+	 * Datum des letzten Tages der Existenz der Gruppierung.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>End Date</em>' attribute.
 	 * @see #setEndDate(Date)
@@ -350,63 +312,13 @@ public interface Organization extends PersonOrOrganization {
 	void setEndDate(Date value);
 
 	/**
-	 * Returns the value of the '<em><b>Created</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Created</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Created</em>' attribute.
-	 * @see #setCreated(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Created()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-	 * @generated
-	 */
-	Date getCreated();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getCreated <em>Created</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Created</em>' attribute.
-	 * @see #getCreated()
-	 * @generated
-	 */
-	void setCreated(Date value);
-
-	/**
-	 * Returns the value of the '<em><b>Modified</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Modified</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Modified</em>' attribute.
-	 * @see #setModified(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Modified()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-	 * @generated
-	 */
-	Date getModified();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getModified <em>Modified</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Modified</em>' attribute.
-	 * @see #getModified()
-	 * @generated
-	 */
-	void setModified(Date value);
-
-	/**
 	 * Returns the value of the '<em><b>Website</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Allgemeine Website der Gruppierung.
+	 *  <p>
+	 * Allgemeine Website der Gruppierung.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Website</em>' attribute.
 	 * @see #setWebsite(String)
@@ -425,5 +337,114 @@ public interface Organization extends PersonOrOrganization {
 	 * @generated
 	 */
 	void setWebsite(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Room</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Raum, in dem die Organization beheimatet ist.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Room</em>' attribute.
+	 * @see #setRoom(String)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Room()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getRoom();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getRoom <em>Room</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Room</em>' attribute.
+	 * @see #getRoom()
+	 * @generated
+	 */
+	void setRoom(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.OrganizationLocation#getOrganziation <em>Organziation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Ort, an dem die Körperschaft beheimatet ist. Wenn möglich die Stadtgrenzen, ansonsten die Stadtmitte.
+	 * (Die Ortsangabe kann sowohl über diese Eigenschaft, als auch über die vorangegangenen Einzeleigenschaften
+	 * erfolgen, sollte aber übereinstimmen, falls beide Ausgabeoptionen genutzt werden.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Location</em>' containment reference.
+	 * @see #setLocation(OrganizationLocation)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getOrganization_Location()
+	 * @see de.oklab.leipzig.oparl.OrganizationLocation#getOrganziation
+	 * @model opposite="organziation" containment="true"
+	 * @generated
+	 */
+	OrganizationLocation getLocation();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Organization#getLocation <em>Location</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' containment reference.
+	 * @see #getLocation()
+	 * @generated
+	 */
+	void setLocation(OrganizationLocation value);
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Organization$\";'"
+	 * @generated
+	 */
+	String getType();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Straße und Hausnummer der Organization.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getStreetAddress();'"
+	 * @generated
+	 */
+	String getStreetAddress();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Postleitzahl der Organization.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getPostalCode();'"
+	 * @generated
+	 */
+	String getPostalCode();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Ortsangabe der Organization.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getLocality();'"
+	 * @generated
+	 */
+	String getLocality();
 
 } // Organization

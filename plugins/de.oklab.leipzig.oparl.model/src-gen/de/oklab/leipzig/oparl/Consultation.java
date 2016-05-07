@@ -4,114 +4,80 @@ package de.oklab.leipzig.oparl;
 
 import org.eclipse.emf.common.util.EList;
 
-import org.eclipse.emf.ecore.EObject;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Consultation</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * *
- * Der Objekttyp `oparl:Consultation` dient dazu, die Beratung einer Drucksache ([`oparl:Paper`](#oparl_paper)) in
- * einer Sitzung abzubilden. Dabei ist es nicht entscheidend, ob diese Beratung in der Vergangenheit stattgefunden hat
- * oder diese für die Zukunft geplant ist.\n\nDie Gesamtheit aller Objekte des Typs `oparl:Consultation` zu einer
- * bestimmten Drucksache bildet das ab, was in der Praxis als \"Beratungsfolge\" der Drucksache bezeichnet wird.
+ *  <p>
+ * Der Objekttyp {@link Consultation} dient dazu, die Beratung einer Drucksache
+ * ({@link Paper}) in einer Sitzung abzubilden. Dabei ist es nicht entscheidend,
+ * ob diese Beratung in der Vergangenheit stattgefunden hat oder diese für die
+ * Zukunft geplant ist.
+ * </p><p>
+ * Die Gesamtheit aller Objekte des Typs {@link Consultation} zu einer bestimmten
+ * Drucksache bildet das ab, was in der Praxis als "Beratungsfolge" der
+ * Drucksache bezeichnet wird.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ *        {
+ *            "id": "https://oparl.example.org/consultation/47594",
+ *            "type": "https://oparl.org/schema/1.0/Consultation",
+ *            "agendaItem": "https://oparl.example.org/agendaitem/15569",
+ *            "meeting": "https://oparl.example.org/meeting/243",
+ *            "organization": "https://oparl.example.org/organization/96",
+ *            "authoritative": false,
+ *            "role": "Beschlussfassung"
+ *        }
+ * </pre>
+ * </p>
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link de.oklab.leipzig.oparl.Consultation#getId <em>Id</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Consultation#getType <em>Type</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Consultation#getPaper <em>Paper</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Consultation#getAgendaItem <em>Agenda Item</em>}</li>
+ *   <li>{@link de.oklab.leipzig.oparl.Consultation#getMeeting <em>Meeting</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Consultation#getOrganization <em>Organization</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Consultation#isAuthoritative <em>Authoritative</em>}</li>
  *   <li>{@link de.oklab.leipzig.oparl.Consultation#getRole <em>Role</em>}</li>
- *   <li>{@link de.oklab.leipzig.oparl.Consultation#getKeyword <em>Keyword</em>}</li>
  * </ul>
  *
  * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation()
  * @model
  * @generated
  */
-public interface Consultation extends EObject {
+public interface Consultation extends InnerOParlElement {
 	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Id()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.URL"
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Consultation#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Type</b></em>' attribute.
+	 * Returns the value of the '<em><b>Paper</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getConsultation <em>Consultation</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Pattern("^http://oparl\\.org/schema/1\\.0/Consultation$")
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see #setType(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Type()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getType();
-
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Consultation#getType <em>Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see #getType()
-	 * @generated
-	 */
-	void setType(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Paper</b></em>' reference.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getConsultation <em>Consultation</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Paper</em>' reference isn't clear,
-	 * there really should be more of a description here...
+	 *  <p>
+	 * Rückreferenz auf das Paper, welches nur dann ausgegeben wird, wenn das
+	 * Consultation-Objekt einzeln abgerufen ist, d.h. nicht Teil einer internen
+	 * Ausgabe ist.
 	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Paper</em>' reference.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Paper</em>' container reference.
 	 * @see #setPaper(Paper)
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Paper()
 	 * @see de.oklab.leipzig.oparl.Paper#getConsultation
-	 * @model opposite="consultation"
+	 * @model opposite="consultation" transient="false"
 	 * @generated
 	 */
 	Paper getPaper();
 
 	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Consultation#getPaper <em>Paper</em>}' reference.
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Consultation#getPaper <em>Paper</em>}' container reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Paper</em>' reference.
+	 * @param value the new value of the '<em>Paper</em>' container reference.
 	 * @see #getPaper()
 	 * @generated
 	 */
@@ -123,7 +89,9 @@ public interface Consultation extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Tagesordnungspunkt, unter dem die Drucksache beraten wird.
+	 *  <p>
+	 * Tagesordnungspunkt, unter dem die Drucksache beraten wird.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Agenda Item</em>' reference.
 	 * @see #setAgendaItem(AgendaItem)
@@ -145,14 +113,44 @@ public interface Consultation extends EObject {
 	void setAgendaItem(AgendaItem value);
 
 	/**
+	 * Returns the value of the '<em><b>Meeting</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Sitzung, in der die Drucksache beraten wird.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Meeting</em>' reference.
+	 * @see #setMeeting(Meeting)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Meeting()
+	 * @model
+	 * @generated
+	 */
+	Meeting getMeeting();
+
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Consultation#getMeeting <em>Meeting</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Meeting</em>' reference.
+	 * @see #getMeeting()
+	 * @generated
+	 */
+	void setMeeting(Meeting value);
+
+	/**
 	 * Returns the value of the '<em><b>Organization</b></em>' reference list.
 	 * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Gremium, dem die Sitzung zugewiesen ist, zu welcher der zuvor genannte Tagesordnungspunkt gehört. Hier kann
-	 * auch eine mit Liste von Gremien angegeben werden (die verschiedenen `oparl:Body` und `oparl:System` angehören
-	 * können). Die Liste ist dann geordnet. Das erste Gremium der Liste ist federführend.
+	 *  <p>
+	 * Gremium, in dem die Drucksache beraten wird. Hier kann auch eine mit Liste
+	 * von Gremien angegeben werden (die verschiedenen {@link Body} und
+	 * {@link System} angehören können). Die Liste ist dann geordnet.
+	 * Das erste Gremium der Liste ist federführend.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Organization</em>' reference list.
 	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Organization()
@@ -166,7 +164,10 @@ public interface Consultation extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 *  Drückt aus, ob bei dieser Beratung ein Beschluss zu der Drucksache gefasst wird (`true`) wird oder nicht (`false`).
+	 *  <p>
+	 * Drückt aus, ob bei dieser Beratung ein Beschluss zu der Drucksache gefasst
+	 * wird (<pre>true</pre>) wird oder nicht (<pre>false</pre>).
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Authoritative</em>' attribute.
 	 * @see #setAuthoritative(boolean)
@@ -191,9 +192,10 @@ public interface Consultation extends EObject {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * Rolle oder Funktion der Beratung. Zum Beispiel Anhörung, Entscheidung, Kenntnisnahme, Vorberatung usw. Diese
-	 * Eigenschaft funktioniert wie in  [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben
-	 * entweder als String oder als URL zu einem `skos:Concept` Objekt.
+	 *  <p>
+	 * Rolle oder Funktion der Beratung. Zum Beispiel Anhörung, Entscheidung,
+	 * Kenntnisnahme, Vorberatung usw.
+	 * </p>
 	 * <!-- end-model-doc -->
 	 * @return the value of the '<em>Role</em>' attribute.
 	 * @see #setRole(String)
@@ -214,18 +216,12 @@ public interface Consultation extends EObject {
 	void setRole(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Keyword</b></em>' attribute list.
-	 * The list contents are of type {@link java.lang.String}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 * @Nullable
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Keyword</em>' attribute list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getConsultation_Keyword()
-	 * @model unique="false"
+	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Consultation\";'"
 	 * @generated
 	 */
-	EList<String> getKeyword();
+	String getType();
 
 } // Consultation

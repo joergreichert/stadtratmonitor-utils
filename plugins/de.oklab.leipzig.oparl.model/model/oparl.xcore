@@ -1,645 +1,2052 @@
 /**
- * http://spec.oparl.org/version/master/OParl-1.0-draft.html
+ * https://oparl.org/spezifikation/online-ansicht/#entity-system
  * https://github.com/lu-j/oparl-json-schema/blob/master/schema/
  */
 package de.oklab.leipzig.oparl
 
-/**
- * Tagesordnungspunkte sind die Bestandteile von Sitzungen (`oparl:Meeting`). 
- * Jeder Tagesordnungspunkt widmet sich inhaltlich einem bestimmten Thema, 
- * wozu in der Regel auch die Beratung bestimmter Drucksachen gehört.
- * 
- * Die Beziehung zwischen einem Tagesordnungspunkt und einer Drucksache wird 
- * über ein Objekt vom Typ `oparl:Consultation` hergestellt, das über die  
- * Eigenschaft `consultation` referenziert werden kann.
- * 
- * https://github.com/lu-j/oparl-json-schema/blob/master/schema/AgendaItem.json
- */
-class AgendaItem {
-	/*@NonNull*/URL ^id
-	/*@NonNull*//*Pattern("^http://oparl\\.org/schema/1\\.0/AgendaItem$")*/String ^type
-	/* Sitzung, der der Tagesordnungspunkt zugeordnet ist. */
-	/*@NonNull*/refers Meeting meeting opposite agendaItem
-	/* Das Thema des Tagesordnungspunktes. */
-	/*@NonNull*/String name
-	/* 
-	 * Gliederungs-\"Nummer\" des Tagesordnungspunktes. Eine beliebige Zeichenkette, 
-	 * wie z. B. \"10.\", \"10.1\", \"C\", \"c)\" o. ä. Die Reihenfolge wird nicht 
-	 * dadurch, sondern durch die Reihenfolge der TOPs im `agendaItem`-Attribut von 
-	 * `oparl:Meeting` festgelegt.
+import de.oklab.leipzig.oparl.impl.IdentifiableImpl
+import de.oklab.leipzig.oparl.impl.NamedImpl
+import de.oklab.leipzig.oparl.impl.SystemImpl
+import java.util.regex.Pattern
+import de.oklab.leipzig.oparl.impl.AddressableOParlElementImpl
+import de.oklab.leipzig.oparl.impl.BodyImpl
+
+abstract class Identifiable {
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+	URL _id
+	
+	/* <p>
+	 * Die Eigenschaft id ist für jeden OParl-Objekttypen vorgegeben und
+	 * enthält den eindeutigen Bezeichner des Objekts, nämlich seine URL.
+	 * Dies ist ein zwingendes Merkmal für jedes Objekt.
+	 * </p>
 	 */
-	/*@Nullable*/String number 
-	/* 
-	 * Falls in diesem Tagesordnungspunkt ein Beschluss gefasst wurde, 
-	 * kann hier ein Text oder eine Datei angegeben werden. Das ist 
-	 * besonders dann in der Praxis relevant, wenn der gefasste Beschluss 
-	 * (z. B. durch Änderungsantrag) von der Beschlussvorlage abweicht.
-	 */
-	/*@Nullable*/String resolution
-	/* Dateianhänge zum Tagesordnungspunkt. */
-	/*@Nullable*/refers File [] auxiliaryFile
-	/*@Nullable*/String [] keyword
-	/* 
-	 * Kennzeichnet, ob der Tagesordnungspunkt zur Behandlung in öffentlicher 
-	 * Sitzung vorgesehen ist/war. Es wird ein Wahrheitswert (`true` oder `false`) 
-	 * erwartet.
-	 */
-	boolean public
-	/* Beratung, die diesem Tagesordnungspunkt zugewiesen ist. */
-	refers Consultation consultation opposite agendaItem
-	/* Kategorische Information darüber, welches Ergebnis die Beratung des 
-	 * Tagesordnungspunktes erbracht hat, in der Bedeutung etwa 
-	 * \"Unverändert beschlossen\" oder \"Geändert beschlossen\". Diese 
-	 * Eigenschaft  funktioniert wie in 
-	 * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) 
-	 * beschrieben entweder als URL zu einem `skos:Concept` oder als String.
-	 */
-	String result
-	Date created
-	Date modified  
+	op URL getId() {
+		(this as IdentifiableImpl)._id
+	}
+
+	op void setId(URL _id) {
+		if(_id == null) {
+			throw new IllegalArgumentException("Id isn't allowed to be null")
+		}
+		(this as IdentifiableImpl)._id = _id
+	}	
 }
 
-class Meeting {
-	URL ^id
-	/*Pattern("^http://oparl\\.org/schema/1\\.0/Meeting$")*/String ^type
-	String name
+
+abstract class Typed extends Identifiable {
+	
+	/* <p>
+	 * Objekttypenangabe des Objekts, zwingend für jedes Objekt.
+	 * Der Wert ist eine Namespace-URL. Für die OParl-Objekttypen sind die
+	 * folgenden URLs definiert:
+	 * </p>
+	 * <p>
+	 * <table border="1">
+	 *   <tr>
+	 *     <th>Typ (kurz)</th><th>Namespace-URL</th>
+	 *   </tr>
+	 *   <tr><td>oparl:AgendaItem</td><td>https://oparl.org/schema/1.0/AgendaItem</td></tr>
+	 *   <tr><td>oparl:Body</td><td>https://oparl.org/schema/1.0/Body</td></tr>
+	 *   <tr><td>oparl:Consultation</td><td>https://oparl.org/schema/1.0/Consultation</td></tr>
+	 *   <tr><td>oparl:File</td><td>https://oparl.org/schema/1.0/File</td></tr>
+	 *   <tr><td>oparl:LegislativeTerm</td><td>https://oparl.org/schema/1.0/LegislativeTerm</td></tr>
+	 *   <tr><td>oparl:Location</td><td>https://oparl.org/schema/1.0/Location</td></tr>
+	 *   <tr><td>oparl:Meeting</td><td>https://oparl.org/schema/1.0/Meeting</td></tr>
+	 *   <tr><td>oparl:Membership</td><td>https://oparl.org/schema/1.0/Membership</td></tr>
+	 *   <tr><td>oparl:Organization</td><td>https://oparl.org/schema/1.0/Organization</td></tr>
+	 *   <tr><td>oparl:Paper</td><td>https://oparl.org/schema/1.0/Paper</td></tr>
+	 *   <tr><td>oparl:Person</td><td>https://oparl.org/schema/1.0/Person</td></tr>
+	 *   <tr><td>oparl:System</td><td>https://oparl.org/schema/1.0/System</td></tr>
+	 * </table>
+	 * </p>
+	 */
+	/*@NonNull*/ op OParlType getType()}
+
+	
+abstract class Tagged extends Typed {
+	/* <p>
+	 * Die Eigenschaft keyword dient der optionalen Kategorisierung von Objekten und
+	 * ist in einer Vielzahl von Objekttypen zu diesem Zweck einsetzbar.
+	 * </p>
+	 */
+	String [] keyword
+}
+
+abstract class Named extends Tagged {
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+	String _name
+
 	/*
-	 * Datum und Uhrzeit des Anfangszeitpunkts der Sitzung. Bei einer zukünftigen Sitzung ist dies der geplante 
-	 * Zeitpunkt, bei einer stattgefundenen KANN es der tatsächliche Startzeitpunkt sein.
+	 * <p>
+	 * Beide Eigenschaften können bei vielen Objekttypen genutzt werden,
+	 * um den Namen des Objekts anzugeben. Üblicherweise ist name eine
+	 * Pflichteigenschaft für den ausgeschriebenen offiziellen Namen,
+	 * während shortName optional angegeben werden kann. Dies ist
+	 * dann zu empfehlen, wenn zu einem Namen eine kurze bzw. kompakte
+	 * und eine längere, aber weniger nutzerfreundliche Variante existieren.
+	 * Ein Beispiel wäre die Kurzform "CDU" für den offiziellen Parteinamen
+	 * "Christlich Demokratische Union Deutschlands".
+	 * </p>
+	 */
+	op String getName() {
+		(this as NamedImpl)._name
+	}
+
+	op void setName(String name) {
+		if(name == null) {
+			throw new IllegalArgumentException("Name isn't allowed to be null")
+		}
+		(this as NamedImpl)._name = name
+	}	
+}
+
+
+abstract class Dated extends Named {
+	/* <p>
+	 * Datum und Uhrzeit der Erstellung des jeweiligen Objekts.
+	 * </p>
+	 */
+	Date created
+
+	/* <p>
+	 * Diese Eigenschaft kennzeichnet stets Datum und Uhrzeit der letzten Änderung
+	 * des jeweiligen Objekts.
+     * </p><p>
+     * In Einzelfällen unterliegt die Frage, was als Änderung eines Objekts bezeichnet
+     * werden kann, einem gewissen Interpretationsspielraum. Beispielsweise ist zu
+     * entscheiden, ob eine Gruppierung (oparl:Organization) als geändert gilt, wenn
+     * ein neues Mitglied hinzugefügt wurde.
+     * </p><p>
+     * Diese Frage sollte aus Sicht des OParl-Clients beantwortet werden. Wenn
+     * beispielsweise eine Gruppierung vom Server grundsätzlich mit der Liste der URLs
+     * aller Mitglieder ausgegeben wird, umfasst das Objekt aus Sicht des Clients eben
+     * auch die Liste der Mitglieder. In diesem Fall wäre eine Veränderung der Liste
+     * der Mitglieder als Änderung des Objekts zu verstehen, die im modified
+     * Zeitstempel widerspiegeln sollte.
+     * </p>
+	 */
+	Date modified	
+}
+
+
+abstract class OParlElement extends Dated {
+
+	/* <p>
+	 * Beide Eigenschaften können bei vielen Objekttypen genutzt werden,
+	 * um den Namen des Objekts anzugeben. Üblicherweise ist name eine
+	 * Pflichteigenschaft für den ausgeschriebenen offiziellen Namen,
+	 * während shortName optional angegeben werden kann. Dies ist
+	 * dann zu empfehlen, wenn zu einem Namen eine kurze bzw. kompakte
+	 * und eine längere, aber weniger nutzerfreundliche Variante existieren.
+	 * Ein Beispiel wäre die Kurzform "CDU" für den offiziellen Parteinamen
+	 * "Christlich Demokratische Union Deutschlands".
+	 * </p>
+	 */
+	String shortName
+
+	/* <p>
+	 * Die Eigenschaft license erlaubt es, am jeweiligen Objekt die URL einer
+	 * Lizenz anzugeben. Damit wird gekennzeichnet, welche Lizenz der Veröffentlicher
+	 * der Daten für das jeweilige Objekt vergibt.
+     * </p><p>
+     * Eine besondere Bedeutung hat die Eigenschaft license, wenn sie am oparl:System
+     * Objekt oder am oparl:Body Objekt vergeben wird. Die hier angegebene
+     * Lizenzinformation sagt aus, dass alle Objekte dieses Systems bzw. der
+     * Körperschaft unter der angegebenen Lizenz veröffentlicht werden, sofern dies
+     * nicht am jeweiligen Objekt mit einer anders lautenden Lizenz-URL überschrieben
+     * wird. Daher wird dringend empfohlen, die Lizenzinformation global am
+     * oparl:System Objekt mitzuteilen und auf redundante Informationen zu verzichten.
+     * </p><p>
+     * An Objekten vom Typ oparl:File auftretend, bezieht sich die Lizenzinformation
+     * nicht nur auf die strukturierten Metadaten, die über die API bezogen werden,
+     * sondern auch auf den eigentlichen Inhalt der Datei(en), die über die angebotene(n)
+     * URL(s) abgerufen werden können.
+     * </p>
+	 */
+	String license
+
+
+	/* <p>
+	 * Falls das Objekt gelöscht wurde, muss dieses gemäß Kapitel 2.8 das Attribut
+	 * deleted: true bekommen.
+	 * </p>
+	 */
+	boolean deleted = "false"
+}
+
+
+abstract class InnerOParlElement extends Tagged {
+	
+}
+
+
+/* <p>
+ * Ein {@link System}-Objekt repräsentiert eine OParl-Schnittstelle für eine bestimmte OParl-Version.
+ * Es ist außerdem der Startpunkt für Clients beim Zugriff auf einen Server.
+ * </p>
+ * <p>
+ * Möchte ein Server mehrere zueinander inkompatible OParl-Versionen unterstützen, dann <b>muss</b> der Server für jede
+ * Version eine eigenen OParl-Schnittstelle mit einem eigenen {@link System}-Objekt ausgeben.
+ * </p>
+ * <p>
+ * Beispiel:
+ * <pre>
+ * {
+ *   "id": "https://oparl.example.org/",
+ *   "type": "https://oparl.org/schema/1.0/System",
+ *   "oparlVersion": "https://oparl.org/specs/1.0/",
+ *   "body": "https://oparl.example.org/bodies",
+ *   "name": "Beispiel-System",
+ *   "contactEmail": "info@example.org",
+ *   "contactName": "Allgemeiner OParl Kontakt",
+ *   "website": "http://www.example.org/",
+ *   "vendor": "http://example-software.com/",
+ *   "product": "http://example-software.com/oparl-server/",
+ *   "otherOparlVersions": [
+ *       "https://oparl2.example.org/"
+ *   ]
+ * }
+ * </pre>
+ * </p>
+ */
+class System extends OParlElement {
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _oparlVersion
+
+    /**
+     * Dient der Angabe von System-Objekten mit anderen OParl-Versionen.
+     */
+	contains System [] otherOparlVersions
+
+    /**
+     * Link zur Objektliste mit allen Körperschaften, die auf dem System existieren.
+     */
+    /*1..n*/contains Body [] bodies opposite system
+
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _contactEmail
+
+    /*
+     * Name der Ansprechpartnerin bzw. des Ansprechpartners oder der Abteilung, die über die in
+     * {@link System#contactEmail} angegebene Adresse erreicht werden kann.
+     */
+    String contactName
+
+    /**
+     * URL der Website des parlamentarischen Informationssystems
+     */
+    URL website
+
+    /**
+     * URL der Website des Software-Anbieters, von dem die OParl-Server-Software stammt.
+     */
+    URL vendor
+
+    /**
+     * URL zu Informationen über die auf dem System genutzte OParl-Server-Software
+     */
+    URL product
+
+    op OParlType getType() {
+    	return "https://oparl.org/schema/1.0/System"
+    }
+
+    /* <p>
+     * Die URL der OParl-Spezifikation, die von diesem Server unterstützt wird. Aktuell kommt hier nur ein
+     * Wert in Frage. Mit zukünftigen OParl-Versionen kommen weitere mögliche URLs hinzu.
+     * </p>
+     * <p>
+     * <b>Wert:</b> https://oparl.org/specs/1.0/
+     * </p>
+     */
+    op String getOparlVersion() {
+    	(this as SystemImpl)._oparlVersion
+    }
+
+    op void setOparlVersion(String version) {
+		if(version == null) {
+			throw new IllegalArgumentException("OParl version isn't allowed to be null")
+		}
+		val patternStr = "^mailto:.+$"
+    	val pattern = Pattern.compile(patternStr)
+    	val matcher = pattern.matcher(version)
+    	if(!matcher.find) {
+    		throw new IllegalArgumentException(String.format("%s doesn't follow pattern %s", version, patternStr))
+    	}
+    	(this as SystemImpl)._oparlVersion = version
+    }
+
+    /* <p>
+     * Nutzerfreundlicher Name für das System, mit dessen Hilfe Nutzerinnen und Nutzer das System erkennen und
+     * von anderen unterscheiden können.
+     * </p>
+     */
+    op String getName() {
+    	super.name
+    }
+
+    /* <p>
+     * E-Mail-Adresse für Anfragen zur OParl-API. Die Angabe einer E-Mail-Adresse dient sowohl NutzerInnen wie
+     * auch Entwicklerinnen von Clients zur Kontaktaufnahme mit dem Betreiber.
+     * </p>
+     */
+    op String getContactEmail() {
+    	(this as SystemImpl)._contactEmail
+    }
+
+    op void setContactEmail(String contactEmail) {
+    	if(contactEmail != null) {
+			val patternStr = "^^http://oparl\\.org/specs/1\\.0/$"
+	    	val pattern = Pattern.compile(patternStr)
+	    	val matcher = pattern.matcher(contactEmail)
+	    	if(!matcher.find) {
+	    		throw new IllegalArgumentException(String.format("%s doesn't follow pattern %s", contactEmail, patternStr))
+	    	}
+    	}
+    	(this as SystemImpl)._contactEmail = contactEmail
+    }
+}
+
+
+/* <p>
+ * Der Objekttyp oparl:Body dient dazu, eine Körperschaft zu repräsentieren. Eine Körperschaft ist in den meisten
+ * Fällen eine Gemeinde, eine Stadt oder ein Landkreis.
+ * </p><p>
+ * In der Regel sind auf einem OParl-Server Daten von genau einer Körperschaft gespeichert und es wird daher auch
+ * nur ein Body-Objekt ausgegeben. Sind auf dem Server jedoch Daten von mehreren Körperschaften gespeichert, muss
+ * für jede Körperschaft ein eigenes Body-Objekt ausgegeben werden.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ * {
+ *   "id": "https://oparl.example.org/body/0",
+ *   "type": "https://oparl.org/schema/1.0/Body",
+ *   "system": "https://oparl.example.org/",
+ *   "contactEmail": "ris@beispielstadt.de",
+ *   "contactName": "RIS-Betreuung",
+ *   "ags": "05315000",
+ *   "rgs": "053150000000",
+ *   "equivalentBody": [
+ *       "http://d-nb.info/gnd/2015732-0",
+ *       "http://dbpedia.org/resource/Cologne"
+ *   ],
+ *   "shortName": "Köln",
+ *   "name": "Stadt Köln, kreisfreie Stadt",
+ *   "website": "http://www.beispielstadt.de/",
+ *   "license": "http://creativecommons.org/licenses/by/4.0/",
+ *   "licenseValidSince": "2014-01-01",
+ *   "organization": "https://oparl.example.org/body/0/organizations/",
+ *   "person": "https://oparl.example.org/body/0/people/",
+ *   "meeting": "https://oparl.example.org/body/0/meetings/",
+ *   "paper": "https://oparl.example.org/body/0/papers/",
+ *   "legislativeTerm": [
+ *       {
+ *           "id": "https://oparl.example.org/term/21",
+ *           "type": "https://oparl.org/schema/1.0/LegislativeTerm",
+ *           "body": "https://oparl.example.org/body/0",
+ *           "name": "21. Wahlperiode",
+ *           "startDate": "2010-12-03",
+ *           "endDate": "2013-12-03"
+ *       }
+ *   ],
+ *   "location": {
+ *       "id:": "https://oparl.example.org/location/0",
+ *       "type": "https://oparl.org/schema/1.0/Location",
+ *       "description": "Rathaus der Beispielstadt, Ratshausplatz 1, 12345 Beispielstadt",
+ *       "geometry": {
+ *           "type": "Feature",
+ *           "geometry": {
+ *               "type": "Point",
+ *               "coordinates": [
+ *                   50.1234,
+ *                   10.4321
+ *               ]
+ *           },
+ *           "properties": {
+ *               "name": "Rathausplatz"
+ *           }
+ *       }
+ *   },
+ *   "classification": "Kreisfreie Stadt",
+ *   "created": "2014-01-08T14:28:31.568+0100",
+ *   "modified": "2014-01-08T14:28:31.568+0100"
+ * }
+ * </pre>
+ * </p>
+ */
+class Body extends AddressableOParlElement {
+    /* <p>
+     * System, zu dem dieses Objekt gehört.
+     * </p>
+     */
+    refers System system opposite bodies
+
+    /* <p>
+     * Allgemeine Website der Körperschaft.
+     * </p>
+     */
+    String website
+
+    /* <p>
+     * Zeitpunkt, seit dem die unter {@link Body#license} angegebene Lizenz gilt. Vorsicht bei Änderungen der Lizenz
+     * die zu restriktiveren Bedingungen führen.
+     * </p>
+     */
+    Date licenseValidSince
+
+    /* <p>
+     * Zeitpunkt, ab dem OParl für dieses Body bereitgestellt wurde. Dies hilft, um die Datenvalidität einzuschätzen,
+     * erst ab der Einrichtung für OParl kann sichergestellt werden, dass sämtliche Werte korrekt in der
+     * Original-Quelle vorliegen.
+     * </p>
+     */
+    Date oparlSince
+
+    /* <p>
+     * Der achtstellige Amtliche Gemeindeschlüssel
+     * </p>
+     */
+    String ags
+
+    /* <p>
+     * Der zwölfstellige Regionalschlüssel. Der Regionalschlüssel wird in Zukunft voraussichtlich den
+     * Amtlichen Gemeindeschlüssel ersetzen.
+     * </p>
+     * <p>
+     * Regionalschlüssel können im <a href="https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html">Gemeindeverzeichnis (GV-ISys) des Statistischen Bundesamtes</a>
+     * eingesehen werden.
+     * </p>
+     */
+    String rgs
+
+    /* <p>
+     * Dient der Angabe beliebig vieler zusätzlicher URLs, die dieselbe Körperschaft repräsentieren.
+     * </p><p>
+     * Hier können beispielsweise, sofern vorhanden, der entsprechende Eintrag der <a href="http://www.dnb.de/gnd">
+     * Gemeinsamen Normdatei der Deutschen Nationalbibliothek</a> oder der <a href="http://www.dbpedia.org/">
+     * DBPedia</a> oder der <a href="http://www.dbpedia.org/">Wikipedia</a>.
+     * angegeben werden.
+     * </p><p>
+     * Body- oder System-Objekte mit anderen OParl-Versionen <b>dürfen</b> nicht Teil der Liste sein.
+     * </p>
+     */
+    contains Body [] equivalentBody
+    
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _contactEmail
+
+    /* <p>
+     * Name oder Bezeichnung der mit {@link Body#contactEmail} erreichbaren Stelle.
+     * </p>
+     */
+    String contactName
+
+    /* <p>
+     * Link zur Objektliste mit allen Gruppierungen der Körperschaft.
+     * </p>
+     */
+    contains Organization [] organization opposite body
+
+    /* <p>
+     * Link zur Objektliste mit allen Personen der Körperschaft.
+     * </p>
+     */
+    contains Person [] person opposite body
+
+    /* <p>
+     * Link zur Objektliste mit allen Sitzungen der Körperschaft.
+     * </p>
+     */
+    contains Meeting [] meeting
+
+    /* <p>
+     * Link zur Objektliste mit allen Drucksachen der Körperschaft.
+     * </p>
+     */
+    contains Paper [] paper opposite body
+
+    /* <p>
+     * Objektliste mit allen Wahlperioden der Körperschaft in dem Zeitraum, für den OParl bereitgestellt wird.
+     * </p>
+     */
+    contains LegislativeTerm [] legislativeTerm opposite body
+
+    /* <p>
+     * Art der Körperschaft.
+     * </p>
+     */
+    String classification
+
+	/* <p>
+	 * Ort, an dem die Körperschaft beheimatet ist. Wenn möglich die Stadtgrenzen, ansonsten die Stadtmitte.
+	 * (Die Ortsangabe kann sowohl über diese Eigenschaft, als auch über die vorangegangenen Einzeleigenschaften
+	 * erfolgen, sollte aber übereinstimmen, falls beide Ausgabeoptionen genutzt werden.
+	 * </p>
+	 */
+	contains BodyLocation location opposite body
+
+    op OParlType getType() {
+    	return "https://oparl.org/schema/1.0/Body"
+    }
+
+    /* <p>
+     * Dient der Angabe einer Kontakt-E-Mail-Adresse mit \"mailto:\"-Schema. Die Adresse soll die Kontaktaufnahme
+     * zu einer für die Körperschaft und idealerweise das parlamentarische Informationssystem zuständigen Stelle
+     * ermöglichen.
+     * </p>
+     */
+    op String getContactEmail() {
+    	(this as BodyImpl)._contactEmail
+    }
+
+    op void setContactEmail(String contactEmail) {
+    	if(contactEmail != null) {
+			val patternStr = "^^http://oparl\\.org/specs/1\\.0/$"
+	    	val pattern = Pattern.compile(patternStr)
+	    	val matcher = pattern.matcher(contactEmail)
+	    	if(!matcher.find) {
+	    		throw new IllegalArgumentException(String.format("%s doesn't follow pattern %s", contactEmail, patternStr))
+	    	}
+    	}
+    	(this as BodyImpl)._contactEmail = contactEmail
+    }
+
+    /* <p>
+     * Straße und Hausnummer der Körperschaft.
+     * </p>
+     */
+    op String getStreetAddress() {
+        super.streetAddress
+    }
+
+    /* <p>
+     * Postleitzahl der Körperschaft.
+     * </p>
+     */
+    op String getPostalCode() {
+        super.postalCode
+    }
+
+    /* <p>
+     * Ortsangabe der Körperschaft.
+     * </p>
+     */
+    op String getLocality() {
+        super.locality
+    }
+}
+
+class AddressableOParlElement extends OParlElement {
+    /* <p>
+     * Straße und Hausnummer.
+     * </p>
+     */
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _streetAddress
+
+    /* <p>
+     * Postleitzahl.
+     * </p>
+     */
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _postalCode
+
+    /* <p>
+     * Ortsangabe.
+     * </p>
+     */
+	@GenModel(suppressedGetVisibility="true", suppressedSetVisibility="true")
+    String _locality
+
+    /* <p>
+     * Straße und Hausnummer der Körperschaft.
+     * </p>
+     */
+    op String getStreetAddress() {
+        (this as AddressableOParlElementImpl)._streetAddress
+    }
+
+    op void setStreetAddress(String address) {
+        (this as AddressableOParlElementImpl)._streetAddress = address
+    }
+
+    /* <p>
+     * Postleitzahl der Körperschaft.
+     * </p>
+     */
+    op String getPostalCode() {
+        (this as AddressableOParlElementImpl)._postalCode
+    }
+
+    op void setPostalCode(String postalCode) {
+        (this as AddressableOParlElementImpl)._postalCode = postalCode
+    }
+
+    /* <p>
+     * Ortsangabe der Körperschaft.
+     * </p>
+     */
+    op String getLocality() {
+        (this as AddressableOParlElementImpl)._locality
+    }
+
+    op void setLocality(String locality) {
+        (this as AddressableOParlElementImpl)._locality = locality
+    }
+}
+
+
+/* <p>
+ * Dieser Objekttyp dient der Beschreibung einer Wahlperiode.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ * "legislativeTerm": [
+ *       {
+ *           "id": "https://oparl.example.org/term/21",
+ *           "type": "https://oparl.org/schema/1.0/LegislativeTerm",
+ *           "body": "https://oparl.example.org/body/0",
+ *           "name": "21. Wahlperiode",
+ *           "startDate": "2010-12-03",
+ *           "endDate": "2013-12-03"
+ *       }
+ *   ]
+ * </pre>
+ * </p>
+ */
+class LegislativeTerm extends InnerOParlElement {
+	
+    /* <p>
+     * Nutzerfreundliche Bezeichnung der Wahlperiode.
+     * </p>
+     */
+	String name
+
+	/* <p>
+	 * Rückreferenz auf die Körperschaft, welche nur dann ausgegeben wird, wenn das LegislativeTerm-Objekt einzeln
+	 * abgerufen ist, d.h. nicht Teil einer internen Ausgabe ist.
+	 * </p>
+	 */
+	refers Body body opposite legislativeTerm
+
+    /* <p>
+     * Der erste Tag der Wahlperiode.
+     * </p>
+     */
+    String startDate
+
+    /* <p>
+     * Der letzte Tag der Wahlperiode.
+     * </p>
+     */
+    String endDate
+
+    op OParlType getType() {
+    	return "https://oparl.org/schema/1.0/LegislativeTerm"
+    }
+}
+
+
+/* <p>
+ * Dieser Objekttyp dient dazu, Gruppierungen von Personen abzubilden, die in der parlamentarischen Arbeit eine
+ * Rolle spielen. Dazu zählen in der Praxis insbesondere Fraktionen und Gremien.
+ * </p>
+ * <p>
+ * Beispiel:
+ * <pre>
+ * {
+ *   "id": "https://oparl.example.org/organization/34",
+ *   "type": "https://oparl.org/schema/1.0/Organization",
+ *   "body": "https://oparl.example.org/bodies/1",
+ *   "name": "Ausschuss für Haushalt und Finanzen",
+ *   "shortName": "Finanzausschuss",
+ *   "startDate": "2012-07-17T00:00:00+02:00",
+ *   "organizationType": "Gremium",
+ *   "post": [
+ *       "Vorsitzender",
+ *       "1. Stellvertreter",
+ *       "Mitglied"
+ *   ],
+ *   "meeting": [
+ *       "https://oparl.example.org/meeting/27",
+ *       "https://oparl.example.org/meeting/36",
+ *       "https://oparl.example.org/meeting/45",
+ *       "https://oparl.example.org/meeting/53",
+ *       "https://oparl.example.org/meeting/63",
+ *       "https://oparl.example.org/meeting/72",
+ *       "https://oparl.example.org/meeting/81",
+ *       "https://oparl.example.org/meeting/92",
+ *       "https://oparl.example.org/meeting/101",
+ *       "https://oparl.example.org/meeting/111",
+ *       "https://oparl.example.org/meeting/120",
+ *       "https://oparl.example.org/meeting/133"
+ *   ],
+ *   "membership": [
+ *       "https://oparl.example.org/memberships/27",
+ *       "https://oparl.example.org/memberships/48",
+ *       "https://oparl.example.org/memberships/57"
+ *   ],
+ *   "classification": "Ausschuss",
+ *   "keyword": [
+ *       "finanzen",
+ *       "haushalt"
+ *   ],
+ *   "created": "2012-07-16T16:01:44+02:00",
+ *   "modified": "2012-08-16T14:05:27+02:00"
+ * }
+ * </pre>
+ * </p>
+ */
+class Organization extends PersonOrOrganization {
+
+	/* <p>
+	 * Körperschaft, zu der diese Gruppierung gehört.
+	 * </p>
+	 */
+	refers Body body opposite organization
+
+    /* <p>
+     * Mitgliedschaften dieser Gruppierung.
+     * </p>
+     */
+    contains Membership [] membership opposite organization
+
+	/* <p>
+	 * URL auf eine externe Objektliste mit den Sitzungen dieser Gruppierung. Invers zur Eigenschaft organization
+	 * der Klasse oparl:Meeting
+	 * </p>
+	 */
+	contains MeetingOrganization [] meeting opposite organization
+
+	/* <p>
+	 * Positionen, die für diese Gruppierung vorgesehen sind.
+	 * </p>
+	 */
+    String [] post
+
+    /* <p>
+     * URL der übergeordneten Gruppierung.
+     * </p>
+     */
+    refers Organization subOrganizationOf
+
+    /* <p>
+     * Grobe Kategorisierung der Gruppierung. Mögliche Werte sind "Gremium", "Partei", "Fraktion",
+     * "Verwaltungsbereich", "externes Gremium", "Institution" und "Sonstiges".
+     * </p>
+     */
+    String organizationType
+
+    /* <p>
+     * Die Art der Gruppierung. In Frage kommen z.B. "Parlament", "Ausschuss", "Beirat", "Projektbeirat",
+     * "Kommission", "AG", "Verwaltungsrat", "Fraktion" oder "Partei". Die Angabe <b>sollte</b> möglichst
+     * präzise erfolgen. Außerdem <b>sollten</b> Abkürzungen vermieden werden. Für die höchste demokratische
+     * Instanz in der Kommune <b>sollte</b> immer der Begriff "Parlament" verwendet werden, nicht "Rat" oder
+     * "Hauptausschuss".
+     * </p>
+     */
+    String classification
+
+    /* <p>
+     * Gründungsdatum der Gruppierung. Kann z. B. das Datum der konstituierenden Sitzung sein.
+     * </p>
+     */
+    Date startDate
+
+    /* <p>
+     * Datum des letzten Tages der Existenz der Gruppierung.
+     * </p>
+     */
+    Date endDate
+
+    /* <p>
+     * Allgemeine Website der Gruppierung.
+     * </p>
+     */
+    URL website
+
+    /* <p>
+     * Raum, in dem die Organization beheimatet ist.
+     * </p>
+     */
+    String room
+
+	/* <p>
+	 * Ort, an dem die Körperschaft beheimatet ist. Wenn möglich die Stadtgrenzen, ansonsten die Stadtmitte.
+	 * (Die Ortsangabe kann sowohl über diese Eigenschaft, als auch über die vorangegangenen Einzeleigenschaften
+	 * erfolgen, sollte aber übereinstimmen, falls beide Ausgabeoptionen genutzt werden.
+	 * </p>
+	 */
+	contains OrganizationLocation location opposite organziation
+
+    op OParlType getType() {
+    	return "https://oparl.org/schema/1.0/Organization$"
+    }
+    
+    /* <p>
+     * Straße und Hausnummer der Organization.
+     * </p>
+     */
+    op String getStreetAddress() {
+        super.streetAddress
+    }
+
+    /* <p>
+     * Postleitzahl der Organization.
+     * </p>
+     */
+    op String getPostalCode() {
+        super.postalCode
+    }
+
+    /* <p>
+     * Ortsangabe der Organization.
+     * </p>
+     */
+    op String getLocality() {
+        super.locality
+    }
+}
+
+class MeetingOrganization {
+	refers Meeting meeting opposite organization
+	refers Organization organization opposite meeting
+}
+
+
+/**
+ * <p>
+ * Jede natürliche Person, die in der parlamentarischen Arbeit tätig und insbesondere Mitglied in einer Gruppierung
+ * {@link Organization} ist, wird mit einem Objekt vom Typ {@link Personn} abgebildet.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ * {
+ *  "id": "https://oparl.example.org/person/29",
+ *  "type": "https://oparl.org/schema/1.0/Person",
+ *  "body": "https://oparl.example.org/body/0",
+ *  "name": "Prof. Dr. Max Mustermann",
+ *  "familyName": "Mustermann",
+ *  "givenName": "Max",
+ *  "title": [
+ *      "Prof.",
+ *      "Dr."
+ *  ],
+ *  "formOfAddress": "Ratsfrau",
+ *  "gender": "male",
+ *  "email": "max@mustermann.de",
+ *  "phone": "+493012345678",
+ *  "streetAddress": "Musterstraße 5",
+ *  "postalCode": "11111",
+ *  "locality": "Musterort",
+ *  "status": [
+ *      "Bezirksbürgermeister"
+ *  ],
+ *  "membership": [
+ *      {
+ *          "id": "https://oparl.example.org/memberships/385",
+ *          "type": "https://oparl.org/schema/1.0/Membership",
+ *          "organization": "https://oparl.example.org/organizations/5",
+ *          "role": "Vorsitzende",
+ *          "votingRight": true,
+ *          "startDate": "2013-12-03T16:30:00+01:00"
+ *      },
+ *      {
+ *          "id": "https://oparl.example.org/memberships/693",
+ *          "type": "https://oparl.org/schema/1.0/Membership",
+ *          "organization": "https://oparl.example.org/organizations/9",
+ *          "role": "Sachkundige Bürgerin",
+ *          "votingRight": false,
+ *          "startDate": "2013-12-03T16:30:00+01:00",
+ *          "endDate": "2014-07-28T00:00:00+02:00"
+ *      }
+ *  ],
+ *  "created": "2011-11-11T11:11:00+01:00",
+ *  "modified": "2012-08-16T14:05:27+02:00"
+ * }
+ * </pre>
+ * </p>
+ */
+class Person extends PersonOrOrganization {
+
+    /* <p>
+     * Körperschaft, zu der die Person gehört.
+     * </p>
+     */
+    refers Body body opposite person
+
+    /* <p>
+     * Familienname bzw. Nachname.
+     * </p>
+     */
+    String familyName
+
+
+    /* <p>
+     * Vorname bzw. Taufname.
+     * </p>
+     */
+    String givenName
+
+    /* <p>
+     * Anrede.
+     * </p>
+     */
+    String formOfAddress
+
+    /* <p>
+     * Namenszusatz (z.B. jun. oder MdL.)
+     * </p>
+     */
+    String affix
+
+    /* <p>
+     * Akademische Titel
+     * </p>
+     */
+    String [] title
+
+    /* <p>
+     * Geschlecht. Empfohlene Werte sind <pre>female</pre>, <pre>male</pre> und <pre>other</pre>. Für den Fall,
+     * dass das Geschlecht der Person unbekannt ist, sollte die Eigenschaft nicht ausgegeben werden.
+     * </p>
+     */
+    String gender
+
+    /* <p>
+     * Telefonnummern der Person.
+     * </p>
+     */
+    String [] phone
+
+    /* <p>
+     * E-Mail-Adressen der Person.
+     * </p>
+     */
+    String [] email
+
+    /* <p>
+     * Untergeordnete Ortsangabe der Kontakt-Anschrift der Person,
+     * z.B. Stadtbezirk, Ortsteil oder Dorf.
+     * </p>
+     */
+    String subLocality
+
+    /* <p>
+     * Referenz der Kontakt-Anschrift der Person.
+     * </p>
+     */
+    contains Location location
+
+    /* <p>
+     * Status, d.h. Rollen in der Kommune.
+     * </p>
+     */
+    String [] status
+
+    /* <p>
+     * Mitgliedschaften der Person in Gruppierungen, z. B. Gremien und
+     * Fraktionen. Es <b>sollen</b> sowohl aktuelle als auch vergangene
+     * Mitgliedschaften angegeben werden
+     * </p>
+     */
+    contains Membership [] membership opposite person
+
+    /* <p>
+     * Kurzer Informationstext zur Person. Eine Länge von weniger als
+     * 300 Zeichen ist <b>empfohlen</b>.
+     */
+    String life
+
+    /* <p>
+     * Angabe der Quelle, aus der die Informationen für {@link Person#life} stammen.
+     * Bei Angabe von {@link Person#life} ist diese Eigenschaft empfohlen.
+     */
+    String lifeSource
+
+    /* <p>
+     * Der vollständige Name der Person mit akademischem Grad und dem gebräuchlichen Vornamen, wie er zur Anzeige
+     * durch den Client genutzt werden kann.
+     * </p>
+     */
+    op String getName() {
+        super.name
+    }
+
+    /* <p>
+     * Straße und Hausnummer der Kontakt-Anschrift der Person.
+     * </p>
+     */
+    op String getStreetAddress() {
+        super.streetAddress
+    }
+
+    /* <p>
+     * Postleitzahl der Kontakt-Anschrift der Person.
+     * </p>
+     */
+    op String getPostalCode() {
+        super.postalCode
+    }
+
+    /* <p>
+     * Ortsangabe der Kontakt-Anschrift der Person.
+     * </p>
+     */
+    op String getLocality() {
+        super.locality
+    }
+
+    op OParlType getType() {
+        return "https://oparl.org/schema/1.0/Person"
+    }
+}
+
+
+/* <p>
+ * Über Objekte diesen Typs wird die Mitgliedschaft von Personen in
+ * Gruppierungen dargestellt. Diese Mitgliedschaften können zeitlich
+ * begrenzt sein. Zudem kann abgebildet werden, dass eine Person eine
+ * bestimmte Rolle bzw. Position innerhalb der Gruppierung inne hat,
+ * beispielsweise den Vorsitz einer Fraktion.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ *      {
+ *          "id": "https://oparl.example.org/memberships/385",
+ *          "type": "https://oparl.org/schema/1.0/Membership",
+ *          "organization": "https://oparl.example.org/organizations/5",
+ *          "role": "Vorsitzende",
+ *          "votingRight": true,
+ *          "startDate": "2013-12-03T16:30:00+01:00"
+ *      }
+ * </pre>
+ * </p>
+ */
+class Membership extends InnerOParlElement {
+
+	/* <p>
+   * Rückreferenz auf Person, welches nur dann ausgegeben wird, wenn das
+   * Membership-Objekt einzeln abgerufen ist, d.h. nicht Teil einer internen Ausgabe ist.
+   * </p>
+   */
+	refers Person person opposite membership
+
+  /* <p>
+   * Die Gruppierung, in der die Person Mitglied ist oder war.
+   * </p>
+   */
+  refers Organization organization opposite membership
+
+	/* <p>
+	 * Rolle der Person für die Gruppierung. Kann genutzt werden, um
+   * verschiedene Arten von Mitgliedschaften zum Beispiel in Gremien zu
+   * unterscheiden.
+   * </p>
+	 */
+  String role
+
+  /* <p>
+   * Gibt an, ob die Person in der Gruppierung stimmberechtigtes Mitglied ist.
+   * </p>
+   */
+  boolean votingRight
+
+  /* <p>
+   * Anfangszeitpunkt der Mitgliedschaft.
+   * </p>
+   */
+  Date startDate
+
+  /* <p>
+   * Der Endzeitpunkt der Mitgliedschaft.
+   * </p>
+   */
+  Date endDate
+
+  /* <p>
+   * Die Gruppierung, für die die Person in der unter organization angegebenen
+   * Organisation sitzt. Beispiel: Mitgliedschaft als Vertreter einer
+   * Ratsfraktion, einer Gruppierung oder einer externen Organisation.
+   * </p>
+   */
+  refers Organization onBehalfOf
+
+  op OParlType getType() {
+      return "https://oparl.org/schema/1.0/Membership"
+  }
+}
+
+
+/* <p>
+ * Eine Sitzung ist die Versammlung einer oder mehrerer Gruppierungen
+ * {@link Organization} zu einem bestimmten Zeitpunkt an einem bestimmten Ort.
+ * </p><p>
+ * Die geladenen Teilnehmer der Sitzung sind jeweils als Objekte vom Typ
+ * {@link Person} in entsprechender Form referenziert. Verschiedene Dateien
+ * (Einladung, Ergebnis- und Wortprotokoll, sonstige Anlagen) können
+ * referenziert werden.
+ * </p><p>
+ * Die Inhalte einer Sitzung werden durch Tagesordnungspunkte
+ * {@link AgendaItem} abgebildet.
+ * </p>
+ * <p>Beispiel:
+ * {
+ *   "id": "https://oparl.example.org/meeting/281",
+ *   "type": "https://oparl.org/schema/1.0/Meeting",
+ *   "name": "4. Sitzung des Finanzausschusses",
+ *   "start": "2013-01-04T08:00:00+01:00",
+ *   "end": "2013-01-04T12:00:00+01:00",
+ *   "room": "Sitzungsraum 204",
+ *   "streetAddress": "Musterstraße 5",
+ *   "postalCode": "11111",
+ *   "locality": "Musterort",
+ *   "organization": [
+ *       "https://oparl.example.org/organization/34"
+ *   ],
+ *   "invitation": {
+ *       "id": "https://oparl.example.org/files/57739",
+ *       "type": "https://oparl.org/schema/1.0/File",
+ *       "name": "Einladung",
+ *       "fileName": "einladung.pdf",
+ *       "mimeType": "application/pdf",
+ *       "date": "2012-01-08T14:05:27+01:00",
+ *       "modified": "2012-01-08T14:05:27+01:00",
+ *       "sha1Checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ *       "size": 82930,
+ *       "accessUrl": "https://oparl.example.org/files/57739.pdf",
+ *       "downloadUrl": "https://oparl.example.org/files/download/57739.pdf"
+ *   },
+ *   "resultsProtocol": {
+ *       "id": "https://oparl.example.org/files/57739",
+ *       "type": "https://oparl.org/schema/1.0/File",
+ *       "name": "Protokoll",
+ *       "fileName": "protokoll.pdf",
+ *       "mimeType": "application/pdf",
+ *       "date": "2012-01-08T14:05:27+01:00",
+ *       "modified": "2012-01-08T14:05:27+01:00",
+ *       "sha1Checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ *       "size": 82930,
+ *       "accessUrl": "https://oparl.example.org/files/57739.pdf",
+ *       "downloadUrl": "https://oparl.example.org/files/download/57739.pdf"
+ *   },
+ *   "verbatimProtocol": {
+ *       "id": "https://oparl.example.org/files/57739",
+ *       "type": "https://oparl.org/schema/1.0/File",
+ *       "name": "Wortprotokoll",
+ *       "fileName": "wortprotokoll.pdf",
+ *       "mimeType": "application/pdf",
+ *       "date": "2012-01-08T14:05:27+01:00",
+ *       "modified": "2012-01-08T14:05:27+01:00",
+ *       "sha1Checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ *       "size": 82930,
+ *       "accessUrl": "https://oparl.example.org/files/57739.pdf",
+ *       "downloadUrl": "https://oparl.example.org/files/download/57739.pdf"
+ *   },
+ *   "auxiliaryFile": [
+ *       {
+ *           "id": "https://oparl.example.org/files/57739",
+ *           "type": "https://oparl.org/schema/1.0/File",
+ *           "name": "Nachtrags-Tagesordnung",
+ *           "fileName": "nachtrag-TO.pdf",
+ *           "mimeType": "application/pdf",
+ *           "date": "2012-01-08T14:05:27+01:00",
+ *           "modified": "2012-01-08T14:05:27+01:00",
+ *           "sha1Checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ *           "size": 82930,
+ *           "accessUrl": "https://oparl.example.org/files/57739.pdf",
+ *           "downloadUrl": "https://oparl.example.org/files/download/57739.pdf"
+ *       }
+ *   ],
+ *   "agendaItem": [
+ *       {
+ *           "id": "https://oparl.example.org/agendaitem/3271",
+ *           "type": "https://oparl.org/schema/1.0/AgendaItem",
+ *           "meeting": "https://oparl.example.org/meeting/281",
+ *           "number": "10.1",
+ *           "name": "Satzungsänderung für Ausschreibungen",
+ *           "public": true,
+ *           "consultation": "https://oparl.example.org/consultation/1034",
+ *           "result": "Geändert beschlossen",
+ *           "resolution": "Der Beschluss weicht wie folgt vom Antrag ab: ...",
+ *           "modified": "2012-08-16T14:05:27+02:00"
+ *       }
+ *   ],
+ *   "created": "2012-01-06T12:01:00+01:00",
+ *   "modified": "2012-01-08T14:05:27+01:00"
+ * }
+ * </p>
+ */
+class Meeting extends AddressableOParlElement {
+  /* <p>
+   * Aktueller Status der Sitzung. <b>Empfohlen</b> ist die Verwendung von
+   * <pre>terminiert</pre> (geplant), <pre>eingeladen</pre> (vor der Sitzung
+   * bis zur Freigabe des Protokolls) und <pre>durchgeführt</pre>
+   * (nach Freigabe des Protokolls).
+   * </p>
+   */
+  String meetingState
+
+  /* <p>
+   * Wenn die Sitzung ausfällt, wird cancelled auf true gesetzt.
+   * </p>
+   */
+  boolean cancelled
+
+	/* <p>
+	 * Datum und Uhrzeit des Anfangszeitpunkts der Sitzung. Bei einer zukünftigen
+   * Sitzung ist dies der geplante Zeitpunkt, bei einer stattgefundenen
+   * <b>kann</b> es der tatsächliche Startzeitpunkt sein.
+   * </p>
 	 */
 	Date start
-	/*
-	 * Endzeitpunkt der Sitzung als Datum/Uhrzeit. Bei einer zukünftigen Sitzung ist dies der geplante Zeitpunkt, 
-	 * bei einer stattgefundenen KANN es der tatsächliche Endzeitpunkt sein.
+
+	/* <p>
+	 * Endzeitpunkt der Sitzung als Datum/Uhrzeit. Bei einer zukünftigen Sitzung
+   * ist dies der geplante Zeitpunkt, bei einer stattgefundenen <b>kann</b> es
+   * der tatsächliche Endzeitpunkt sein.
+   * </p>
 	 */
 	Date end
-	/*
-	 * Straße und Hausnummer des Sitzungsortes.
-	 */
-	String streetAddress
-	/*
-	 * Postleitzahl des Sitzungsortes.
-	 */
-	String postalCode
-	/*
-	 * Ortsangabe des Sitzungsortes.
-	 */
-	String locality
-	/*
+
+  /* <p>
+   * Raum, in dem die Sitzung stattfindet.
+   * </p>
+   */
+  String room
+
+	/* <p>
 	 * Sitzungsort in Form von Geodaten.
+   * </p>
 	 */
-	refers Location location
-	/*
-	 * Gruppierungen, denen die Sitzung zugeordnet ist. Im Regelfall wird hier eine Gruppierung verknüpft sein, 
-	 * es kann jedoch auch gemeinsame Sitzungen mehrerer Gruppierungen geben. Das erste Element ist dann das 
-	 * federführende Gremium. TODO: Eigenschaft für federführendes Gremium ergänzen und dann Ordnung entfernen. 
-	 * invers zur Eigenschaft `meeting` der Klasse `oparl:Organization`.
-	 */
-	refers Organization [] organization opposite meeting
-	/*
-	 * Vorsitz der Sitzung
-	 */
-	refers Person chairPerson
-	/*
-	 * Schriftführer, Protokollant.
-	 */
-	refers Person scribe
-	/*
-	 * Teilnehmer der Sitzung. Bei einer Sitzung in der Zukunft sind dies die geladenen Teilnehmer, bei einer 
-	 * stattgefundenen Sitzung SOLL die Liste nur diejenigen Teilnehmer umfassen, die tatsächlich an der Sitzung 
-	 * teilgenommen haben.
+	contains MeetingLocation location opposite meeting
+
+	/* <p>
+	 * Gruppierungen, denen die Sitzung zugeordnet ist. Im Regelfall wird hier
+   * eine Gruppierung verknüpft sein, es kann jedoch auch gemeinsame Sitzungen
+   * mehrerer Gruppierungen geben. Das erste Element ist dann das
+   * federführende Gremium.
+   * </p>
+   */
+	refers MeetingOrganization [] organization opposite meeting
+
+  /* <p>
+	 * Personen, die an der Sitzung teilgenommen haben (d.h. nicht nur die
+   * eingeladenen Personen, sondern die tatsächlich anwesenden). Diese
+   * Eigenschaft kann selbstverständlich erst nach dem Stattfinden der
+   * Sitzung vorkommen.
+   * </p>
 	 */
 	refers Person [] participant
-	/*
+
+  /* <p>
 	 * Einladungsdokument zur Sitzung.
+   * </p>
 	 */
 	contains InvitationFile invitation opposite meeting
-	/*
-	 * Ergebnisprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich erst nachdem Stattfinden der Sitzung 
-	 * vorkommen.
+
+  /* <p>
+	 * Ergebnisprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
+   * erst nachdem Stattfinden der Sitzung vorkommen.
+   * </p>
 	 */
 	contains ResultsProtocol resultsProtocol opposite meeting
-	/*
-	 * Wortprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich erst nach dem Stattfinden der Sitzung 
-	 * vorkommen.
+
+  /* <p>
+	 * Wortprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
+   * erst nach dem Stattfinden der Sitzung vorkommen.
+   * </p>
 	 */
 	contains VerbatimProtocol verbatimProtocol opposite meeting
-	/*
-	 * Dateianhang zur Sitzung. Hiermit sind Dateien gemeint, die üblicherweise mit der Einladung zu einer Sitzung 
-	 * verteilt werden, und die nicht bereits über einzelne Tagesordnungspunkte referenziert sind.
+
+  /* <p>
+	 * Dateianhang zur Sitzung. Hiermit sind Dateien gemeint, die
+   * üblicherweise mit der Einladung zu einer Sitzung verteilt werden,
+   * und die nicht bereits über einzelne Tagesordnungspunkte referenziert sind.
+   * </p>
 	 */
-	contains AuxiliaryFile auxiliaryFile opposite meeting
-	/*
-	 * Tagesordnungspunkte der Sitzung. Die Reihenfolge ist relevant. Es kann Sitzungen ohne TOPs geben.
+	contains AuxiliaryFile [] auxiliaryFile opposite meeting
+
+  /* <p>
+	 * Tagesordnungspunkte der Sitzung. Die Reihenfolge ist relevant.
+   * Es kann Sitzungen ohne TOPs geben.
+   * </p>
 	 */
 	contains AgendaItem [] agendaItem opposite meeting
-	/*@Nullable*/String [] keyword
-	Date created
-	Date modified  
+
+  op OParlType getType() {
+      return "https://oparl.org/schema/1.0/Meeting"
+  }
+
+  /* <p>
+   * Name der Sitzung.
+   * </p>
+   */
+  op String getName() {
+    super.name
+  }
+
+  /* <p>
+   * Straße und Hausnummer des Sitzungsortes.
+   * </p>
+   */
+  op String getStreetAddress() {
+      super.streetAddress
+  }
+
+  /* <p>
+   * Postleitzahl des Sitzungsortes.
+   * </p>
+   */
+  op String getPostalCode() {
+      super.postalCode
+  }
+
+  /* <p>
+   * Ortsangabe des Sitzungsortes.
+   * </p>
+   */
+  op String getLocality() {
+      super.locality
+  }
 }
 
-/**
- * Der Objekttyp `oparl:Consultation` dient dazu, die Beratung einer Drucksache ([`oparl:Paper`](#oparl_paper)) in 
- * einer Sitzung abzubilden. Dabei ist es nicht entscheidend, ob diese Beratung in der Vergangenheit stattgefunden hat 
- * oder diese für die Zukunft geplant ist.\n\nDie Gesamtheit aller Objekte des Typs `oparl:Consultation` zu einer 
- * bestimmten Drucksache bildet das ab, was in der Praxis als \"Beratungsfolge\" der Drucksache bezeichnet wird.
+
+/* <p>
+ * Tagesordnungspunkte sind die Bestandteile von Sitzungen {@link Meeting}.
+ * Jeder Tagesordnungspunkt widmet sich inhaltlich einem bestimmten Thema,
+ * wozu in der Regel auch die Beratung bestimmter Drucksachen gehört.
+ * </p><p>
+ * Die Beziehung zwischen einem Tagesordnungspunkt und einer Drucksache wird
+ * über ein Objekt vom Typ {@link Consultation} hergestellt, das über die
+ * Eigenschaft consultation referenziert werden kann.
+ * </p>
+ * <p>Beispiel:
+ *       {
+ *           "id": "https://oparl.example.org/agendaitem/3271",
+ *           "type": "https://oparl.org/schema/1.0/AgendaItem",
+ *           "meeting": "https://oparl.example.org/meeting/281",
+ *           "number": "10.1",
+ *           "name": "Satzungsänderung für Ausschreibungen",
+ *           "public": true,
+ *           "consultation": "https://oparl.example.org/consultation/1034",
+ *           "result": "Geändert beschlossen",
+ *           "resolution": "Der Beschluss weicht wie folgt vom Antrag ab: ...",
+ *           "modified": "2012-08-16T14:05:27+02:00"
+ *       }
+ * </p>
  */
-class Consultation {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Consultation$")*/ String ^type
-    refers Paper paper opposite consultation
-    /* Tagesordnungspunkt, unter dem die Drucksache beraten wird. */
-    refers AgendaItem agendaItem opposite consultation
-    /*
-     * Gremium, dem die Sitzung zugewiesen ist, zu welcher der zuvor genannte Tagesordnungspunkt gehört. Hier kann 
-     * auch eine mit Liste von Gremien angegeben werden (die verschiedenen `oparl:Body` und `oparl:System` angehören 
-     * können). Die Liste ist dann geordnet. Das erste Gremium der Liste ist federführend.
-     */
-    refers Organization [] organization
-    /* Drückt aus, ob bei dieser Beratung ein Beschluss zu der Drucksache gefasst wird (`true`) wird oder nicht (`false`). */
-    boolean authoritative
-    /*
-     * Rolle oder Funktion der Beratung. Zum Beispiel Anhörung, Entscheidung, Kenntnisnahme, Vorberatung usw. Diese 
-     * Eigenschaft funktioniert wie in  [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben  
-     * entweder als String oder als URL zu einem `skos:Concept` Objekt.
-     */
-    String role
-	/*@Nullable*/String [] keyword
+class AgendaItem extends InnerOParlElement {
+	
+  /* <p>
+   * Das Thema des Tagesordnungspunktes.
+   * </p>
+   */
+  String name
+
+	/* <p>
+   * Rückreferenz auf das Meeting, welches nur dann ausgegeben wird,
+   * wenn das agendaItem-Objekt einzeln abgerufen ist, d.h. nicht Teil
+   * einer internen Ausgabe ist.
+   * </p>
+   */
+	/*@NonNull*/refers Meeting meeting opposite agendaItem
+
+	/* <p>
+	 * Gliederungs-"Nummer" des Tagesordnungspunktes. Eine beliebige Zeichenkette,
+   * wie z. B. "10.", "10.1", "C", "c)" o. ä. Die Reihenfolge wird nicht dadurch,
+   * sondern durch die Reihenfolge der TOPs im
+   * {@link AgendaItem#agendaItem}-Attribut von {@link Meeting} festgelegt.
+   * </p>
+	 */
+	String number
+
+  /* <p>
+	 * Kennzeichnet, ob der Tagesordnungspunkt zur Behandlung in öffentlicher
+   * Sitzung vorgesehen ist/war. Es wird ein Wahrheitswert (<pre>true</pre>
+   * oder <pre>false</pre>) erwartet.
+   * </p>
+	 */
+	boolean public
+
+  /* <p>
+   * Beratung, die diesem Tagesordnungspunkt zugewiesen ist.
+   * </p>
+   */
+	refers Consultation consultation opposite agendaItem
+
+  /* <p>
+   * Kategorische Information darüber, welches Ergebnis die Beratung des
+   * Tagesordnungspunktes erbracht hat, in der Bedeutung etwa
+   * "Unverändert beschlossen" oder "Geändert beschlossen".
+   * </p>
+	 */
+	String result
+
+	/* <p>
+	 * Falls in diesem Tagesordnungspunkt ein Beschluss gefasst wurde,
+   * kann hier ein Text angegeben werden. Das ist besonders dann in der
+   * Praxis relevant, wenn der gefasste Beschluss (z. B. durch
+   * Änderungsantrag) von der Beschlussvorlage abweicht.
+   * </p>
+	 */
+	String resolutionText
+
+  /* <p>
+   * Falls in diesem Tagesordnungspunkt ein Beschluss gefasst wurde,
+   * kann hier eine Datei angegeben werden. Das ist besonders dann in der
+   * Praxis relevant, wenn der gefasste Beschluss (z. B. durch Änderungsantrag)
+   * von der Beschlussvorlage abweicht.
+   * </p>
+   */
+  contains AgendaItemResolutionFile resolutionFile opposite agendaItem
+
+	/* <p>
+   * Dateianhänge zum Tagesordnungspunkt.
+   * </p>
+   */
+	contains AgendaItemAuxiliaryFile [] auxiliaryFile opposite agendaItem
+
+  /* <p>
+   * Datum und Uhrzeit des Anfangszeitpunkts des Tagesordnungspunktes.
+   * Bei zukünftigen Tagesordnungspunkten ist dies der geplante Zeitpunkt,
+   * bei einem stattgefundenen <b>kann</b> es der tatsächliche Startzeitpunkt
+   * sein.
+   * </p>
+   */
+  Date start
+
+  /* <p>
+   * Endzeitpunkt des Tagesordnungspunktes als Datum/Uhrzeit.
+   * Bei zukünftigen Tagesordnungspunkt ist dies der geplante Zeitpunkt,
+   * bei einer stattgefundenen <b>kann</b> es der tatsächliche Endzeitpunkt sein.
+   * </p>
+   */
+  Date end
+
+  op OParlType getType() {
+      return "https://oparl.org/schema/1.0/AgendaItem"
+  }
 }
+
+
+/* <p>
+ * Dieser Objekttyp dient der Abbildung von Drucksachen in der parlamentarischen
+ * Arbeit, wie zum Beispiel Anfragen, Anträgen und Beschlussvorlagen.
+ * </p><p>
+ * Drucksachen werden in Form einer Beratung ({@link Consultation}) im
+ * Rahmen eines Tagesordnungspunkts ({@link AgendaItem}) einer
+ * Sitzung ({@link Meeting}) behandelt.
+ * </p><p>
+ * Drucksachen spielen in der schriftlichen wie mündlichen Kommunikation eine
+ * besondere Rolle, da in vielen Texten auf bestimmte Drucksachen Bezug genommen
+ * wird. Hierbei kommen in parlamentarischen Informationssystemen
+ * unveränderliche Kennungen der Drucksachen zum Einsatz.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ * {
+ *    "id": "https://oparl.example.org/paper/749",
+ *    "type": "https://oparl.org/schema/1.0/Paper",
+ *    "body": "https://oparl.example.org/bodies/1",
+ *    "name": "Antwort auf Anfrage 1200/2014",
+ *    "reference": "1234/2014",
+ *    "publishedDate": "2014-04-04T16:42:02+02:00",
+ *    "paperType": "Beantwortung einer Anfrage",
+ *    "relatedPaper": [
+ *        "https://oparl.example.org/paper/699"
+ *    ],
+ *    "mainFile": {
+ *        "id": "https://oparl.example.org/files/57737",
+ *        "type": "https://oparl.org/schema/1.0/File",
+ *        "name": "Anlage 1 zur Anfrage",
+ *        "fileName": "anlage.pdf",
+ *        "mimeType": "application/pdf",
+ *        "date": "2013-01-04T07:54:13+01:00",
+ *        "modified": "2013-01-04T07:54:13+01:00",
+ *        "sha1Checksum": "d749751af44a32c818b9b1e1515251c67734f5d2",
+ *        "size": 82930,
+ *        "accessUrl": "https://oparl.example.org/files/57737.pdf",
+ *        "downloadUrl": "https://oparl.example.org/files/download/57737.pdf",
+ *        "license": "http://www.opendefinition.org/licenses/cc-by"
+ *    },
+ *    "auxiliaryFile": [
+ *        {
+ *            "id": "https://oparl.example.org/files/57739",
+ *            "type": "https://oparl.org/schema/1.0/File",
+ *            "name": "Anlage 1 zur Anfrage",
+ *            "fileName": "anlage.pdf",
+ *            "mimeType": "application/pdf",
+ *            "date": "2013-01-04T07:54:13+01:00",
+ *            "modified": "2013-01-04T07:54:13+01:00",
+ *            "sha1Checksum": "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+ *            "size": 82930,
+ *            "accessUrl": "https://oparl.example.org/files/57739.pdf",
+ *            "downloadUrl": "https://oparl.example.org/files/download/57739.pdf",
+ *            "text": "Der Übersichtsplan zeigt alle Ebenen des ...",
+ *            "masterFile": "https://oparl.example.org/files/57738",
+ *            "license": "http://www.opendefinition.org/licenses/cc-by"
+ *        }
+ *    ],
+ *    "location": [
+ *        {
+ *            "id": "https://oparl.example.org/locations/29856",
+ *            "type": "https://oparl.org/schema/1.0/Location",
+ *            "description": "Honschaftsstraße 312, Köln",
+ *            "geometry": {
+ *                "type": "Point",
+ *                "coordinates": [
+ *                    7.03291,
+ *                    50.98249
+ *                ]
+ *            }
+ *        }
+ *    ],
+ *    "originatorPerson": [
+ *        "https://oparl.example.org/person/2000",
+ *        "https://oparl.example.org/person/1000"
+ *    ],
+ *    "originatorOrganization": [
+ *        "https://oparl.example.org/organization/2000",
+ *        "https://oparl.example.org/organization/1000"
+ *    ],
+ *    "consultation": [
+ *        {
+ *            "id": "https://oparl.example.org/consultation/47594",
+ *            "type": "https://oparl.org/schema/1.0/Consultation",
+ *            "agendaItem": "https://oparl.example.org/agendaitem/15569",
+ *            "meeting": "https://oparl.example.org/meeting/243",
+ *            "organization": "https://oparl.example.org/organization/96",
+ *            "authoritative": false,
+ *            "role": "Beschlussfassung"
+ *        }
+ *    ],
+ *    "underDirectionOf": [
+ *        "https://oparl.example.org/organization/2000"
+ *    ],
+ *    "modified": "2013-01-08T12:05:27+01:00"
+ * }
+ * </pre>
+ * </p>
+ */
+class Paper extends OParlElement {
+    /* <p>
+     * Körperschaft, zu der die Drucksache gehört.
+     * </p>
+     */
+    refers Body body opposite paper
+
+    /* <p>
+     * Kennung bzw. Aktenzeichen der Drucksache, mit der sie in der
+     * parlamentarischen Arbeit eindeutig referenziert werden kann.
+     * </p>
+     */
+    String reference
+
+    /* <p>
+     * Veröffentlichungsdatum der Drucksache.
+     * </p>
+     */
+    Date publishedDate
+
+    /* <p>
+     * Art der Drucksache, z. B. Beantwortung einer Anfrage.
+     * </p>
+     */
+    String paperType
+
+    /* <p>
+     * Inhaltlich verwandte Drucksachen.
+     * </p>
+     */
+    refers Paper [] relatedPaper 
+
+    /* <p>
+     * Übergeordnete Drucksachen.
+     * </p>
+     */
+    refers Paper [] superordinatedPaper opposite subordinatedPaper
+
+    /* <p>
+     * Untergeordnete Drucksachen.
+     * </p>
+     */
+    refers Paper [] subordinatedPaper opposite superordinatedPaper
+
+    /* <p>
+     * Die Haupt-Datei zu dieser Drucksache.
+     * Beispiel: Die Drucksache repräsentiert eine Beschlussvorlage und die
+     * Haupt-Datei enthält den Text der Beschlussvorlage. Sollte keine
+     * eindeutige Haupt-Datei vorhanden sein, wird diese Eigenschaft nicht
+     * ausgegeben.
+     * <p>
+     */
+    contains File mainFile
+
+    /* <p>
+     * Alle Dateien zur Drucksache ausgenommen der gegebenenfalls in
+     * {@link Paper#mainFile} angegebenen Datei.
+     * </p>
+     */
+    contains AuxiliaryFile [] auxiliaryFile
+
+    /* <p>
+     * Sofern die Drucksache einen inhaltlichen Ortsbezug hat, beschreibt diese
+     * Eigenschaft den Ort in Textform und/oder in Form von Geodaten.
+     * </p>
+     */
+    contains PaperLocation [] location opposite paper
+
+    /* <p>
+     * Urheber der Drucksache, falls der Urheber eine Person ist.
+     * Es können auch mehrere Personen angegeben werden.
+     * </p>
+     */
+    refers Person [] originatorPerson
+
+    /* <p>
+     * Federführung. Amt oder Abteilung, für die Inhalte oder Beantwortung der
+     * Drucksache verantwortlich.
+     * </p>
+     */
+    refers Organization [] underDirectionof
+
+    /* <p>
+     * Urheber der Drucksache, falls der Urheber eine Gruppierung ist.
+     * Es können auch mehrere Gruppierungen angegeben werden.
+     * </p>
+     */
+    refers Organization [] originatorOrganization
+
+    /* <p>
+     * Beratungen der Drucksache.
+     * </p>
+     */
+    contains Consultation [] consultation opposite paper
+
+    op OParlType getType() {
+        return "https://oparl.org/schema/1.0/Paper"
+    }
+
+    /* <p>
+     * Titel der Drucksache.
+     * </p>
+     */
+    op String getName() {
+      super.name
+    }
+}
+
+
+/* <p>
+ * Der Objekttyp {@link Consultation} dient dazu, die Beratung einer Drucksache
+ * ({@link Paper}) in einer Sitzung abzubilden. Dabei ist es nicht entscheidend,
+ * ob diese Beratung in der Vergangenheit stattgefunden hat oder diese für die
+ * Zukunft geplant ist.
+ * </p><p>
+ * Die Gesamtheit aller Objekte des Typs {@link Consultation} zu einer bestimmten
+ * Drucksache bildet das ab, was in der Praxis als "Beratungsfolge" der
+ * Drucksache bezeichnet wird.
+ * </p>
+ * <p>Beispiel:
+ * <pre>
+ *        {
+ *            "id": "https://oparl.example.org/consultation/47594",
+ *            "type": "https://oparl.org/schema/1.0/Consultation",
+ *            "agendaItem": "https://oparl.example.org/agendaitem/15569",
+ *            "meeting": "https://oparl.example.org/meeting/243",
+ *            "organization": "https://oparl.example.org/organization/96",
+ *            "authoritative": false,
+ *            "role": "Beschlussfassung"
+ *        }
+ * </pre>
+ * </p>
+ */
+class Consultation extends InnerOParlElement {
+
+  /* <p>
+   * Rückreferenz auf das Paper, welches nur dann ausgegeben wird, wenn das
+   * Consultation-Objekt einzeln abgerufen ist, d.h. nicht Teil einer internen
+   * Ausgabe ist.
+   * </p>
+   */
+  refers Paper paper opposite consultation
+
+  /* <p>
+   * Tagesordnungspunkt, unter dem die Drucksache beraten wird.
+   * </p>
+   */
+  refers AgendaItem agendaItem opposite consultation
+
+  /* <p>
+   * Sitzung, in der die Drucksache beraten wird.
+   * </p>
+   */
+  refers Meeting meeting 
+
+  /* <p>
+   * Gremium, in dem die Drucksache beraten wird. Hier kann auch eine mit Liste
+   * von Gremien angegeben werden (die verschiedenen {@link Body} und
+   * {@link System} angehören können). Die Liste ist dann geordnet.
+   * Das erste Gremium der Liste ist federführend.
+   * </p>
+   */
+  refers Organization [] organization
+
+  /* <p>
+   * Drückt aus, ob bei dieser Beratung ein Beschluss zu der Drucksache gefasst
+   * wird (<pre>true</pre>) wird oder nicht (<pre>false</pre>).
+   * </p>
+   */
+  boolean authoritative
+
+  /* <p>
+   * Rolle oder Funktion der Beratung. Zum Beispiel Anhörung, Entscheidung,
+   * Kenntnisnahme, Vorberatung usw.
+   * </p>
+   */
+  String role
+
+  op OParlType getType() {
+      return "https://oparl.org/schema/1.0/Consultation"
+  }
+}
+
+
+/* <p>
+ * Ein Objekt vom Typ {@link File} repräsentiert eine Datei, beispielsweise
+ * eine PDF-Datei, ein RTF- oder ODF-Dokument, und hält Metadaten zu der Datei
+ * sowie URLs zum Zugriff auf die Datei bereit.
+ * </p><p>
+ * Objekte vom Typ {@link File} können mit Drucksachen ({@link Paper}) oder
+ * Sitzungen ({@link Meeting}) in Beziehung stehen. Dies wird durch die
+ * Eigenschaft {@link File#paper} bzw. {@link File#meeting} angezeigt.
+ * </p><p>
+ * Mehrere Objekte vom Typ {@link File} können mit einander in direkter
+ * Beziehung stehen, wenn sie den selben Inhalt in unterschiedlichen
+ * technischen Formaten wiedergeben. Hierfür werden die Eigenschaften
+ * {@link File#masterFile} bzw. {@link File#derivativeFile} eingesetzt.
+ * Das oben angezeigte Beispiel-Objekt repräsentiert eine PDF-Datei
+ * (zu erkennen an der Eigenschaft {@link File#mimeType} und zeigt außerdem über
+ * die Eigenschaft {@link File#masterFile} an, von welcher anderen Datei es
+ * abgeleitet wurde. Umgekehrt kann über die Eigenschaft
+ * {@link File#derivativeFile} angezeigt werden, welche Ableitungen einer Datei
+ * existieren.
+ * </p>
+ */
+class File extends OParlElement {
+	/* <p>
+	 * Dateiname, unter dem die Datei in einem Dateisystem gespeichert werden kann.
+   * Beispiel: "einedatei.pdf". Da der Name den kompletten Unicode-Zeichenumfang
+   * nutzen kann, <b>sollten</b> Clients ggf. selbst dafür sorgen, diesen beim
+   * Speichern in ein Dateisystem den lokalen Erfordernissen anzupassen.
+   * </p>
+	 */
+  String fileName
+
+  /* <p>
+   * MIME-Type der Datei
+   * </p>
+   */
+  String mimeType
+
+  /* <p>
+   * Datum und Zeit der Erstellung der Datei. Wahlweise, falls dies nicht vom
+   * System kommuniziert werden kann oder soll, <b>kann</b> alternativ der
+   * Zeitpunkt der Veröffentlichung ausgegeben werden.
+   * </p>
+   */
+  Date date
+
+  /* <p>
+   * Größe der Datei in Bytes.
+   * </p>
+   */
+  Integer size
+
+  /* <p>
+   * SHA1-Prüfsumme des Dateiinhalts in Hexadezimal-Schreibweise.
+   * </p>
+   */
+  String sha1Checksum
+
+  /* <p>
+   * Reine Text-Wiedergabe des Dateiinhalts, sofern dieser in Textform
+   * wiedergegeben werden kann.
+   * </p>
+   */
+  String text
+
+  /* <p>
+   * URL zum allgemeinen Zugriff auf die Datei. Näheres unter
+   * <a href="https://oparl.org/spezifikation/online-ansicht/#dateizugriff">Dateizugriffe</a>.
+   * </p>
+   */
+  /*NotNull*/ URL accessUrl
+
+  /* <p>
+   * URL zum Download der Datei. Näheres unter
+   * <a href="https://oparl.org/spezifikation/online-ansicht/#dateizugriff">Dateizugriffe</a>.
+   * </p>
+   */
+  URL downloadUrl
+
+  /* <p>
+   * Externe URL, welche eine zusätzliche Zugriffsmöglichkeit bietet.
+   * Beispiel: YouTube-Video.
+   * </p>
+   */
+  URL externalServiceUrl
+
+  /* <p>
+   * Datei, von der das aktuelle Objekt abgeleitet wurde. Details dazu in der
+   * allgemeinen Beschreibung weiter oben.
+   * </p>
+   */
+  refers File masterFile opposite derivativeFile
+
+  /* <p>
+   * Datei, die von dem aktuellen Objekt abgeleitet wurde. Details dazu in der
+   * allgemeinen Beschreibung weiter oben.
+   * </p>
+   */
+  refers File [] derivativeFile opposite masterFile
+
+  /* <p>
+   * Lizenz, unter der die Datei angeboten wird. Wenn diese Eigenschaft nicht
+   * verwendet wird, ist der Wert von {@link File#license} beziehungsweise die
+   * Lizenz eines übergeordneten Objektes maßgeblich.
+   * </p>
+   */
+  URL fileLicense
+
+  op OParlType getType() {
+      return "https://oparl.org/schema/1.0/File"
+  }
+
+  /*
+   * Ein zur Anzeige für Endnutzer bestimmter Name für dieses Objekt.
+   * Leerzeichen <b>dürfen</b> enthalten sein, Datei-Endungen wie ".pdf"
+   * <b>sollten nicht</b> enthalten sein.
+   */
+  op String getName() {
+    return super.name
+  }
+  
+  /* <p>
+   * Lizenz, unter der die Datei-Metadaten (dieses Objekt) angeboten werden.
+   * Wenn diese Eigenschaft verwendet wird, dann ist sie anstelle einer
+   * globalen Angabe im übergeordneten {@link Body}- bzw.
+   * {@link System}-Objekt  maßgeblich.
+   * </p>
+   */
+  op URL getLicense() {
+  	super.license
+  }
+}
+
+/* <p>
+ * Dieser Objekttyp dient dazu, einen Ortsbezug formal abzubilden.
+ * Ortsangaben können sowohl aus Textinformationen bestehen
+ * (beispielsweise dem Namen einer Straße/eines Platzes oder eine genaue Adresse)
+ * als auch aus Geodaten. Ortsangaben sind auch nicht auf einzelne Positionen
+ * beschränkt, sondern können eine Vielzahl von Positionen, Flächen, Strecken
+ * etc. abdecken.
+ * </p><p>
+ * Geodaten müssen im GeoJSON-Format ausgegeben werden.
+ * </p>
+ */
+class Location extends OParlElement {
+    /* <p>
+     * Textuelle Beschreibung eines Orts, z. B. in Form einer Adresse.
+     * </p>
+     */
+    String description
+
+    /*
+     * Geodaten-Repräsentation des Orts. Der Wert dieser Eigenschaft <b>muss</b>
+     * der Spezifikation von GeoJSON entsprechen.
+     */
+    String geometry
+
+    /* <p>
+     * Rückfreferenzen auf Body-Objekte. Wird nur dann ausgegeben, wenn das
+     * Location-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+     * </p>
+     */
+    refers BodyLocation [] bodies opposite location
+
+    /* <p>
+     * Rückfreferenzen auf Organization-Objekte. Wird nur dann ausgegeben,
+     * wenn das Location-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+     * </p>
+     */
+    refers OrganizationLocation [] organizations opposite location
+
+    /* <p>
+     * Rückfreferenzen auf Meeting-Objekte. Wird nur dann ausgegeben, wenn das
+     * Location-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+     * </p>
+     */
+    refers MeetingLocation [] meetings opposite location
+
+    /* <p>
+     * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+     * Location-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+     * </p>
+     */
+    refers PaperLocation [] papers opposite location
+
+    op OParlType getType() {
+        return "https://oparl.org/schema/1.0/Location"
+    }
+}
+
+class BodyLocation {
+	refers Body body opposite location
+	refers Location location opposite bodies
+}
+
+class OrganizationLocation {
+	refers Organization organziation opposite location
+	refers Location location opposite organizations
+}
+
+class MeetingLocation {
+	refers Meeting meeting opposite location
+	refers Location location opposite meetings
+}
+
+class PaperLocation {
+	refers Paper paper opposite location
+	refers Location location opposite papers
+}
+
+
+abstract class PersonOrOrganization extends AddressableOParlElement {}
 
 class InvitationFile extends File {
+  /* <p>
+   * Rückfreferenzen auf Meeting-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
 	refers Meeting meeting opposite invitation
+	
+  /* <p>
+   * Rückfreferenzen auf AgendaItem-Objekte. Wird nur dann ausgegeben,
+   * wenn das File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+  refers AgendaItem [] agendaItem
+
+  /* <p>
+   * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </ü>
+   */
+  refers Paper [] paper	
 }
 
 class ResultsProtocol extends File {
-	refers Meeting meeting opposite resultsProtocol	
+  /* <p>
+   * Rückfreferenzen auf Meeting-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+	refers Meeting meeting opposite resultsProtocol
+	
+  /* <p>
+   * Rückfreferenzen auf AgendaItem-Objekte. Wird nur dann ausgegeben,
+   * wenn das File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+  refers AgendaItem [] agendaItem
+
+  /* <p>
+   * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </ü>
+   */
+  refers Paper [] paper
+
 }
 
 class VerbatimProtocol extends File {
-	refers Meeting meeting opposite verbatimProtocol	
+  /* <p>
+   * Rückfreferenzen auf Meeting-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+	refers Meeting meeting opposite verbatimProtocol
+	
+  /* <p>
+   * Rückfreferenzen auf AgendaItem-Objekte. Wird nur dann ausgegeben,
+   * wenn das File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+  refers AgendaItem [] agendaItem
+
+  /* <p>
+   * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </ü>
+   */
+  refers Paper [] paper
+
 }
 
 class AuxiliaryFile extends File {
-	refers Meeting meeting opposite auxiliaryFile	
+  /* <p>
+   * Rückfreferenzen auf Meeting-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+	refers Meeting meeting opposite auxiliaryFile
+	
+  /* <p>
+   * Rückfreferenzen auf AgendaItem-Objekte. Wird nur dann ausgegeben,
+   * wenn das File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+  refers AgendaItemAuxiliaryFile [] agendaItem opposite auxiliaryFile
+
+  /* <p>
+   * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </ü>
+   */
+  refers Paper [] paper
 }
 
-/**
- * Ein Objekt vom Typ `oparl:File` repräsentiert eine Datei, beispielsweise eine PDF-Datei, ein RTF- oder ODF-Dokument, 
- * und hält Metadaten zu der Datei sowie URLs zum Zugriff auf  die Datei bereit.\n\nObjekte vom Typ `oparl:File` können 
- * mit Drucksachen (`oparl:Paper`) oder Sitzungen (`oparl:Meeting`) in Beziehung stehen. Dies wird durch  die Eigenschaft 
- * `paper` bzw. `meeting` angezeigt.\n\nMehrere Objekte vom Typ `oparl:File` können mit einander in direkter Beziehung stehen, 
- * wenn sie den selben Inhalt in unterschiedlichen technischen Formaten wiedergeben. Hierfür werden die Eigenschaften 
- * `masterFile` bzw. `derivativeFile` eingesetzt. Das oben angezeigte Beispiel-Objekt repräsentiert eine PDF-Datei 
- * (zu erkennen an der Eigenschaft `mimeType`) und zeigt außerdem über die Eigenschaft  `masterFile` an, von welcher 
- * anderen Datei es abgeleitet wurde. Umgekehrt KANN über die Eigenschaft `derivativeFile` angezeigt werden, welche 
- * Ableitungen einer Datei existieren.
- */
-class File {
-    URL ^id
-    /*Pattern(^http://oparl\\.org/schema/1\\.0/File$)*/ String ^type
-	/*
-	 * Dateiname, unter dem die Datei in einem Dateisystem gespeichert werden kann. Beispiel: \"einedatei.pdf\". 
-	 * Da der Name den kompletten Unicode-Zeichenumang nutzen kann, SOLLEN Clients ggf. selbst dafür sorgen, diesen beim 
-	 * Speichern in ein Dateisystem den lokalen Erfordernissen anzupassen.
-	 */
-    String fileName
-    /*
-     * Ein zur Anzeige für Endnutzer bestimmter Name für dieses Objekt. Leerzeichen DÜRFEN enthalten sein, Datei-Endungen wie 
-     * \".pdf\" SOLLEN NICHT enthalten sein. Der Wert SOLL NICHT mit dem Wert der Eigenschaft `fileName` identisch sein.
-     */
-    String name
-    /*
-     * MIME-Type des Inhalts ^[vgl. RFC2046: <http://tools.ietf.org/html/rfc2046>]. Sollte das System einer Datei keinen 
-     * spezifischen Typ zuweisen können, wird EMPFOHLEN, hier `application/octet-stream` zu verwenden.
-     */
-    String mimeType
-    /*
-     * Datum und Zeit der Erstellung der Datei. Wahlweise, falls dies nicht vom System kommuniziert werden kann oder soll, 
-     * KANN alternativ der Zeitpunkt der Veröffentlichung ausgegeben werden.
-     */
-    Date date
-    /*
-     * Datum und Zeit der letzten Änderung der Datei bzw. der Metadaten. Als Änderung der Datei gilt alles, was den Inhalt 
-     * der Datei verändert und beispielsweise zu einer Veränderung der Prüfsumme führen würde, nicht aber die Änderung des 
-     * Dateinamens (siehe Eigenschaft `name`). Als Änderung der Metadaten hingegen würde beispielsweise die Änderung des 
-     * Dateinamens gelten. Hier soll immer das größere der beiden Daten ausgegeben werden, also der am wenigsten lang 
-     * zurückliegende Änderungszeitpunkt.
-     */
-    Date modified
-    /* Größe der Datei in Bytes. */
-    Integer size
-    /* SHA1-Prüfsumme des Dateiinhalts in Hexadezimal-Schreibweise. */
-    String sha1Checksum
-    /* Reine Text-Wiedergabe des Dateiinhalts, sofern dieser in Textform wiedergegeben werden kann. */
-    String text
-    /* URL zum allgemeinen Zugriff auf die Datei. Näheres unter [Dateizugriffe](#dateizugriff). */
-    URL accessUrl
-    /* URL zum Download der Datei. Näheres unter [Dateizugriffe](#dateizugriff). */
-    URL downloadUrl
-    /* 
-     * Falls die Datei zu einer oder mehreren Drucksachen (`oparl:Paper`) gehört, MÜSSEN diese Drucksachen über diese 
-     * Eigenschaft angegeben werden.
-     */
-    refers Paper [] paper
-    /*
-     * Falls die Datei zu einer oder mehreren Sitzungen (`oparl:Meeting`) gehört, MÜSSEN diese Sitzungen über diese 
-     * Eigenschaft angegeben werden.
-     */
-    // defined in subtypes
-    //refers Meeting [] meeting
-    /*
-     * Datei, von der das aktuelle Objekt abgeleitet wurde. Details dazu in der allgemeinen Beschreibung weiter oben.
-     */
-    refers File masterFile opposite derivativeFile
-    /*
-     * Datei, die von dem aktuellen Objekt abgeleitet wurde. Details dazu in der allgemeinen Beschreibung weiter oben.
-     */
-    refers File [] derivativeFile opposite masterFile
-    /*
-     * Lizenz, unter der die Datei angeboten wird. Wenn diese Eigenschaft verwendet wird, dann ist sie anstelle einer 
-     * globalen Angabe im übergeordneten `oparl:Body`- bzw. `oparl:System`-Objekt maßgeblich.
-     * ^[vgl. [license](#eigenschaft_license)]
-     */
-    URL license
-    /*
-     * Rolle, Funktion der Datei in Bezug auf eine Sitzung. Die Eigenschaft SOLL entsprechend nur in Verbindung mit der 
-     * Eigenschaft `meeting` gesetzt sein. Siehe dazu [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung).
-     */
-    String fileRole
-	/*@Nullable*/String [] keyword
+class AgendaItemResolutionFile {
+	refers AgendaItem agendaItem opposite resolutionFile
+	refers ResolutionFile resolutionFile opposite agendaItem
 }
 
-/**
- * Dieser Objekttyp dient dazu, den Ortsbezug einer Drucksache formal  abzubilden. Ortsangaben können sowohl aus 
- * Textinformationen bestehen  (beispielsweise dem Namen einer Straße/eines Platzes oder eine genaue  Adresse) als auch 
- * aus Geodaten. Ortsangaben sind auch nicht auf einzelne Positionen beschränkt, sondern können eine Vielzahl von 
- * Positionen, Flächen, Strecken etc. abdecken.\n\nIn der Praxis soll dies dazu dienen, den geografischen Bezug eines 
- * politischen Vorgangs, wie zum Beispiel eines Bauvorhabens oder der  Änderung eines Flächennutzungsplanes, 
- * maschinenlesbar nachvollziehbar zu machen.\n\nDieser Objekttyp kann für Objekte im Kontext des Objekttyps 
- * `oparl:Paper` verwendet werden.\n\nOParl sieht bei Angabe von Geodaten ZWINGEND die Verwendung des   
- * Well-Known-Text-Formats (WKT) der Simple Feature Access Spezifikation^[Simple Feature Access Spezifikation: 
- * <http://www.opengeospatial.org/standards/sfa>] vor. WKT erlaubt die Beschreibung von unterschiedlichen Geometrien 
- * wie Punkten (`Point`), Pfaden (`LineString`), Polygonen (`Polygon`) und viele andere mehr.\n\nZum Zeitpunkt der 
- * Erstellung der vorliegenden Spezifikation ist Version 1.2.1 der Simple-Feature-Access-Spezifikation aktuell. 
- * OParl stellt keine Anforderungen daran, welche Version von Simple-Feature-Access bei der Ausgabe von WKT zu 
- * unterstützen ist.\n\nFür die Ausgabe über eine OParl-API MÜSSEN sämtliche Koordinatenangaben solcher Geodaten 
- * im System WGS84^[WGS84 steht für \"World Geodetic System 1984\", es wird unter anderem auch vom Global Positioning 
- * System (GPS) verwendet. In geografischen Informationssystemen ist für das System der EPSG-Code 4326  geläufig.] 
- * angegeben werden, und zwar in Form von Zahlenwerten (Fließkommazahlen) für Längen- und Breitengrad.
- */
-class Location {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Location$")*/String ^type
-    /* Textliche Beschreibung eines Orts, z. B. in Form einer Adresse. */
-    String description
-    /* 
-     * Geodaten-Repräsentation des Orts. Ist diese Eigenschaft gesetzt, MUSS ihr Wert der Spezifikation von 
-     * Well-Known Text (WKT) entsprechen.
-     */
-    String geometry
-	/*@Nullable*/String [] keyword
+class AgendaItemAuxiliaryFile {
+	refers AgendaItem agendaItem opposite auxiliaryFile
+	refers AuxiliaryFile auxiliaryFile opposite agendaItem
 }
 
-abstract class PersonOrOrganization {}
+class ResolutionFile extends File {
+	
+  /* <p>
+   * Rückfreferenzen auf AgendaItem-Objekte. Wird nur dann ausgegeben,
+   * wenn das File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </p>
+   */
+  refers AgendaItemResolutionFile [] agendaItem opposite resolutionFile
 
-/*
- * Dieser Objekttyp dient dazu, Gruppierungen von Personen abzubilden, die in der parlamentarischen Arbeit eine Rolle spielen. 
- * Dazu zählen in der Praxis insbesondere Fraktionen und Gremien.^[Ein Teil der Eigenschaften ist der \"Organization\"
- *  Ontologie (kurz: `org:Organization`) des W3C entnommen. Quelle: The Organization Ontology, W3C Recommendation 16 January 2014, 
- * <http://www.w3.org/TR/vocab-org/>. Deren Bezeichnungen wurden deshalb beibehalten. Das betrifft z.B. die Verwendung von `classification`.]
- */
-class Organization extends PersonOrOrganization {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Organization$")*/String ^type
-	/* Körperschaft, zu der diese Gruppierung gehört. */
-	refers Body body opposite organization	
-    /* Offizielle (lange) Form des Namens der Gruppierung. */
-    String name
-    /* Mitgliedschaften dieser Gruppierung. */
-    refers Membership [] membership opposite organization
-	/*
-	 * Sitzungen dieser Gruppierung. Invers zur Eigenschaft `organization` der Klasse `oparl:Meeting`. Da die Anzahl der 
-	 * Sitzungen stetig wachsen kann, wird EMPFOHLEN, die Liste über eine eigene URL verfügbar zu machen und damit 
-	 * Paginierung sowie die Filterung mittels startDate und endDate Parametern zu ermöglichen. Siehe dazu auch 
-	 * [Objektlisten](#objektlisten).
-	 */
-	refers Meeting [] meeting opposite organization	
-    /* Der Name der Gruppierung als Kurzform. */
-    String shortName
-	/*
-	 * Positionen, die für diese Gruppierung vorgesehen sind. Die Werte dieser Eigenschaft funktioniert wie in 
-	 * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben entweder als URL zu einem `skos:Concept` 
-	 * oder als String. Die Strings bzw. `prefLabel`-Eigenschaften der Objekte SOLLEN sowohl die männliche als auch die 
-	 * weibliche Form enthalten, und zwar in dem Muster \"männliche Form | weibliche Form\" (genau in der Reihenfolge mit 
-	 * einem Leerzeichen vor und nach dem \"|\"). Wenn sich beide Formen nicht unterscheiden, dann DARF die Form nur einmal 
-	 * verwendet werden: \"Mitglied\" und nicht \"Mitglied | Mitglied\". Weitere Beispiele: \"Vorsitzender | Vorsitzende\", 
-	 * \"1. Stellvertreter | 1. Stellvertreterin\", \"2. Stellvertreter | 2. Stellvertreterin\", \"Schriftführer | 
-	 * Schriftführerin\", \"Stellvertretender Schriftführer | Stellvertretende Schriftführerin
-	 */
-    URL [] post
-    /* Ggf. URL der übergeordneten Gruppierung. */
-    refers Organization subOrganizationOf
-    /*
-     * Die Art der Gruppierung. In Frage kommen z.B. \"Rat\", \"Hauptausschuss\", \"Ausschuss\", \"Beirat\", 
-     * \"Projektbeirat\", \"Kommission\", \"AG\", \"Verwaltungsrat\". Die Angabe soll möglichst präzise erfolgen. 
-     * Vgl. [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung).
-     */
-    String classification
-	/*@Nullable*/String [] keyword
-    /* Gründungsdatum der Gruppierung. Kann z. B. das Datum der konstituierenden Sitzung sein. */
-    Date startDate
-    /* Datum des letzten Tages der Existenz der Gruppierung. */
-    Date endDate
-	Date created
-	Date modified  
-    /* Allgemeine Website der Gruppierung. */
-    URL website
-}
-
-/**
- * Jede natürliche Person, die in der parlamentarischen Arbeit tätig und insbesondere Mitglied in einer 
- * Gruppierung ([oparl:Organization](#oparl_organization)) ist, wird mit einem Objekt vom Typ 
- * `oparl:Person` abgebildet.
- */
-class Person extends PersonOrOrganization {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Person$")*/ String ^type
-    refers Body body opposite member
-    /*
-     * Der vollständige Name der Person mit akademischem Grad und dem gebräuchlichen Vornamen, wie er 
-     * zur Anzeige durch den Client genutzt werden kann.
-     */
-    String name
-    /* Familienname bzw. Nachname. */
-    String familyName
-    /* Vorname bzw. Taufname. */
-    String givenName
-    /*
-     * Anrede. Diese Eigenschaft funktioniert wie in [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) 
-     * beschrieben entweder als URL zu einem `skos:Concept` oder als String. Der String bzw. `prefLabel` SOLL 
-     * sowohl die männliche als auch die weibliche Bezeichnung enthalten. Beispiele: \"Herr | Frau\", \"Ratsherr | Ratsfrau\".
-     */
-    String formOfAddress
-    /* Akademische(r) Titel. Vgl. [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung). */
-    String [] title
-    /* 
-     * Geschlecht. Empfohlene Werte sind `female`, `male`, `none` und `other`. Für den Fall, dass das Geschlecht 
-     * der Person unbekannt ist, SOLL die Eigenschaft nicht ausgegeben werden. Vgl. 
-     * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung).
-     */
-    String gender
-    /* Telefonnummer der Person mit `tel:` Schema, ohne Leerzeichen. */
-    /*Pattern("^tel:\\+?\\d+$")*/ String phone
-    /* E-Mail-Adresse mit `mailto:` Schema. */
-    /*Pattern("^mailto:.+$")*/String email
-    /* Straße und Hausnummer der Kontakt-Anschrift der Person. */
-    String streetAddress
-    /* Postleitzahl der Kontakt-Anschrift der Person. */
-    String postalCode
-    /* Ortsangabe der Kontakt-Anschrift der Person. */
-    String locality
-    /*
-     * Status. Diese Eigenschaft funktioniert wie in [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) 
-     * beschrieben entweder als URL zu einem `skos:Concept` oder als String. Die Strings bzw. `prefLabel` SOLLEN 
-     * sowohl die männliche als auch die weibliche Form enthalten, und zwar in dem Muster \"männliche Form | weibliche Form\" 
-     * (genau in der Reihenfolge mit einem Leerzeichen vor und nach dem \"|\"). Wenn sich beide Formen nicht unterscheiden, 
-     * dann DARF die Form nur einmal verwendet werden: \"Ratsmitglied\" und nicht \"Ratsmitglied | Ratsmitglied\". 
-     * Dadurch kann auch solche Software einen sinnvollen Text anzeigen, die keine Fall-Unterscheidung nach Geschlecht 
-     * der Personen vornimmt. Weitere Beispiele: \"Bürgermeister | Bürgermeisterin\", \"Bezirksbürgermeister | 
-     * Bezirksbürgermeisterin\", \"Stadtverordneter | Stadtverordnete\", \"Bezirksverordneter | Bezirksverordnete\", 
-     * \"Sachkundiger Bürger | Sachkundige Bürgerin\", \"Einzelstadtverordneter | Einzelstadtverordnete\" 
-     * (Mitglieder des Rates die keiner Fraktion/Organisation angehören). 
-     * Vgl. [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung).
-     */
-    String [] status
-    /* Mitgliedschaften der Person in Gruppierungen, z. B. Gremien und Fraktionen. */
-    refers Membership [] membership opposite person
-	/*@Nullable*/String [] keyword
-	Date created
-	Date modified  
-}
-
-/**
- * Über Objekte diesen Typs wird die Mitgliedschaft von Personen in Gruppierungen dargestellt. Diese Mitgliedschaften 
- * können zeitlich begrenzt sein. Zudem kann abgebildet werden, dass eine Person eine bestimmte Rolle bzw. Position 
- * innerhalb der Gruppierung inne hat, beispielsweise den Vorsitz einer Fraktion.
- */
-class Membership {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Membership$")*/ String ^type
-	/* Die betreffende Person, die Mitglied einer Gruppierung ist oder war. */
-	refers Person person opposite membership
-    refers Organization organization opposite membership 
-	/*
-	 * Rolle der Person für die Gruppierung. Kann genutzt werden, um verschiedene Arten von Mitgliedschaften zum Beispiel 
-	 * in Gremien zu unterscheiden. Diese Eigenschaft funktioniert wie in 
-	 * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben entweder als URL zu einem skos:Concept 
-	 * oder als String. Der String (oder entsprechend das prefLabel des verlinkten Objekts) SOLL in dieser Form sowohl 
-	 * die männliche als auch die weibliche Rollenbezeichnung enthalten: `\"Vorsitzender | Vorsitzende\"`.
-	 */
-    String role
-    /*
-     * The post held by the person in the organization. TODO: Prüfen, ob das ohne JSON-LD Sinn macht, oder ob hier 
-     * zusätzliche Erläuterungen notwendig sind.
-     */
-    String post
-    /*
-     * Entsendende Gruppierung, Fraktion, fraktionsloses oder externes Gremium. Es kann auch Mitglieder geben, die von 
-     * keiner anderen Gruppierung entsendet wurden (z. B. fraktionslose Abgeordnete). Da eine solche Person sich gewissermaßen 
-     * selbst \"entsendet\" hat, SOLL in dem Fall hier der selbe Wert angegeben werden wie bei der Eigenschaft `person`.
-     * ^[ Dies entspricht `opengov:onBehalfOf` in Popolo. <http://popoloproject.com/specs/membership.html>]
-     */
-    URL onBehalfOf
-    /* Gibt an, ob die Person in der Gruppierung stimmberechtigtes Mitglied ist. */
-    boolean votingRight
-    /* 
-     * Anfangszeitpunkt der Mitgliedschaft.^[Abgeleitet von: `schema:validFrom` in Popolo. 
-     * <http://popoloproject.com/specs/membership.html>]
-     */
-    Date startDate
-    /*
-     * Der Endzeitpunkt der Mitgliedschaft.^[Abgeleitet von: `schema:validThrough` in Popolo. 
-     * <http://popoloproject.com/specs/membership.html>]
-     */
-    Date endDate
-}
-
-/*
- * Dieser Objekttyp dient der Abbildung von Drucksachen in der parlamentarischen Arbeit, wie zum Beispiel Anfragen, Anträgen 
- * und Beschlussvorlagen.\n\nDrucksachen werden in Form einer Beratung (oparl:Consultation) im Rahmen eines Tagesordnungspunkts 
- * (oparl:AgendaItem) einer Sitzung (oparl:Meeting) behandelt.\n\nDrucksachen spielen in der schriftlichen wie mündlichen 
- * Kommunikation eine besondere Rolle, da in vielen Texten auf bestimmte Drucksachen Bezug genommen wird. Hierbei kommen in 
- * parlamentarischen Informationssystemen unveränderliche Kennungen der Drucksachen zum Einsatz.
- */
-class Paper {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Paper$")*/String ^type
-    /* Körperschaft, zu der die Drucksache gehört. */
-    refers Body body opposite paper
-    /* Titel der Drucksache. */
-    String name
-    /* Kennung bzw. Aktenzeichen der Drucksache, mit der sie in der parlamentarischen Arbeit eindeutig referenziert werden kann. */
-    String reference
-    /* Veröffentlichungsdatum der Drucksache. */
-    Date publishedDate
-    /* Art der Drucksache, z. B. Beantwortung einer Anfrage. Diese Eigenschaft funktioniert wie in 
-     * [Vokabulare zur Klassifizierung](#vokabulare_klassifizierung) beschrieben entweder als URL zu einem `skos:Concept` oder als String.
-     */
-    String paperType
-    /* Inhaltlich verwandte Drucksachen. */
-    refers Paper [] relatedPaper
-    /* 
-     * Die Haupt-Datei zu dieser Drucksache. Beispiel: Die Drucksache repräsentiert eine Beschlussvorlage und die Haupt-Datei 
-     * enthält den Text der Beschlussvorlage.
-     */
-    refers File mainFile /*opposite paper*/
-    refers AuxiliaryFile [] auxiliaryFile /*opposite paper*/
-    /* Sofern die Drucksache einen inhaltlichen Ortsbezug hat, beschreibt diese Eigenschaft den Ort in Textform und/oder in Form von Geodaten. */
-    refers Location [] location
-    /* Urheber der Drucksache, kann eine oder mehrere Person(en) bzw. Gruppierung(en) sein. */
-    refers PersonOrOrganization [] originator
-    /* Beratungen der Drucksache. */
-    refers Consultation [] consultation opposite paper
-    Date modified
-	/*@Nullable*/String [] keyword
-	/* Federführung. Amt oder Abteilung, für die Inhalte oder Beantwortung der Drucksache verantwortlich. */
-    refers Organization [] underDirectionof
-}
-
-/*
- * Der Objekttyp `oparl:Body` dient dazu, eine Körperschaft und damit ein Parlament zu repräsentieren, zu dem der Server Informationen 
- * bereithält. Eine Körperschaft kann beispielsweise eine Gemeinde, ein Landkreis oder  ein kommunaler Zweckverband sein.
- * 
- * Hätte das System beispielsweise den Zweck, Informationen über das kommunale Parlament der Stadt Köln, namentlich den Rat der Stadt 
- * Köln, abzubilden, dann müsste dieses System dazu ein Objekt vom Typ `oparl:Body` führen, welches die Stadt Köln repräsentiert.
- * 
- * Vom OParl-Server wird erwartet, dass er mindestens ein Objekt vom Typ `oparl:Body` bereithält. Teilen sich mehrere Körperschaften 
- * dasselbe technische System, können auf demselben Server auch mehrere Objekte vom Typ `oparl:Body` beherbergt werden.
- * 
- * Über die Zuordnung zu einem bestimmten `oparl:Body`-Objekt zeigen andere Objekte, wie beispielsweise Gremien oder Drucksachen, 
- * ihre Zugehörigkeit zu einer bestimmten Körperschaft und damit implizit zu einem bestimmten Parlament an.
- */
-class Body {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/Body$")*/String ^type
-    /* System, zu dem dieses Objekt gehört. */
-    refers System system opposite bodies
-    /* Kurzer Name der Körperschaft. */
-    String shortName
-    /* Der offizielle lange Name der Körperschaft. */
-    String name
-    /* Allgemeine Website der Körperschaft. */
-    String website
-    /*
-     * Lizenz, die für die Daten, die über diese API abgerufen werden können, gilt, sofern nicht am einzelnen Objekt anders angegeben. 
-     * Siehe dazu auch die übergreifende Beschreibung zur Eigenschaft [`license`](#eigenschaft_license).
-     */
-    URL license
-    /*
-     * Zeitpunkt, seit dem die unter `license` angegebene Lizenz gilt. Vorsicht bei Änderungen der Lizenz die zu restriktiveren 
-     * Bedingungen führen.
-     */
-    Date licenseValidSince
-    /*
-     * Regionalschlüssel der Körperschaft als zwölfstellige Zeichenkette^[Regionalschlüssel können im [Gemeindeverzeichnis (GV-ISys) 
-     * des Statistischen Bundesamtes](https://www.destatis.de/DE/ZahlenFakten/LaenderRegionen/Regionales/Gemeindeverzeichnis/Gemeindeverzeichnis.html) 
-     * eingesehen werden].
-     */
-    String rgs
-    /*
-     * Dient der Angabe beliebig vieler zusätzlicher URLs, die dieselbe Körperschaft repräsentieren. Hier können beispielsweise, sofern 
-     * vorhanden, der entsprechende Eintrag der Gemeinsamen Normdatei der Deutschen Nationalbibliothek^[Gemeinsame Normdatei <http://www.dnb.de/gnd>] 
-     * oder der DBPedia^[DBPedia <http://www.dbpedia.org/>] oder der Wikipedia^[Wikipedia <http://de.wikipedia.org/>] angegeben werden.
-     */
-    URL [] equivalentBody
-    /*
-     * Dient der Angabe einer Kontakt-E-Mail-Adresse mit \"mailto:\"-Schema. Die Adresse soll die Kontaktaufnahme zu einer für die Körperschaft 
-     * und idealerweise das parlamentarische Informationssystem zuständigen Stelle ermöglichen.
-     */
-    /*Pattern("^mailto:.+$")*/String contactEmail
-    /*
-     * Name oder Bezeichnung der mit `contactEmail` erreichbaren Stelle.
-     */
-    String contactName
-    /* Drucksachen unter dieser Körperschaft. Vgl. [Objektlisten](#objektlisten). */
-    refers Paper [] paper opposite body
-    /* Personen in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten). */
-    refers Person [] member opposite body
-    /* Sitzungen dieser Körperschaft. Vgl. [Objektlisten](#objektlisten). */
-    refers Meeting [] meeting
-    /*
-     * Gruppierungen in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten).
-     */
-    refers Organization [] organization opposite body
-    /* Wahlperioden in dieser Körperschaft. Vgl. [Objektlisten](#objektlisten). */
-    refers LegislativeTerm [] legislativeTerm opposite body
-    /* Art der Körperschaft. */
-    String classification
-	/*@Nullable*/String [] keyword
-	Date created
-	Date modified  
-}
-
-/**
- * **Namespace-URL:** `http://oparl.org/schema/1.0/System`\n\nDer Objekttyp `oparl:System` bildet grundlegende 
- * Informationen zum parlamentarischen Informationssystem ab. Das Objekt repräsentiert das technische System, 
- * unabhängig von der Frage, welche Körperschaften auf diesem System vertreten sind.\n\nAuf jedem OParl-Server 
- * MUSS ein Objekt vom Typ `oparl:System` vorgehalten werden. Es DARF nur ein einziges solches Objekt je Server 
- * existieren.\n\nFür Clients ist das `oparl:System` Objekt ein geeigneter Einstiegspunkt, um grundlegende 
- * Informationen über das System zu bekommen und die URLs zum Zugriff auf andere Informationen in Erfahrung zu 
- * bringen.\n\nDie URL des `oparl:System`-Objekts MUSS per Definition identisch mit der URL des API-Endpunkts 
- * des Servers sein.
- */
-class System {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/System$")*/ String ^type
-    /*
-     * Die URL der OParl-Spezifikation, die von diesem Server unterstützt wird. Aktuell kommt hier nur ein Wert 
-     * in Frage. Mit zukünftigen OParl-Versionen kommen weitere mögliche URLs hinzu. Wert: `http://oparl.org/specs/1.0/`
-     */
-    /*Pattern("^^http://oparl\\.org/specs/1\\.0/$")*/ String oparlVersion
-    /* Liste der Körperschaften (`oparl:Body`-Objekte), die auf dem System existieren. */
-    refers Body [] bodies opposite system
-    /*
-     * E-Mail-Adresse für Anfragen zur OParl-API. Die Angabe einer E-Mail-Adresse dient sowohl NutzerInnen wie 
-     * auch Entwicklerinnen von Clients zur Kontaktaufnahme mit dem Betreiber.
-     */
-    String name
-    /*Pattern("^mailto:.+$")*/ String contactEmail
-    /*
-     * Name der Ansprechpartnerin bzw. des Ansprechpartners oder der Abteilung, die über die in `contactEmail` 
-     * angegebene Adresse erreicht werden kann.
-     */
-    String contactName
-    /* URL des Feeds \"Neue Objekte\". */
-    URL newObjects
-    /* URL des Feeds \"Geänderte Objekte\". */
-    URL updatedObjects
-    /* URL des Feeds \"Entfernte Objekte\". */
-    URL removedObjects
-    /* URL der Website des parlamentarischen Informationssystems */
-    URL website
-    /* URL der Website des Software-Anbieters, von dem die OParl-Server-Software stammt. */
-    URL vendor
-    /* URL zu Informationen über die auf dem System genutzte OParl-Server-Software */
-    URL product
-}
-
-/**
- * Dieser Objekttyp dient der Beschreibung einer Wahlperiode.
- */
-class LegislativeTerm {
-    URL ^id
-    /*Pattern("^http://oparl\\.org/schema/1\\.0/LegislativeTerm$")*/String ^type
-    /* Die Körperschaft, der diese Wahlperiode zugeordnet ist. */
-	refers Body body opposite legislativeTerm	
-    /* Nutzerfreundliche Bezeichnung der Wahlperiode. */
-    String name
-    /* Der erste Tag der Wahlperiode. */
-    String startDate
-    /* Der letzte Tag der Wahlperiode. */
-    String endDate
+  /* <p>
+   * Rückfreferenzen auf Paper-Objekte. Wird nur dann ausgegeben, wenn das
+   * File-Objekt nicht als eingebettetes Objekt aufgerufen wird.
+   * </ü>
+   */
+  refers Paper [] paper	
 }
 
 type URL wraps String
 type Date wraps java.util.Date
+type OParlType wraps String
