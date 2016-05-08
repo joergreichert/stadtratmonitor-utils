@@ -49,211 +49,211 @@ import java.util.Date;
  * @generated
  */
 public interface Membership extends InnerOParlElement {
-	/**
-	 * Returns the value of the '<em><b>Person</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Person#getMembership <em>Membership</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Rückreferenz auf Person, welches nur dann ausgegeben wird, wenn das
-	 * Membership-Objekt einzeln abgerufen ist, d.h. nicht Teil einer internen Ausgabe ist.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Person</em>' container reference.
-	 * @see #setPerson(Person)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Person()
-	 * @see de.oklab.leipzig.oparl.Person#getMembership
-	 * @model opposite="membership" transient="false"
-	 * @generated
-	 */
-	Person getPerson();
+    /**
+     * Returns the value of the '<em><b>Person</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Person#getMembership <em>Membership</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Rückreferenz auf Person, welches nur dann ausgegeben wird, wenn das
+     * Membership-Objekt einzeln abgerufen ist, d.h. nicht Teil einer internen Ausgabe ist.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Person</em>' container reference.
+     * @see #setPerson(Person)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Person()
+     * @see de.oklab.leipzig.oparl.Person#getMembership
+     * @model opposite="membership" transient="false"
+     * @generated
+     */
+    Person getPerson();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getPerson <em>Person</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Person</em>' container reference.
-	 * @see #getPerson()
-	 * @generated
-	 */
-	void setPerson(Person value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getPerson <em>Person</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Person</em>' container reference.
+     * @see #getPerson()
+     * @generated
+     */
+    void setPerson(Person value);
 
-	/**
-	 * Returns the value of the '<em><b>Organization</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Organization#getMembership <em>Membership</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Die Gruppierung, in der die Person Mitglied ist oder war.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Organization</em>' container reference.
-	 * @see #setOrganization(Organization)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Organization()
-	 * @see de.oklab.leipzig.oparl.Organization#getMembership
-	 * @model opposite="membership" transient="false"
-	 * @generated
-	 */
-	Organization getOrganization();
+    /**
+     * Returns the value of the '<em><b>Organization</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Organization#getMembership <em>Membership</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Die Gruppierung, in der die Person Mitglied ist oder war.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Organization</em>' container reference.
+     * @see #setOrganization(Organization)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Organization()
+     * @see de.oklab.leipzig.oparl.Organization#getMembership
+     * @model opposite="membership" transient="false"
+     * @generated
+     */
+    Organization getOrganization();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getOrganization <em>Organization</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Organization</em>' container reference.
-	 * @see #getOrganization()
-	 * @generated
-	 */
-	void setOrganization(Organization value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getOrganization <em>Organization</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Organization</em>' container reference.
+     * @see #getOrganization()
+     * @generated
+     */
+    void setOrganization(Organization value);
 
-	/**
-	 * Returns the value of the '<em><b>Role</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Rolle der Person für die Gruppierung. Kann genutzt werden, um
-	 * verschiedene Arten von Mitgliedschaften zum Beispiel in Gremien zu
-	 * unterscheiden.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Role</em>' attribute.
-	 * @see #setRole(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Role()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getRole();
+    /**
+     * Returns the value of the '<em><b>Role</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Rolle der Person für die Gruppierung. Kann genutzt werden, um
+     * verschiedene Arten von Mitgliedschaften zum Beispiel in Gremien zu
+     * unterscheiden.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Role</em>' attribute.
+     * @see #setRole(String)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_Role()
+     * @model unique="false"
+     * @generated
+     */
+    String getRole();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getRole <em>Role</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Role</em>' attribute.
-	 * @see #getRole()
-	 * @generated
-	 */
-	void setRole(String value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getRole <em>Role</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Role</em>' attribute.
+     * @see #getRole()
+     * @generated
+     */
+    void setRole(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Voting Right</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Gibt an, ob die Person in der Gruppierung stimmberechtigtes Mitglied ist.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Voting Right</em>' attribute.
-	 * @see #setVotingRight(boolean)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_VotingRight()
-	 * @model unique="false"
-	 * @generated
-	 */
-	boolean isVotingRight();
+    /**
+     * Returns the value of the '<em><b>Voting Right</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Gibt an, ob die Person in der Gruppierung stimmberechtigtes Mitglied ist.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Voting Right</em>' attribute.
+     * @see #setVotingRight(boolean)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_VotingRight()
+     * @model unique="false"
+     * @generated
+     */
+    boolean isVotingRight();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#isVotingRight <em>Voting Right</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Voting Right</em>' attribute.
-	 * @see #isVotingRight()
-	 * @generated
-	 */
-	void setVotingRight(boolean value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#isVotingRight <em>Voting Right</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Voting Right</em>' attribute.
+     * @see #isVotingRight()
+     * @generated
+     */
+    void setVotingRight(boolean value);
 
-	/**
-	 * Returns the value of the '<em><b>Start Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Anfangszeitpunkt der Mitgliedschaft.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Start Date</em>' attribute.
-	 * @see #setStartDate(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_StartDate()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-	 * @generated
-	 */
-	Date getStartDate();
+    /**
+     * Returns the value of the '<em><b>Start Date</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Anfangszeitpunkt der Mitgliedschaft.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Start Date</em>' attribute.
+     * @see #setStartDate(Date)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_StartDate()
+     * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+     * @generated
+     */
+    Date getStartDate();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getStartDate <em>Start Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Start Date</em>' attribute.
-	 * @see #getStartDate()
-	 * @generated
-	 */
-	void setStartDate(Date value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getStartDate <em>Start Date</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Start Date</em>' attribute.
+     * @see #getStartDate()
+     * @generated
+     */
+    void setStartDate(Date value);
 
-	/**
-	 * Returns the value of the '<em><b>End Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Der Endzeitpunkt der Mitgliedschaft.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>End Date</em>' attribute.
-	 * @see #setEndDate(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_EndDate()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-	 * @generated
-	 */
-	Date getEndDate();
+    /**
+     * Returns the value of the '<em><b>End Date</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Der Endzeitpunkt der Mitgliedschaft.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>End Date</em>' attribute.
+     * @see #setEndDate(Date)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_EndDate()
+     * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+     * @generated
+     */
+    Date getEndDate();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getEndDate <em>End Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>End Date</em>' attribute.
-	 * @see #getEndDate()
-	 * @generated
-	 */
-	void setEndDate(Date value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getEndDate <em>End Date</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>End Date</em>' attribute.
+     * @see #getEndDate()
+     * @generated
+     */
+    void setEndDate(Date value);
 
-	/**
-	 * Returns the value of the '<em><b>On Behalf Of</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Die Gruppierung, für die die Person in der unter organization angegebenen
-	 * Organisation sitzt. Beispiel: Mitgliedschaft als Vertreter einer
-	 * Ratsfraktion, einer Gruppierung oder einer externen Organisation.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>On Behalf Of</em>' reference.
-	 * @see #setOnBehalfOf(Organization)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_OnBehalfOf()
-	 * @model
-	 * @generated
-	 */
-	Organization getOnBehalfOf();
+    /**
+     * Returns the value of the '<em><b>On Behalf Of</b></em>' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Die Gruppierung, für die die Person in der unter organization angegebenen
+     * Organisation sitzt. Beispiel: Mitgliedschaft als Vertreter einer
+     * Ratsfraktion, einer Gruppierung oder einer externen Organisation.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>On Behalf Of</em>' reference.
+     * @see #setOnBehalfOf(Organization)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getMembership_OnBehalfOf()
+     * @model
+     * @generated
+     */
+    Organization getOnBehalfOf();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getOnBehalfOf <em>On Behalf Of</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>On Behalf Of</em>' reference.
-	 * @see #getOnBehalfOf()
-	 * @generated
-	 */
-	void setOnBehalfOf(Organization value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Membership#getOnBehalfOf <em>On Behalf Of</em>}' reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>On Behalf Of</em>' reference.
+     * @see #getOnBehalfOf()
+     * @generated
+     */
+    void setOnBehalfOf(Organization value);
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Membership\";'"
-	 * @generated
-	 */
-	String getType();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Membership\";'"
+     * @generated
+     */
+    String getType();
 
 } // Membership

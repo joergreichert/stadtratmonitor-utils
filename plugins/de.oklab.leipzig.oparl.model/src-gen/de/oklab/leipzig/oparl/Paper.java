@@ -137,335 +137,335 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Paper extends OParlElement {
-	/**
-	 * Returns the value of the '<em><b>Body</b></em>' container reference.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Body#getPaper <em>Paper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Körperschaft, zu der die Drucksache gehört.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Body</em>' container reference.
-	 * @see #setBody(Body)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Body()
-	 * @see de.oklab.leipzig.oparl.Body#getPaper
-	 * @model opposite="paper" transient="false"
-	 * @generated
-	 */
-	Body getBody();
+    /**
+     * Returns the value of the '<em><b>Body</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Body#getPaper <em>Paper</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Körperschaft, zu der die Drucksache gehört.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Body</em>' container reference.
+     * @see #setBody(Body)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Body()
+     * @see de.oklab.leipzig.oparl.Body#getPaper
+     * @model opposite="paper" transient="false"
+     * @generated
+     */
+    Body getBody();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getBody <em>Body</em>}' container reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Body</em>' container reference.
-	 * @see #getBody()
-	 * @generated
-	 */
-	void setBody(Body value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getBody <em>Body</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Body</em>' container reference.
+     * @see #getBody()
+     * @generated
+     */
+    void setBody(Body value);
 
-	/**
-	 * Returns the value of the '<em><b>Reference</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Kennung bzw. Aktenzeichen der Drucksache, mit der sie in der
-	 * parlamentarischen Arbeit eindeutig referenziert werden kann.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Reference</em>' attribute.
-	 * @see #setReference(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Reference()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getReference();
+    /**
+     * Returns the value of the '<em><b>Reference</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Kennung bzw. Aktenzeichen der Drucksache, mit der sie in der
+     * parlamentarischen Arbeit eindeutig referenziert werden kann.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Reference</em>' attribute.
+     * @see #setReference(String)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Reference()
+     * @model unique="false"
+     * @generated
+     */
+    String getReference();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getReference <em>Reference</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Reference</em>' attribute.
-	 * @see #getReference()
-	 * @generated
-	 */
-	void setReference(String value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getReference <em>Reference</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Reference</em>' attribute.
+     * @see #getReference()
+     * @generated
+     */
+    void setReference(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Published Date</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Veröffentlichungsdatum der Drucksache.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Published Date</em>' attribute.
-	 * @see #setPublishedDate(Date)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_PublishedDate()
-	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-	 * @generated
-	 */
-	Date getPublishedDate();
+    /**
+     * Returns the value of the '<em><b>Published Date</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Veröffentlichungsdatum der Drucksache.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Published Date</em>' attribute.
+     * @see #setPublishedDate(Date)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_PublishedDate()
+     * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+     * @generated
+     */
+    Date getPublishedDate();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getPublishedDate <em>Published Date</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Published Date</em>' attribute.
-	 * @see #getPublishedDate()
-	 * @generated
-	 */
-	void setPublishedDate(Date value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getPublishedDate <em>Published Date</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Published Date</em>' attribute.
+     * @see #getPublishedDate()
+     * @generated
+     */
+    void setPublishedDate(Date value);
 
-	/**
-	 * Returns the value of the '<em><b>Paper Type</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Art der Drucksache, z. B. Beantwortung einer Anfrage.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Paper Type</em>' attribute.
-	 * @see #setPaperType(String)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_PaperType()
-	 * @model unique="false"
-	 * @generated
-	 */
-	String getPaperType();
+    /**
+     * Returns the value of the '<em><b>Paper Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Art der Drucksache, z. B. Beantwortung einer Anfrage.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Paper Type</em>' attribute.
+     * @see #setPaperType(String)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_PaperType()
+     * @model unique="false"
+     * @generated
+     */
+    String getPaperType();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getPaperType <em>Paper Type</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Paper Type</em>' attribute.
-	 * @see #getPaperType()
-	 * @generated
-	 */
-	void setPaperType(String value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getPaperType <em>Paper Type</em>}' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Paper Type</em>' attribute.
+     * @see #getPaperType()
+     * @generated
+     */
+    void setPaperType(String value);
 
-	/**
-	 * Returns the value of the '<em><b>Related Paper</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Inhaltlich verwandte Drucksachen.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Related Paper</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_RelatedPaper()
-	 * @model
-	 * @generated
-	 */
-	EList<Paper> getRelatedPaper();
+    /**
+     * Returns the value of the '<em><b>Related Paper</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Inhaltlich verwandte Drucksachen.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Related Paper</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_RelatedPaper()
+     * @model
+     * @generated
+     */
+    EList<Paper> getRelatedPaper();
 
-	/**
-	 * Returns the value of the '<em><b>Superordinated Paper</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getSubordinatedPaper <em>Subordinated Paper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Übergeordnete Drucksachen.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Superordinated Paper</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_SuperordinatedPaper()
-	 * @see de.oklab.leipzig.oparl.Paper#getSubordinatedPaper
-	 * @model opposite="subordinatedPaper"
-	 * @generated
-	 */
-	EList<Paper> getSuperordinatedPaper();
+    /**
+     * Returns the value of the '<em><b>Superordinated Paper</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getSubordinatedPaper <em>Subordinated Paper</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Übergeordnete Drucksachen.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Superordinated Paper</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_SuperordinatedPaper()
+     * @see de.oklab.leipzig.oparl.Paper#getSubordinatedPaper
+     * @model opposite="subordinatedPaper"
+     * @generated
+     */
+    EList<Paper> getSuperordinatedPaper();
 
-	/**
-	 * Returns the value of the '<em><b>Subordinated Paper</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getSuperordinatedPaper <em>Superordinated Paper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Untergeordnete Drucksachen.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Subordinated Paper</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_SubordinatedPaper()
-	 * @see de.oklab.leipzig.oparl.Paper#getSuperordinatedPaper
-	 * @model opposite="superordinatedPaper"
-	 * @generated
-	 */
-	EList<Paper> getSubordinatedPaper();
+    /**
+     * Returns the value of the '<em><b>Subordinated Paper</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Paper}.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Paper#getSuperordinatedPaper <em>Superordinated Paper</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Untergeordnete Drucksachen.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Subordinated Paper</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_SubordinatedPaper()
+     * @see de.oklab.leipzig.oparl.Paper#getSuperordinatedPaper
+     * @model opposite="superordinatedPaper"
+     * @generated
+     */
+    EList<Paper> getSubordinatedPaper();
 
-	/**
-	 * Returns the value of the '<em><b>Main File</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Die Haupt-Datei zu dieser Drucksache.
-	 * Beispiel: Die Drucksache repräsentiert eine Beschlussvorlage und die
-	 * Haupt-Datei enthält den Text der Beschlussvorlage. Sollte keine
-	 * eindeutige Haupt-Datei vorhanden sein, wird diese Eigenschaft nicht
-	 * ausgegeben.
-	 * <p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Main File</em>' containment reference.
-	 * @see #setMainFile(File)
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_MainFile()
-	 * @model containment="true"
-	 * @generated
-	 */
-	File getMainFile();
+    /**
+     * Returns the value of the '<em><b>Main File</b></em>' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Die Haupt-Datei zu dieser Drucksache.
+     * Beispiel: Die Drucksache repräsentiert eine Beschlussvorlage und die
+     * Haupt-Datei enthält den Text der Beschlussvorlage. Sollte keine
+     * eindeutige Haupt-Datei vorhanden sein, wird diese Eigenschaft nicht
+     * ausgegeben.
+     * <p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Main File</em>' containment reference.
+     * @see #setMainFile(File)
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_MainFile()
+     * @model containment="true"
+     * @generated
+     */
+    File getMainFile();
 
-	/**
-	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getMainFile <em>Main File</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Main File</em>' containment reference.
-	 * @see #getMainFile()
-	 * @generated
-	 */
-	void setMainFile(File value);
+    /**
+     * Sets the value of the '{@link de.oklab.leipzig.oparl.Paper#getMainFile <em>Main File</em>}' containment reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Main File</em>' containment reference.
+     * @see #getMainFile()
+     * @generated
+     */
+    void setMainFile(File value);
 
-	/**
-	 * Returns the value of the '<em><b>Auxiliary File</b></em>' containment reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.AuxiliaryFile}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Alle Dateien zur Drucksache ausgenommen der gegebenenfalls in
-	 * {@link Paper#mainFile} angegebenen Datei.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Auxiliary File</em>' containment reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_AuxiliaryFile()
-	 * @model containment="true"
-	 * @generated
-	 */
-	EList<AuxiliaryFile> getAuxiliaryFile();
+    /**
+     * Returns the value of the '<em><b>Auxiliary File</b></em>' containment reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.AuxiliaryFile}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Alle Dateien zur Drucksache ausgenommen der gegebenenfalls in
+     * {@link Paper#mainFile} angegebenen Datei.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Auxiliary File</em>' containment reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_AuxiliaryFile()
+     * @model containment="true"
+     * @generated
+     */
+    EList<AuxiliaryFile> getAuxiliaryFile();
 
-	/**
-	 * Returns the value of the '<em><b>Location</b></em>' containment reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.PaperLocation}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.PaperLocation#getPaper <em>Paper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Sofern die Drucksache einen inhaltlichen Ortsbezug hat, beschreibt diese
-	 * Eigenschaft den Ort in Textform und/oder in Form von Geodaten.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Location</em>' containment reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Location()
-	 * @see de.oklab.leipzig.oparl.PaperLocation#getPaper
-	 * @model opposite="paper" containment="true"
-	 * @generated
-	 */
-	EList<PaperLocation> getLocation();
+    /**
+     * Returns the value of the '<em><b>Location</b></em>' containment reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.PaperLocation}.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.PaperLocation#getPaper <em>Paper</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Sofern die Drucksache einen inhaltlichen Ortsbezug hat, beschreibt diese
+     * Eigenschaft den Ort in Textform und/oder in Form von Geodaten.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Location</em>' containment reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Location()
+     * @see de.oklab.leipzig.oparl.PaperLocation#getPaper
+     * @model opposite="paper" containment="true"
+     * @generated
+     */
+    EList<PaperLocation> getLocation();
 
-	/**
-	 * Returns the value of the '<em><b>Originator Person</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Urheber der Drucksache, falls der Urheber eine Person ist.
-	 * Es können auch mehrere Personen angegeben werden.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Originator Person</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_OriginatorPerson()
-	 * @model
-	 * @generated
-	 */
-	EList<Person> getOriginatorPerson();
+    /**
+     * Returns the value of the '<em><b>Originator Person</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Urheber der Drucksache, falls der Urheber eine Person ist.
+     * Es können auch mehrere Personen angegeben werden.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Originator Person</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_OriginatorPerson()
+     * @model
+     * @generated
+     */
+    EList<Person> getOriginatorPerson();
 
-	/**
-	 * Returns the value of the '<em><b>Under Directionof</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Federführung. Amt oder Abteilung, für die Inhalte oder Beantwortung der
-	 * Drucksache verantwortlich.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Under Directionof</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_UnderDirectionof()
-	 * @model
-	 * @generated
-	 */
-	EList<Organization> getUnderDirectionof();
+    /**
+     * Returns the value of the '<em><b>Under Directionof</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Federführung. Amt oder Abteilung, für die Inhalte oder Beantwortung der
+     * Drucksache verantwortlich.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Under Directionof</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_UnderDirectionof()
+     * @model
+     * @generated
+     */
+    EList<Organization> getUnderDirectionof();
 
-	/**
-	 * Returns the value of the '<em><b>Originator Organization</b></em>' reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Urheber der Drucksache, falls der Urheber eine Gruppierung ist.
-	 * Es können auch mehrere Gruppierungen angegeben werden.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Originator Organization</em>' reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_OriginatorOrganization()
-	 * @model
-	 * @generated
-	 */
-	EList<Organization> getOriginatorOrganization();
+    /**
+     * Returns the value of the '<em><b>Originator Organization</b></em>' reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Organization}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Urheber der Drucksache, falls der Urheber eine Gruppierung ist.
+     * Es können auch mehrere Gruppierungen angegeben werden.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Originator Organization</em>' reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_OriginatorOrganization()
+     * @model
+     * @generated
+     */
+    EList<Organization> getOriginatorOrganization();
 
-	/**
-	 * Returns the value of the '<em><b>Consultation</b></em>' containment reference list.
-	 * The list contents are of type {@link de.oklab.leipzig.oparl.Consultation}.
-	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Consultation#getPaper <em>Paper</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Beratungen der Drucksache.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Consultation</em>' containment reference list.
-	 * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Consultation()
-	 * @see de.oklab.leipzig.oparl.Consultation#getPaper
-	 * @model opposite="paper" containment="true"
-	 * @generated
-	 */
-	EList<Consultation> getConsultation();
+    /**
+     * Returns the value of the '<em><b>Consultation</b></em>' containment reference list.
+     * The list contents are of type {@link de.oklab.leipzig.oparl.Consultation}.
+     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.Consultation#getPaper <em>Paper</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Beratungen der Drucksache.
+     * </p>
+     * <!-- end-model-doc -->
+     * @return the value of the '<em>Consultation</em>' containment reference list.
+     * @see de.oklab.leipzig.oparl.OparlPackage#getPaper_Consultation()
+     * @see de.oklab.leipzig.oparl.Consultation#getPaper
+     * @model opposite="paper" containment="true"
+     * @generated
+     */
+    EList<Consultation> getConsultation();
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Paper\";'"
-	 * @generated
-	 */
-	String getType();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Paper\";'"
+     * @generated
+     */
+    String getType();
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * <!-- begin-model-doc -->
-	 *  <p>
-	 * Titel der Drucksache.
-	 * </p>
-	 * <!-- end-model-doc -->
-	 * @model kind="operation" unique="false"
-	 *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getName();'"
-	 * @generated
-	 */
-	String getName();
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *  <p>
+     * Titel der Drucksache.
+     * </p>
+     * <!-- end-model-doc -->
+     * @model kind="operation" unique="false"
+     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getName();'"
+     * @generated
+     */
+    String getName();
 
 } // Paper

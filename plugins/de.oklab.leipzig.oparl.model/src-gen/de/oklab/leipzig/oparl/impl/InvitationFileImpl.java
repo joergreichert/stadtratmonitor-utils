@@ -39,244 +39,244 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * @generated
  */
 public class InvitationFileImpl extends FileImpl implements InvitationFile {
-	/**
-	 * The cached value of the '{@link #getAgendaItem() <em>Agenda Item</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getAgendaItem()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<AgendaItem> agendaItem;
+    /**
+     * The cached value of the '{@link #getAgendaItem() <em>Agenda Item</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getAgendaItem()
+     * @generated
+     * @ordered
+     */
+    protected EList<AgendaItem> agendaItem;
 
-	/**
-	 * The cached value of the '{@link #getPaper() <em>Paper</em>}' reference list.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getPaper()
-	 * @generated
-	 * @ordered
-	 */
-	protected EList<Paper> paper;
+    /**
+     * The cached value of the '{@link #getPaper() <em>Paper</em>}' reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see #getPaper()
+     * @generated
+     * @ordered
+     */
+    protected EList<Paper> paper;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected InvitationFileImpl() {
-		super();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected InvitationFileImpl() {
+        super();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass() {
-		return OparlPackage.Literals.INVITATION_FILE;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    protected EClass eStaticClass() {
+        return OparlPackage.Literals.INVITATION_FILE;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Meeting getMeeting() {
-		if (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING) return null;
-		return (Meeting)eContainer();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Meeting getMeeting() {
+        if (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING) return null;
+        return (Meeting)eContainer();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Meeting basicGetMeeting() {
-		if (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING) return null;
-		return (Meeting)eInternalContainer();
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public Meeting basicGetMeeting() {
+        if (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING) return null;
+        return (Meeting)eInternalContainer();
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetMeeting(Meeting newMeeting, NotificationChain msgs) {
-		msgs = eBasicSetContainer((InternalEObject)newMeeting, OparlPackage.INVITATION_FILE__MEETING, msgs);
-		return msgs;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public NotificationChain basicSetMeeting(Meeting newMeeting, NotificationChain msgs) {
+        msgs = eBasicSetContainer((InternalEObject)newMeeting, OparlPackage.INVITATION_FILE__MEETING, msgs);
+        return msgs;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setMeeting(Meeting newMeeting) {
-		if (newMeeting != eInternalContainer() || (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING && newMeeting != null)) {
-			if (EcoreUtil.isAncestor(this, newMeeting))
-				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-			NotificationChain msgs = null;
-			if (eInternalContainer() != null)
-				msgs = eBasicRemoveFromContainer(msgs);
-			if (newMeeting != null)
-				msgs = ((InternalEObject)newMeeting).eInverseAdd(this, OparlPackage.MEETING__INVITATION, Meeting.class, msgs);
-			msgs = basicSetMeeting(newMeeting, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.INVITATION_FILE__MEETING, newMeeting, newMeeting));
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public void setMeeting(Meeting newMeeting) {
+        if (newMeeting != eInternalContainer() || (eContainerFeatureID() != OparlPackage.INVITATION_FILE__MEETING && newMeeting != null)) {
+            if (EcoreUtil.isAncestor(this, newMeeting))
+                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+            NotificationChain msgs = null;
+            if (eInternalContainer() != null)
+                msgs = eBasicRemoveFromContainer(msgs);
+            if (newMeeting != null)
+                msgs = ((InternalEObject)newMeeting).eInverseAdd(this, OparlPackage.MEETING__INVITATION, Meeting.class, msgs);
+            msgs = basicSetMeeting(newMeeting, msgs);
+            if (msgs != null) msgs.dispatch();
+        }
+        else if (eNotificationRequired())
+            eNotify(new ENotificationImpl(this, Notification.SET, OparlPackage.INVITATION_FILE__MEETING, newMeeting, newMeeting));
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<AgendaItem> getAgendaItem() {
-		if (agendaItem == null) {
-			agendaItem = new EObjectResolvingEList<AgendaItem>(AgendaItem.class, this, OparlPackage.INVITATION_FILE__AGENDA_ITEM);
-		}
-		return agendaItem;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<AgendaItem> getAgendaItem() {
+        if (agendaItem == null) {
+            agendaItem = new EObjectResolvingEList<AgendaItem>(AgendaItem.class, this, OparlPackage.INVITATION_FILE__AGENDA_ITEM);
+        }
+        return agendaItem;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EList<Paper> getPaper() {
-		if (paper == null) {
-			paper = new EObjectResolvingEList<Paper>(Paper.class, this, OparlPackage.INVITATION_FILE__PAPER);
-		}
-		return paper;
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EList<Paper> getPaper() {
+        if (paper == null) {
+            paper = new EObjectResolvingEList<Paper>(Paper.class, this, OparlPackage.INVITATION_FILE__PAPER);
+        }
+        return paper;
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				if (eInternalContainer() != null)
-					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetMeeting((Meeting)otherEnd, msgs);
-		}
-		return super.eInverseAdd(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                if (eInternalContainer() != null)
+                    msgs = eBasicRemoveFromContainer(msgs);
+                return basicSetMeeting((Meeting)otherEnd, msgs);
+        }
+        return super.eInverseAdd(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				return basicSetMeeting(null, msgs);
-		}
-		return super.eInverseRemove(otherEnd, featureID, msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                return basicSetMeeting(null, msgs);
+        }
+        return super.eInverseRemove(otherEnd, featureID, msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-		switch (eContainerFeatureID()) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				return eInternalContainer().eInverseRemove(this, OparlPackage.MEETING__INVITATION, Meeting.class, msgs);
-		}
-		return super.eBasicRemoveFromContainerFeature(msgs);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
+        switch (eContainerFeatureID()) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                return eInternalContainer().eInverseRemove(this, OparlPackage.MEETING__INVITATION, Meeting.class, msgs);
+        }
+        return super.eBasicRemoveFromContainerFeature(msgs);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Object eGet(int featureID, boolean resolve, boolean coreType) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				if (resolve) return getMeeting();
-				return basicGetMeeting();
-			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
-				return getAgendaItem();
-			case OparlPackage.INVITATION_FILE__PAPER:
-				return getPaper();
-		}
-		return super.eGet(featureID, resolve, coreType);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Object eGet(int featureID, boolean resolve, boolean coreType) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                if (resolve) return getMeeting();
+                return basicGetMeeting();
+            case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+                return getAgendaItem();
+            case OparlPackage.INVITATION_FILE__PAPER:
+                return getPaper();
+        }
+        return super.eGet(featureID, resolve, coreType);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@SuppressWarnings("unchecked")
-	@Override
-	public void eSet(int featureID, Object newValue) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				setMeeting((Meeting)newValue);
-				return;
-			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
-				getAgendaItem().clear();
-				getAgendaItem().addAll((Collection<? extends AgendaItem>)newValue);
-				return;
-			case OparlPackage.INVITATION_FILE__PAPER:
-				getPaper().clear();
-				getPaper().addAll((Collection<? extends Paper>)newValue);
-				return;
-		}
-		super.eSet(featureID, newValue);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void eSet(int featureID, Object newValue) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                setMeeting((Meeting)newValue);
+                return;
+            case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+                getAgendaItem().clear();
+                getAgendaItem().addAll((Collection<? extends AgendaItem>)newValue);
+                return;
+            case OparlPackage.INVITATION_FILE__PAPER:
+                getPaper().clear();
+                getPaper().addAll((Collection<? extends Paper>)newValue);
+                return;
+        }
+        super.eSet(featureID, newValue);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void eUnset(int featureID) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				setMeeting((Meeting)null);
-				return;
-			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
-				getAgendaItem().clear();
-				return;
-			case OparlPackage.INVITATION_FILE__PAPER:
-				getPaper().clear();
-				return;
-		}
-		super.eUnset(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public void eUnset(int featureID) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                setMeeting((Meeting)null);
+                return;
+            case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+                getAgendaItem().clear();
+                return;
+            case OparlPackage.INVITATION_FILE__PAPER:
+                getPaper().clear();
+                return;
+        }
+        super.eUnset(featureID);
+    }
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean eIsSet(int featureID) {
-		switch (featureID) {
-			case OparlPackage.INVITATION_FILE__MEETING:
-				return basicGetMeeting() != null;
-			case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
-				return agendaItem != null && !agendaItem.isEmpty();
-			case OparlPackage.INVITATION_FILE__PAPER:
-				return paper != null && !paper.isEmpty();
-		}
-		return super.eIsSet(featureID);
-	}
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public boolean eIsSet(int featureID) {
+        switch (featureID) {
+            case OparlPackage.INVITATION_FILE__MEETING:
+                return basicGetMeeting() != null;
+            case OparlPackage.INVITATION_FILE__AGENDA_ITEM:
+                return agendaItem != null && !agendaItem.isEmpty();
+            case OparlPackage.INVITATION_FILE__PAPER:
+                return paper != null && !paper.isEmpty();
+        }
+        return super.eIsSet(featureID);
+    }
 
 } //InvitationFileImpl

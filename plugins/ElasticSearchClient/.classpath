@@ -114,7 +114,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry excluding="main/java/|test/java/" kind="src" path="src"/>
-	<classpathentry kind="src" path="xtend-gen"/>
+	<classpathentry excluding="main/java/|test/java/" kind="src" path="target/generated-sources/xtend"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
