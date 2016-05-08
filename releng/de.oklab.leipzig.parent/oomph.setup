@@ -47,14 +47,14 @@
       name="Compile configuration">
     <setupTask
         xsi:type="jdt:JRETask"
-        version="JavaSE-1.6"
-        location="${jre.location-1.6}">
+        version="JavaSE-1.8"
+        location="${jre.location-1.8}">
       <description>Define the JRE needed to compile and run the Java projects of ${scope.project.label}</description>
     </setupTask>
     <setupTask
         xsi:type="setup:VariableTask"
         name="eclipse.target.platform"
-        defaultValue="Kepler"
+        defaultValue="Mars"
         storageURI="scope://Workspace"/>
   </setupTask>
   <setupTask
@@ -89,10 +89,10 @@
           versionRange="[2.10.0,2.11.0)"/>
       <requirement
           name="org.eclipse.emf.mwe2.language.sdk.feature.group"
-          versionRange="[2.10.0,2.11.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
-          versionRange="[2.10.0,2.11.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <repository
           url="http://download.eclipse.org/modeling/emf/emf/updates/nightly/"/>
       <repository
@@ -185,7 +185,7 @@
       <requirement
           name="org.eclipse.m2e.feature.feature.group"/>
       <repository
-          url="http://download.eclipse.org/releases/kepler"/>
+          url="http://download.eclipse.org/releases/mars"/>
       <repository
           url="http://repo1.maven.org/maven2/.m2e/connectors/m2eclipse-tycho/0.7.0/N/0.7.0.201309291400/"/>
       <description>Maven connector</description>
@@ -1676,10 +1676,10 @@
           versionRange="[2.10.0,2.11.0)"/>
       <requirement
           name="org.eclipse.emf.mwe2.language.sdk.feature.group"
-          versionRange="[2.10.0,2.11.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.eclipse.emf.mwe2.runtime.sdk.feature.group"
-          versionRange="[2.10.0,2.11.0)"/>
+          versionRange="[2.9.0,2.10.0)"/>
       <requirement
           name="org.xpect.sdk.feature.group"/>
       <requirement
