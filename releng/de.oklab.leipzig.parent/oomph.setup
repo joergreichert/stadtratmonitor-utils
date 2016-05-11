@@ -29,7 +29,7 @@
     <setupTask
         xsi:type="setup:EclipseIniTask"
         option="-Doomph.redirection.stadtratmonitor-utils.setup"
-        value="=https://raw.githubusercontent.com/joergreichert/stadtratmonitor-utils/${scope.project.stream.name}/releng/org.eclipse.xtext.todo.config.parent/oomph.setup->${git.clone.stadtratmonitor-utils.location|uri}/releng/de.oklab.leipzig.parent/oomph.setup"
+        value="=https://raw.githubusercontent.com/joergreichert/stadtratmonitor-utils/${scope.project.stream.name}/releng/de.oklab.leipzig.parent/oomph.setup->${git.clone.stadtratmonitor-utils.location|uri}/releng/de.oklab.leipzig.parent/oomph.setup"
         vm="true">
       <description>redirect changes to Oomph configuration triggered within the Eclipse instance to the setup file within the locally cloned repository, so it can be checked in</description>
     </setupTask>
@@ -1579,7 +1579,7 @@
     </setupTask>
     <setupTask
         xsi:type="git:GitCloneTask"
-        id="git.clone.todo"
+        id="git.clone.stadtratmonitor-utils"
         remoteURI="joergreichert/stadtratmonitor-utils">
       <annotation
           source="http://www.eclipse.org/oomph/setup/InducedChoices">
@@ -1602,7 +1602,7 @@
         xsi:type="maven:MavenImportTask"
         projectNameTemplate="">
       <sourceLocator
-          rootFolder="${git.clone.todo.location}">
+          rootFolder="${git.clone.stadtratmonitor-utils.location}">
         <predicate
             xsi:type="predicates:LocationPredicate"
             pattern=".*/plugins/.*"/>
@@ -1620,7 +1620,7 @@
     <setupTask
         xsi:type="projects:ProjectsImportTask">
       <sourceLocator
-          rootFolder="${git.clone.todo.location}">
+          rootFolder="${git.clone.stadtratmonitor-utils.location}">
         <predicate
             xsi:type="predicates:LocationPredicate"
             pattern=".*/plugins/.*"/>
