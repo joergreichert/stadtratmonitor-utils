@@ -12,11 +12,13 @@ public class AgendaItem {
     @JsonProperty("PolitikBeiUns:originalId")
     private String originalId;
     private Date created;
-    @JsonProperty("PolitikBeiUns:address")
-    private String address;
     private Date modified;
     @JsonProperty("public")
     private boolean wasPublic;
+    private String type;
+    private String number;
+    private URI consultation;
+    private AgendaItemResult result;
 
     public URI getBody() {
         return body;
@@ -58,14 +60,6 @@ public class AgendaItem {
         this.created = created;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     public Date getModified() {
         return modified;
     }
@@ -80,5 +74,37 @@ public class AgendaItem {
 
     public void setWasPublic(boolean wasPublic) {
         this.wasPublic = wasPublic;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public URI getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(URI consultation) {
+        this.consultation = consultation;
+    }
+
+    public AgendaItemResult getResult() {
+        return result;
+    }
+
+    public void setResult(AgendaItemResult result) {
+        this.result = result;
     }
 }

@@ -12,6 +12,12 @@ public class Meeting extends AbstractDatedEntity {
     @Field("name")
     private String name;
 
+    @Field("description")
+    private String description;
+
+    @Field("politikBeiUnsOriginalId")
+    private String politikBeiUnsOriginalId;
+
     @Field("organization_name")
     private String organizationName;
 
@@ -37,6 +43,22 @@ public class Meeting extends AbstractDatedEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPolitikBeiUnsOriginalId() {
+        return politikBeiUnsOriginalId;
+    }
+
+    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
+        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
     }
 
     public String getOrganizationName() {

@@ -4,7 +4,10 @@ import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mo
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.junit.Ignore;
@@ -19,23 +22,22 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 
+import de.oklab.leipzig.oparl.converter.AgendaItemConverter;
 import de.oklab.leipzig.oparl.converter.BodyConverter;
+import de.oklab.leipzig.oparl.converter.MeetingConverter;
 import de.oklab.leipzig.oparl.converter.OrganizationConverter;
 import de.oklab.leipzig.oparl.converter.SystemConverter;
 import de.oklab.leipzig.oparl.entities.Body;
-import de.oklab.leipzig.oparl.entities.Consultation;
+import de.oklab.leipzig.oparl.entities.Meeting;
 import de.oklab.leipzig.oparl.entities.Organization;
-import de.oklab.leipzig.oparl.persistence.BodyRepository;
-import de.oklab.leipzig.oparl.persistence.OParlRepository;
-import de.oklab.leipzig.oparl.persistence.OrganizationRepository;
-import de.oklab.leipzig.oparl.persistence.SystemRepository;
 import de.oklab.leipzig.oparl.persistence.impl.OParlRepositoryImpl;
 import de.oklab.leipzig.oparl.service.model.BodyResult;
+import de.oklab.leipzig.oparl.service.model.MeetingResult;
 import de.oklab.leipzig.oparl.service.model.OrganizationResult;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringMongoConfiguration.class, OParlRepositoryImpl.class, SystemConverter.class,
-        BodyConverter.class, OrganizationConverter.class })
+        BodyConverter.class, OrganizationConverter.class, MeetingConverter.class, AgendaItemConverter.class })
 public class MongoTest {
     @Rule
     public MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("oklab").host("localhost").build());
@@ -53,6 +55,12 @@ public class MongoTest {
     private OrganizationRepository organizationRepository;
 
     @Autowired
+    private MeetingRepository meetingRepository;
+
+    @Autowired
+    private AgendaItemRepository agendaItemRepository;
+
+    @Autowired
     private SystemConverter systemConverter;
 
     @Autowired
@@ -60,6 +68,9 @@ public class MongoTest {
 
     @Autowired
     private OrganizationConverter organizationConverter;
+
+    @Autowired
+    private MeetingConverter meetingConverter;
 
     @Test
     @Ignore
@@ -94,10 +105,35 @@ public class MongoTest {
     @Ignore
     public void testSaveOrganization() throws JsonProcessingException, IOException {
         OrganizationResult result = new ObjectMapper().readerFor(OrganizationResult.class)
-			.readValue(new File("organization.json"));
-        List<Organization> entities = result.getData().stream().parallel()
-				.map(b -> organizationConverter.convert(b))
+                .readValue(new File("organization.json"));
+        List<Organization> entities = result.getData().stream().parallel().map(b -> organizationConverter.convert(b))
                 .collect(Collectors.toList());
         organizationRepository.save(entities);
+    }
+
+    @Test
+    @Ignore
+    public void testSaveMeeting() throws JsonProcessingException, IOException {
+        MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class).readValue(new File("meeting.json"));
+        List<Meeting> entities = result.getData().stream().parallel().map(b -> meetingConverter.convert(b))
+                .collect(Collectors.toList());
+        Map<Body, List<Meeting>> bodyToMeeting = new HashMap<>();
+        for (Meeting entity : entities) {
+            agendaItemRepository.save(entity.getAgendaItem());
+            if (bodyToMeeting.containsKey(entity.getBody())) {
+                bodyToMeeting.get(entity.getBody()).add(entity);
+            } else {
+                List<Meeting> meetings = new ArrayList<>();
+                meetings.add(entity);
+                if (entity.getBody() != null) {
+                    bodyToMeeting.put(entity.getBody(), meetings);
+                }
+            }
+        }
+        meetingRepository.save(entities);
+        for (Map.Entry<Body, List<Meeting>> entry : bodyToMeeting.entrySet()) {
+            entry.getKey().setMeeting(entry.getValue());
+        }
+        bodyRepository.save(bodyToMeeting.keySet());
     }
 }

@@ -9,7 +9,7 @@ public class Result<T> {
     private Link links;
 
     public Result() {
-        // OrganizationODO Auto-generated constructor stub
+        // Auto-generated constructor stub
     }
 
     public Pagination getPagination() {
