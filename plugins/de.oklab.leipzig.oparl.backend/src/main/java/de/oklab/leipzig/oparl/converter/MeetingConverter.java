@@ -10,13 +10,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 import de.oklab.leipzig.oparl.entities.Body;
-import de.oklab.leipzig.oparl.persistence.BodyRepository;
+import de.oklab.leipzig.oparl.persistence.OParlRepository;
 import de.oklab.leipzig.oparl.service.model.Meeting;
 
 @Component
 public class MeetingConverter implements Converter<Meeting, de.oklab.leipzig.oparl.entities.Meeting> {
+
     @Autowired
-    private BodyRepository bodyRepository;
+    private OParlRepository oParlRepository;
 
     @Autowired
     private AgendaItemConverter agendaItemConverter;
@@ -35,7 +36,7 @@ public class MeetingConverter implements Converter<Meeting, de.oklab.leipzig.opa
         URI bodyURI = source.getBody();
         Body body = null;
         if (!bodies.containsKey(bodyURI)) {
-            body = bodyRepository.findOne(bodyURI);
+            body = oParlRepository.findBodyByURI(bodyURI);
             bodies.put(bodyURI, body);
         } else {
             body = bodies.get(bodyURI);

@@ -43,9 +43,6 @@ public class MongoTest {
     public MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("oklab").host("localhost").build());
 
     @Autowired
-    private OParlRepository oparlRepository;
-
-    @Autowired
     private SystemRepository systemRepository;
 
     @Autowired

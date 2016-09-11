@@ -26,10 +26,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import de.oklab.leipzig.oparl.service.model.AgendaItem;
 import de.oklab.leipzig.oparl.service.model.Body;
 import de.oklab.leipzig.oparl.service.model.BodyResult;
+import de.oklab.leipzig.oparl.service.model.MeetingResult;
 import de.oklab.leipzig.oparl.service.model.Organization;
 import de.oklab.leipzig.oparl.service.model.OrganizationResult;
 
@@ -120,6 +123,19 @@ public class RestTest {
         for (URI data : result.getData().stream().flatMap(d -> d.getMembership().stream())
                 .collect(Collectors.toList())) {
             downloadFile(data);
+        }
+    }
+
+    @Test
+    @Ignore
+    public void testDownloadConsultation() throws JsonProcessingException, IOException {
+        MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class).readValue(new File("meeting.json"));
+        for (de.oklab.leipzig.oparl.service.model.Meeting meeting : result.getData()) {
+            for (AgendaItem agendaItem : meeting.getAgendaItem()) {
+                if (agendaItem.getConsultation() != null) {
+                    downloadFile(agendaItem.getConsultation());
+                }
+            }
         }
     }
 }
