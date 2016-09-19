@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Consultation;
 import de.oklab.leipzig.oparl.entities.Meeting;
+import de.oklab.leipzig.oparl.entities.Organization;
 import de.oklab.leipzig.oparl.persistence.OParlRepository;
 
 @Repository("oparlRepository")
@@ -46,5 +47,12 @@ public class OParlRepositoryImpl implements OParlRepository {
         Criteria criteria = Criteria.where("_id.path").is(uri.getPath());
         Query query = Query.query(criteria);
         return mongoTemplate.findOne(query, Body.class);
+    }
+
+    @Override
+    public Organization findOrganizationByURI(URI uri) {
+        Criteria criteria = Criteria.where("_id.path").is(uri.getPath());
+        Query query = Query.query(criteria);
+        return mongoTemplate.findOne(query, Organization.class);
     }
 }

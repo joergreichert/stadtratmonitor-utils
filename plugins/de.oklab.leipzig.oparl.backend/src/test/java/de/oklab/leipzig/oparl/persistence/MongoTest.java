@@ -4,6 +4,9 @@ import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mo
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,10 +28,12 @@ import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import de.oklab.leipzig.oparl.converter.AgendaItemConverter;
 import de.oklab.leipzig.oparl.converter.BodyConverter;
 import de.oklab.leipzig.oparl.converter.MeetingConverter;
+import de.oklab.leipzig.oparl.converter.MembershipConverter;
 import de.oklab.leipzig.oparl.converter.OrganizationConverter;
 import de.oklab.leipzig.oparl.converter.SystemConverter;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Meeting;
+import de.oklab.leipzig.oparl.entities.Membership;
 import de.oklab.leipzig.oparl.entities.Organization;
 import de.oklab.leipzig.oparl.persistence.impl.OParlRepositoryImpl;
 import de.oklab.leipzig.oparl.service.model.BodyResult;
@@ -37,7 +42,8 @@ import de.oklab.leipzig.oparl.service.model.OrganizationResult;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringMongoConfiguration.class, OParlRepositoryImpl.class, SystemConverter.class,
-        BodyConverter.class, OrganizationConverter.class, MeetingConverter.class, AgendaItemConverter.class })
+        BodyConverter.class, OrganizationConverter.class, MeetingConverter.class, MembershipConverter.class,
+        AgendaItemConverter.class })
 public class MongoTest {
     @Rule
     public MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("oklab").host("localhost").build());
@@ -58,6 +64,9 @@ public class MongoTest {
     private AgendaItemRepository agendaItemRepository;
 
     @Autowired
+    private MembershipRepository membershipRepository;
+
+    @Autowired
     private SystemConverter systemConverter;
 
     @Autowired
@@ -69,11 +78,14 @@ public class MongoTest {
     @Autowired
     private MeetingConverter meetingConverter;
 
+    @Autowired
+    private MembershipConverter membershipConverter;
+
     @Test
     @Ignore
     public void testSaveSystem() throws JsonProcessingException, IOException {
         de.oklab.leipzig.oparl.service.model.System system = new ObjectMapper()
-                .readerFor(de.oklab.leipzig.oparl.service.model.System.class).readValue(new File("oparl.json"));
+                .readerFor(de.oklab.leipzig.oparl.service.model.System.class).readValue(new File("data/oparl.json"));
         de.oklab.leipzig.oparl.entities.System entity = systemConverter.convert(system);
         systemRepository.save(entity);
     }
@@ -81,7 +93,7 @@ public class MongoTest {
     @Test
     @Ignore
     public void testSaveBody() throws JsonProcessingException, IOException {
-        BodyResult result = new ObjectMapper().readerFor(BodyResult.class).readValue(new File("body.json"));
+        BodyResult result = new ObjectMapper().readerFor(BodyResult.class).readValue(new File("data/body.json"));
         List<Body> entities = result.getData().stream().parallel().map(b -> bodyConverter.convert(b))
                 .collect(Collectors.toList());
         bodyRepository.save(entities);
@@ -102,7 +114,7 @@ public class MongoTest {
     @Ignore
     public void testSaveOrganization() throws JsonProcessingException, IOException {
         OrganizationResult result = new ObjectMapper().readerFor(OrganizationResult.class)
-                .readValue(new File("organization.json"));
+                .readValue(new File("data/organization.json"));
         List<Organization> entities = result.getData().stream().parallel().map(b -> organizationConverter.convert(b))
                 .collect(Collectors.toList());
         organizationRepository.save(entities);
@@ -111,7 +123,8 @@ public class MongoTest {
     @Test
     @Ignore
     public void testSaveMeeting() throws JsonProcessingException, IOException {
-        MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class).readValue(new File("meeting.json"));
+        MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class)
+                .readValue(new File("data/meeting.json"));
         List<Meeting> entities = result.getData().stream().parallel().map(b -> meetingConverter.convert(b))
                 .collect(Collectors.toList());
         Map<Body, List<Meeting>> bodyToMeeting = new HashMap<>();
@@ -132,5 +145,25 @@ public class MongoTest {
             entry.getKey().setMeeting(entry.getValue());
         }
         bodyRepository.save(bodyToMeeting.keySet());
+    }
+
+    @Test
+    @Ignore
+    public void testSaveMembership() throws JsonProcessingException, IOException {
+        List<Membership> entities = Files.list(Paths.get("data/memberships")).map(file -> processMembershipFile(file))
+                .filter(e -> e != null).collect(Collectors.toList());
+        membershipRepository.save(entities);
+    }
+
+    private Membership processMembershipFile(Path file) {
+        try {
+            de.oklab.leipzig.oparl.service.model.Membership result = new ObjectMapper()
+                    .readerFor(de.oklab.leipzig.oparl.service.model.Membership.class).readValue(file.toFile());
+            return membershipConverter.convert(result);
+        } catch (IOException e) {
+            System.err.println(file + " cannot be processed: " + e.getMessage());
+            // e.printStackTrace();
+            return null;
+        }
     }
 }

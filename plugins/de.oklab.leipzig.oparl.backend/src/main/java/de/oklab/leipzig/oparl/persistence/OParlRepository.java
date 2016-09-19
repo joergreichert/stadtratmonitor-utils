@@ -8,6 +8,7 @@ import org.springframework.data.util.CloseableIterator;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Consultation;
 import de.oklab.leipzig.oparl.entities.Meeting;
+import de.oklab.leipzig.oparl.entities.Organization;
 
 public interface OParlRepository {
 
@@ -19,4 +20,5 @@ public interface OParlRepository {
 
     public Body findBodyByURI(URI uri);
 
+    public Organization findOrganizationByURI(URI uri);
 }
