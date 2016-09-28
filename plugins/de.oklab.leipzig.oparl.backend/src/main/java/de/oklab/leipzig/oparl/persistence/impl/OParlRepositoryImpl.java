@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.util.CloseableIterator;
 import org.springframework.stereotype.Repository;
 
+import de.oklab.leipzig.oparl.entities.AgendaItem;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Consultation;
 import de.oklab.leipzig.oparl.entities.Meeting;
@@ -44,15 +45,22 @@ public class OParlRepositoryImpl implements OParlRepository {
 
     @Override
     public Body findBodyByURI(URI uri) {
-        Criteria criteria = Criteria.where("_id.path").is(uri.getPath());
-        Query query = Query.query(criteria);
-        return mongoTemplate.findOne(query, Body.class);
+        return findItemByURI(uri, Body.class);
     }
 
     @Override
     public Organization findOrganizationByURI(URI uri) {
+        return findItemByURI(uri, Organization.class);
+    }
+
+    @Override
+    public AgendaItem findAgendaItemByURI(URI uri) {
+        return findItemByURI(uri, AgendaItem.class);
+    }
+
+    private <T> T findItemByURI(URI uri, Class<T> clazz) {
         Criteria criteria = Criteria.where("_id.path").is(uri.getPath());
         Query query = Query.query(criteria);
-        return mongoTemplate.findOne(query, Organization.class);
+        return mongoTemplate.findOne(query, clazz);
     }
 }

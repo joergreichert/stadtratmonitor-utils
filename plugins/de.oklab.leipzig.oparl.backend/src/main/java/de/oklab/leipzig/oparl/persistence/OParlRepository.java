@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.data.util.CloseableIterator;
 
+import de.oklab.leipzig.oparl.entities.AgendaItem;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Consultation;
 import de.oklab.leipzig.oparl.entities.Meeting;
@@ -21,4 +22,6 @@ public interface OParlRepository {
     public Body findBodyByURI(URI uri);
 
     public Organization findOrganizationByURI(URI uri);
+
+    public AgendaItem findAgendaItemByURI(URI agendaItemURI);
 }
