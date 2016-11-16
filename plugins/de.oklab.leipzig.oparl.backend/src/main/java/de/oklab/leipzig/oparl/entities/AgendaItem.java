@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "agendaitem")
 public class AgendaItem {
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field
     private Body body;
 

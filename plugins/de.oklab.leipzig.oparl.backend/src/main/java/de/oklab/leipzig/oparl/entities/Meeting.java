@@ -27,7 +27,7 @@ public class Meeting extends AbstractDatedEntity {
     @Field("address")
     private String address;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("agendaItem")
     private List<AgendaItem> agendaItem;
 
@@ -37,7 +37,7 @@ public class Meeting extends AbstractDatedEntity {
     @Field("type")
     private String type;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("auxiliaryFile")
     private List<File> auxiliaryFile;
 

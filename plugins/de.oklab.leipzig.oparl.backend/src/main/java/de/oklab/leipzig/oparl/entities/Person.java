@@ -25,7 +25,7 @@ public class Person extends AbstractEntity {
     @Field("lastname")
     private String lastname;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("membership")
     private Membership membership;
 

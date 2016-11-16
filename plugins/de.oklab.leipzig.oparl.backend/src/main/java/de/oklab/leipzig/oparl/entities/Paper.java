@@ -10,14 +10,14 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "paper")
 public class Paper extends AbstractEntity {
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("auxiliaryFile")
     private List<File> auxiliaryFile;
 
     @Field("description")
     private String description;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("mainFile")
     private File mainFile;
 

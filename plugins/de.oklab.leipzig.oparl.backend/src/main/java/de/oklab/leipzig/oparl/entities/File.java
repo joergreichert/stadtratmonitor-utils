@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "file")
 public class File extends AbstractEntity {
-    @DBRef
+    @DBRef(lazy = true)
     @Field("file")
     private List<File> file;
 

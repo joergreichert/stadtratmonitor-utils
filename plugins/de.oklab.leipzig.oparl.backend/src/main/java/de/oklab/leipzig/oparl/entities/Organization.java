@@ -10,11 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "organization")
 public class Organization extends AbstractEntity {
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field
     private List<Meeting> meeting;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field
     private List<Membership> membership = new ArrayList<>();
 

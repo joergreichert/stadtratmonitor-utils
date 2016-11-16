@@ -205,8 +205,9 @@ public class MongoTest {
         List<Meeting> entities = result.getData().stream().parallel().map(b -> meetingConverter.convert(b))
                 .collect(Collectors.toList());
         Meeting existingMeeting = null;
+        List<Meeting> existingMeetings = meetingRepository.findAll();
         for (Meeting entity : entities) {
-            for (Meeting meeting : meetingRepository.findAll()) {
+            for (Meeting meeting : existingMeetings) {
                 if (meeting.getOriginalId() != null && entity.getOriginalId() != null
                         && meeting.getOriginalId().toString().equals(entity.getOriginalId().toString())) {
                     existingMeeting = meeting;

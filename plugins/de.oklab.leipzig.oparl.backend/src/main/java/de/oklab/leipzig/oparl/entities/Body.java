@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 @Document(collection = "body")
 public class Body {
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field
     private System system;
 

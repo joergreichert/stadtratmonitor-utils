@@ -5,10 +5,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "consultation")
 public class Consultation extends AbstractEntity {
-    @DBRef
+    @DBRef(lazy = true)
     private AgendaItem agendaItem;
 
-    @DBRef
+    @DBRef(lazy = true)
     private Paper paper;
 
     private String politikBeiUnsOriginalId;

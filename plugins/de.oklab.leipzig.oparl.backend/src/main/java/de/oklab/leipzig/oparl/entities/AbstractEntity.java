@@ -17,7 +17,7 @@ public abstract class AbstractEntity {
     @Field("modified")
     private Date modified;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("body")
     private Body body;
 

@@ -10,7 +10,7 @@ public class Membership extends AbstractDatedEntity {
     @Field
     private String politikBeiUnsOriginalId;
 
-    @DBRef
+    @DBRef(lazy = true)
     @Field("organization")
     private Organization organization;
 
