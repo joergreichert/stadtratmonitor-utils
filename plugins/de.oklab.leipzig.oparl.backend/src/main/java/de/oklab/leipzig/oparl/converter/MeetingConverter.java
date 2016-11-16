@@ -22,6 +22,9 @@ public class MeetingConverter implements Converter<Meeting, de.oklab.leipzig.opa
     @Autowired
     private AgendaItemConverter agendaItemConverter;
 
+    @Autowired
+    private FileConverter fileConverter;
+
     private Map<URI, de.oklab.leipzig.oparl.entities.Body> bodies = new HashMap<>();
 
     @Override
@@ -33,6 +36,16 @@ public class MeetingConverter implements Converter<Meeting, de.oklab.leipzig.opa
         entity.setDescription(source.getDescription());
         entity.setEnd(source.getEnd());
         entity.setPolitikBeiUnsOriginalId(source.getOriginalId());
+        if (source.getInvitation() != null) {
+            entity.setInvitation(fileConverter.convert(source.getInvitation()));
+        }
+        if (source.getAuxiliaryFile() != null) {
+            entity.setAuxiliaryFile(
+                    source.getAuxiliaryFile().stream().map(f -> fileConverter.convert(f)).collect(Collectors.toList()));
+        }
+        if (source.getResultsProtocol() != null) {
+            entity.setResultsProtocol(fileConverter.convert(source.getResultsProtocol()));
+        }
         URI bodyURI = source.getBody();
         Body body = null;
         if (!bodies.containsKey(bodyURI)) {

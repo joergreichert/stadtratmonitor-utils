@@ -28,6 +28,7 @@ import com.lordofthejars.nosqlunit.mongodb.MongoDbRule;
 import de.oklab.leipzig.oparl.converter.AgendaItemConverter;
 import de.oklab.leipzig.oparl.converter.BodyConverter;
 import de.oklab.leipzig.oparl.converter.ConsultationConverter;
+import de.oklab.leipzig.oparl.converter.FileConverter;
 import de.oklab.leipzig.oparl.converter.MeetingConverter;
 import de.oklab.leipzig.oparl.converter.MembershipConverter;
 import de.oklab.leipzig.oparl.converter.OrganizationConverter;
@@ -45,7 +46,7 @@ import de.oklab.leipzig.oparl.service.model.OrganizationResult;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringMongoConfiguration.class, OParlRepositoryImpl.class, SystemConverter.class,
         BodyConverter.class, OrganizationConverter.class, MeetingConverter.class, MembershipConverter.class,
-        AgendaItemConverter.class, ConsultationConverter.class })
+        AgendaItemConverter.class, ConsultationConverter.class, FileConverter.class })
 public class MongoTest {
     @Rule
     public MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("oklab").host("localhost").build());
@@ -67,6 +68,9 @@ public class MongoTest {
 
     @Autowired
     private MembershipRepository membershipRepository;
+
+    @Autowired
+    private FileRepository fileRepository;
 
     @Autowired
     private SystemConverter systemConverter;
@@ -191,6 +195,52 @@ public class MongoTest {
             System.err.println(file + " cannot be processed: " + e.getMessage());
             // e.printStackTrace();
             return null;
+        }
+    }
+
+    @Test
+    @Ignore
+    public void testFile() throws JsonProcessingException, IOException {
+        MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class).readValue(new File("meeting.json"));
+        List<Meeting> entities = result.getData().stream().parallel().map(b -> meetingConverter.convert(b))
+                .collect(Collectors.toList());
+        Meeting existingMeeting = null;
+        for (Meeting entity : entities) {
+            for (Meeting meeting : meetingRepository.findAll()) {
+                if (meeting.getOriginalId() != null && entity.getOriginalId() != null
+                        && meeting.getOriginalId().toString().equals(entity.getOriginalId().toString())) {
+                    existingMeeting = meeting;
+                    break;
+                }
+            }
+            if (entity.getAuxiliaryFile() != null) {
+                for (de.oklab.leipzig.oparl.entities.File auxiliaryFile : entity.getAuxiliaryFile()) {
+                    fileRepository.save(auxiliaryFile);
+                    if (existingMeeting != null) {
+                        if (existingMeeting.getAuxiliaryFile() == null) {
+                            existingMeeting.setAuxiliaryFile(new ArrayList<>());
+                        }
+                        existingMeeting.getAuxiliaryFile().add(auxiliaryFile);
+                    }
+                }
+            }
+            if (entity.getInvitation() != null) {
+                fileRepository.save(entity.getInvitation());
+                if (existingMeeting != null) {
+                    existingMeeting.setInvitation(entity.getInvitation());
+                }
+            }
+            if (entity.getResultsProtocol() != null) {
+                fileRepository.save(entity.getResultsProtocol());
+                if (existingMeeting != null) {
+                    existingMeeting.setResultsProtocol(entity.getResultsProtocol());
+                }
+            }
+            if (existingMeeting != null) {
+                meetingRepository.save(existingMeeting);
+            } else if (entity != null) {
+                meetingRepository.save(entity);
+            }
         }
     }
 }

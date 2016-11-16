@@ -37,6 +37,16 @@ public class Meeting extends AbstractDatedEntity {
     @Field("type")
     private String type;
 
+    @DBRef
+    @Field("auxiliaryFile")
+    private List<File> auxiliaryFile;
+
+    @Field("invitation")
+    private File invitation;
+
+    @Field("resultsProtocol")
+    private File resultsProtocol;
+
     public String getName() {
         return name;
     }
@@ -107,5 +117,29 @@ public class Meeting extends AbstractDatedEntity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<File> getAuxiliaryFile() {
+        return auxiliaryFile;
+    }
+
+    public void setAuxiliaryFile(List<File> auxiliaryFile) {
+        this.auxiliaryFile = auxiliaryFile;
+    }
+
+    public File getInvitation() {
+        return invitation;
+    }
+
+    public void setInvitation(File invitation) {
+        this.invitation = invitation;
+    }
+
+    public File getResultsProtocol() {
+        return resultsProtocol;
+    }
+
+    public void setResultsProtocol(File resultsProtocol) {
+        this.resultsProtocol = resultsProtocol;
     }
 }
