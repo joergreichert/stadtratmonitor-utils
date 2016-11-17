@@ -6,9 +6,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.cert.X509Certificate;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import javax.net.ssl.HostnameVerifier;
@@ -136,6 +138,25 @@ public class RestTest {
                     downloadFile(agendaItem.getConsultation());
                 }
             }
+        }
+    }
+
+    @Test
+    @Ignore
+    public void testDownloadPerson() throws JsonProcessingException, IOException {
+        List<de.oklab.leipzig.oparl.service.model.Membership> results = Files.list(Paths.get("data/memberships"))
+                .map(file -> toResult(file)).filter(e -> e != null).collect(Collectors.toList());
+        for (de.oklab.leipzig.oparl.service.model.Membership result : results) {
+            downloadFile(result.getPerson());
+        }
+    }
+
+    private de.oklab.leipzig.oparl.service.model.Membership toResult(Path file) {
+        try {
+            return new ObjectMapper().readerFor(de.oklab.leipzig.oparl.service.model.Membership.class)
+                    .readValue(file.toFile());
+        } catch (Exception e) {
+            return null;
         }
     }
 }

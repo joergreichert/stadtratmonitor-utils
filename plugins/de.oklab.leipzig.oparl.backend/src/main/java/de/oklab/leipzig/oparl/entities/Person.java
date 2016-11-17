@@ -47,6 +47,9 @@ public class Person extends AbstractEntity {
     @Field("title")
     private String title;
 
+    @Field
+    private String politikBeiUnsOriginalId;
+
     public String getAddress() {
         return address;
     }
@@ -149,5 +152,13 @@ public class Person extends AbstractEntity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getPolitikBeiUnsOriginalId() {
+        return politikBeiUnsOriginalId;
+    }
+
+    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
+        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
     }
 }

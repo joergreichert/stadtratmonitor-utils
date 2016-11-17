@@ -4,6 +4,8 @@ import static com.lordofthejars.nosqlunit.mongodb.MongoDbConfigurationBuilder.mo
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,12 +34,14 @@ import de.oklab.leipzig.oparl.converter.FileConverter;
 import de.oklab.leipzig.oparl.converter.MeetingConverter;
 import de.oklab.leipzig.oparl.converter.MembershipConverter;
 import de.oklab.leipzig.oparl.converter.OrganizationConverter;
+import de.oklab.leipzig.oparl.converter.PersonConverter;
 import de.oklab.leipzig.oparl.converter.SystemConverter;
 import de.oklab.leipzig.oparl.entities.Body;
 import de.oklab.leipzig.oparl.entities.Consultation;
 import de.oklab.leipzig.oparl.entities.Meeting;
 import de.oklab.leipzig.oparl.entities.Membership;
 import de.oklab.leipzig.oparl.entities.Organization;
+import de.oklab.leipzig.oparl.entities.Person;
 import de.oklab.leipzig.oparl.persistence.impl.OParlRepositoryImpl;
 import de.oklab.leipzig.oparl.service.model.BodyResult;
 import de.oklab.leipzig.oparl.service.model.MeetingResult;
@@ -46,7 +50,7 @@ import de.oklab.leipzig.oparl.service.model.OrganizationResult;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringMongoConfiguration.class, OParlRepositoryImpl.class, SystemConverter.class,
         BodyConverter.class, OrganizationConverter.class, MeetingConverter.class, MembershipConverter.class,
-        AgendaItemConverter.class, ConsultationConverter.class, FileConverter.class })
+        AgendaItemConverter.class, ConsultationConverter.class, FileConverter.class, PersonConverter.class })
 public class MongoTest {
     @Rule
     public MongoDbRule remoteMongoDbRule = new MongoDbRule(mongoDb().databaseName("oklab").host("localhost").build());
@@ -68,6 +72,9 @@ public class MongoTest {
 
     @Autowired
     private MembershipRepository membershipRepository;
+
+    @Autowired
+    private PersonRepository personRepository;
 
     @Autowired
     private FileRepository fileRepository;
@@ -92,6 +99,9 @@ public class MongoTest {
 
     @Autowired
     private ConsultationConverter consultationConverter;
+
+    @Autowired
+    private PersonConverter personConverter;
 
     @Test
     @Ignore
@@ -137,6 +147,11 @@ public class MongoTest {
     public void testSaveMeeting() throws JsonProcessingException, IOException {
         MeetingResult result = new ObjectMapper().readerFor(MeetingResult.class)
                 .readValue(new File("data/meeting.json"));
+        navigateMeetings(result);
+    }
+
+    private void navigateMeetings(MeetingResult result)
+            throws JsonProcessingException, MalformedURLException, IOException {
         List<Meeting> entities = result.getData().stream().parallel().map(b -> meetingConverter.convert(b))
                 .collect(Collectors.toList());
         Map<Body, List<Meeting>> bodyToMeeting = new HashMap<>();
@@ -157,6 +172,13 @@ public class MongoTest {
             entry.getKey().setMeeting(entry.getValue());
         }
         bodyRepository.save(bodyToMeeting.keySet());
+        if (result.getLinks() != null) {
+            URI next = result.getLinks().getNext();
+            if (next != null) {
+                MeetingResult nextResult = new ObjectMapper().readerFor(MeetingResult.class).readValue(next.toURL());
+                navigateMeetings(nextResult);
+            }
+        }
     }
 
     @Test
@@ -242,6 +264,25 @@ public class MongoTest {
             } else if (entity != null) {
                 meetingRepository.save(entity);
             }
+        }
+    }
+
+    @Test
+    @Ignore
+    public void testPerson() throws JsonProcessingException, IOException {
+        Files.list(Paths.get("data/person")).map(file -> processPersonFile(file)).filter(e -> e != null).parallel()
+                .forEach(entity -> personRepository.save(entity));
+    }
+
+    private Person processPersonFile(Path file) {
+        try {
+            de.oklab.leipzig.oparl.service.model.Person result = new ObjectMapper()
+                    .readerFor(de.oklab.leipzig.oparl.service.model.Person.class).readValue(file.toFile());
+            return personConverter.convert(result);
+        } catch (IOException e) {
+            System.err.println(file + " cannot be processed: " + e.getMessage());
+            // e.printStackTrace();
+            return null;
         }
     }
 }
