@@ -28,7 +28,7 @@ public class MongoTest {
     public void setUp() {
         final Morphia morphia = new Morphia();
         morphia.mapPackage("de.oklab.leipzig.oparl.entities");
-        datastore = morphia.createDatastore(new MongoClient(), "oklab_morphia");
+        datastore = morphia.createDatastore(new MongoClient(), "oklab_protobuf");
         datastore.ensureIndexes();
     }
 
@@ -40,7 +40,7 @@ public class MongoTest {
     public void testSaveSystem() throws JsonProcessingException, IOException {
         de.oklab.leipzig.oparl.service.model.System system = new ObjectMapper()
                 .readerFor(de.oklab.leipzig.oparl.service.model.System.class).readValue(new File("data/oparl.json"));
-        de.oklab.leipzig.oparl.entities.System entity = systemConverter.convert(system);
+        de.oklab.leipzig.oparl.def.Oparl.System entity = systemConverter.convert(system);
         datastore.save(entity);
     }
 

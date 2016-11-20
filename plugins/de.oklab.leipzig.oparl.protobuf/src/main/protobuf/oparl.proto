@@ -1,0 +1,24 @@
+syntax = "proto3";
+package de.oklab.leipzig.oparl.def;
+
+message System {
+  repeated Body body = 1;
+  string website = 2;
+  string product = 3;
+  string oparlVersion = 4;
+  string contactEmail = 5;
+  string contactName = 6;
+  string vendor = 7;
+  string id = 8;
+  string web = 9;
+  string name = 10;
+  int64 created = 11; 
+  int64 modified = 12; 
+  string type = 13; 
+  repeated string otherOparlVersions = 14;
+}
+
+message Body {
+  string id = 1;
+  string name = 2;
+}
