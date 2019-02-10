@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Component;
 
 import de.oklab.leipzig.oparl.entities.Body;
@@ -30,7 +31,9 @@ public class OrganizationConverter implements Converter<Organization, de.oklab.l
         URI bodyURI = source.getBody();
         Body body = null;
         if (!bodies.containsKey(bodyURI)) {
-            body = bodyRepository.findOne(bodyURI);
+        	Body example = new Body();
+            example.setOriginalId(bodyURI);
+            body = bodyRepository.findOne(Example.of(example)).orElse(null);
             bodies.put(bodyURI, body);
         } else {
             body = bodies.get(bodyURI);

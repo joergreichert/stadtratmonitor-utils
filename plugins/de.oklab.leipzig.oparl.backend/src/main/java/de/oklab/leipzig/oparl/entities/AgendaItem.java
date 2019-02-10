@@ -8,12 +8,17 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Document(collection = "agendaitem")
+@Data
+@NoArgsConstructor
 public class AgendaItem {
 
     @DBRef(lazy = true)
     @Field
-    private Body body;
+    private Meeting meeting;
 
     @Field
     private String name;
@@ -33,60 +38,4 @@ public class AgendaItem {
 
     @Field("public")
     private boolean wasPublic;
-
-    public Body getBody() {
-        return body;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public URI getOriginalId() {
-        return originalId;
-    }
-
-    public void setOriginalId(URI originalId) {
-        this.originalId = originalId;
-    }
-
-    public String getPolitikBeiUnsOriginalId() {
-        return politikBeiUnsOriginalId;
-    }
-
-    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
-        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public boolean isWasPublic() {
-        return wasPublic;
-    }
-
-    public void setWasPublic(boolean wasPublic) {
-        this.wasPublic = wasPublic;
-    }
 }

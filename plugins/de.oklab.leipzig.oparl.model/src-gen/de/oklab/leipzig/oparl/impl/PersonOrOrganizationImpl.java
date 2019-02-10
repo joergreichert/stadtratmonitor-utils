@@ -15,23 +15,23 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public abstract class PersonOrOrganizationImpl extends AddressableOParlElementImpl implements PersonOrOrganization {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected PersonOrOrganizationImpl() {
-        super();
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected PersonOrOrganizationImpl() {
+		super();
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return OparlPackage.Literals.PERSON_OR_ORGANIZATION;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return OparlPackage.Literals.PERSON_OR_ORGANIZATION;
+	}
 
 } //PersonOrOrganizationImpl

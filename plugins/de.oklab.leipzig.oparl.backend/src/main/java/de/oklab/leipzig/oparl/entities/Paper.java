@@ -7,6 +7,13 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 @Document(collection = "paper")
 public class Paper extends AbstractEntity {
 
@@ -32,60 +39,4 @@ public class Paper extends AbstractEntity {
 
     @Field("publishedDate")
     private Date publishedDate;
-
-    public List<File> getAuxiliaryFile() {
-        return auxiliaryFile;
-    }
-
-    public void setAuxiliaryFile(List<File> auxiliaryFile) {
-        this.auxiliaryFile = auxiliaryFile;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public File getMainFile() {
-        return mainFile;
-    }
-
-    public void setMainFile(File mainFile) {
-        this.mainFile = mainFile;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getOriginalUrl() {
-        return originalUrl;
-    }
-
-    public void setOriginalUrl(String originalUrl) {
-        this.originalUrl = originalUrl;
-    }
-
-    public String getPaperType() {
-        return paperType;
-    }
-
-    public void setPaperType(String paperType) {
-        this.paperType = paperType;
-    }
-
-    public Date getPublishedDate() {
-        return publishedDate;
-    }
-
-    public void setPublishedDate(Date publishedDate) {
-        this.publishedDate = publishedDate;
-    }
 }

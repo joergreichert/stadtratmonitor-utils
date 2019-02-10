@@ -136,412 +136,407 @@ import org.eclipse.emf.common.util.EList;
  * @generated
  */
 public interface Meeting extends AddressableOParlElement {
-    /**
-     * Returns the value of the '<em><b>Meeting State</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Aktueller Status der Sitzung. <b>Empfohlen</b> ist die Verwendung von
-     * <pre>terminiert</pre> (geplant), <pre>eingeladen</pre> (vor der Sitzung
-     * bis zur Freigabe des Protokolls) und <pre>durchgeführt</pre>
-     * (nach Freigabe des Protokolls).
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Meeting State</em>' attribute.
-     * @see #setMeetingState(String)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_MeetingState()
-     * @model unique="false"
-     * @generated
-     */
-    String getMeetingState();
+	/**
+	 * Returns the value of the '<em><b>Meeting State</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Aktueller Status der Sitzung. <b>Empfohlen</b> ist die Verwendung von
+	 * <pre>terminiert</pre> (geplant), <pre>eingeladen</pre> (vor der Sitzung
+	 * bis zur Freigabe des Protokolls) und <pre>durchgeführt</pre>
+	 * (nach Freigabe des Protokolls).
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Meeting State</em>' attribute.
+	 * @see #setMeetingState(String)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_MeetingState()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getMeetingState();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getMeetingState <em>Meeting State</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Meeting State</em>' attribute.
-     * @see #getMeetingState()
-     * @generated
-     */
-    void setMeetingState(String value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getMeetingState <em>Meeting State</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Meeting State</em>' attribute.
+	 * @see #getMeetingState()
+	 * @generated
+	 */
+	void setMeetingState(String value);
 
-    /**
-     * Returns the value of the '<em><b>Cancelled</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Wenn die Sitzung ausfällt, wird cancelled auf true gesetzt.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Cancelled</em>' attribute.
-     * @see #setCancelled(boolean)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Cancelled()
-     * @model unique="false"
-     * @generated
-     */
-    boolean isCancelled();
+	/**
+	 * Returns the value of the '<em><b>Cancelled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Wenn die Sitzung ausfällt, wird cancelled auf true gesetzt.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Cancelled</em>' attribute.
+	 * @see #setCancelled(boolean)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Cancelled()
+	 * @model unique="false"
+	 * @generated
+	 */
+	boolean isCancelled();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#isCancelled <em>Cancelled</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Cancelled</em>' attribute.
-     * @see #isCancelled()
-     * @generated
-     */
-    void setCancelled(boolean value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#isCancelled <em>Cancelled</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Cancelled</em>' attribute.
+	 * @see #isCancelled()
+	 * @generated
+	 */
+	void setCancelled(boolean value);
 
-    /**
-     * Returns the value of the '<em><b>Start</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Datum und Uhrzeit des Anfangszeitpunkts der Sitzung. Bei einer zukünftigen
-     * Sitzung ist dies der geplante Zeitpunkt, bei einer stattgefundenen
-     * <b>kann</b> es der tatsächliche Startzeitpunkt sein.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Start</em>' attribute.
-     * @see #setStart(Date)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Start()
-     * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-     * @generated
-     */
-    Date getStart();
+	/**
+	 * Returns the value of the '<em><b>Start</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Datum und Uhrzeit des Anfangszeitpunkts der Sitzung. Bei einer zukünftigen
+	 * Sitzung ist dies der geplante Zeitpunkt, bei einer stattgefundenen
+	 * <b>kann</b> es der tatsächliche Startzeitpunkt sein.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Start</em>' attribute.
+	 * @see #setStart(Date)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Start()
+	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+	 * @generated
+	 */
+	Date getStart();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getStart <em>Start</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Start</em>' attribute.
-     * @see #getStart()
-     * @generated
-     */
-    void setStart(Date value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getStart <em>Start</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Start</em>' attribute.
+	 * @see #getStart()
+	 * @generated
+	 */
+	void setStart(Date value);
 
-    /**
-     * Returns the value of the '<em><b>End</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Endzeitpunkt der Sitzung als Datum/Uhrzeit. Bei einer zukünftigen Sitzung
-     * ist dies der geplante Zeitpunkt, bei einer stattgefundenen <b>kann</b> es
-     * der tatsächliche Endzeitpunkt sein.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>End</em>' attribute.
-     * @see #setEnd(Date)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_End()
-     * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
-     * @generated
-     */
-    Date getEnd();
+	/**
+	 * Returns the value of the '<em><b>End</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Endzeitpunkt der Sitzung als Datum/Uhrzeit. Bei einer zukünftigen Sitzung
+	 * ist dies der geplante Zeitpunkt, bei einer stattgefundenen <b>kann</b> es
+	 * der tatsächliche Endzeitpunkt sein.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>End</em>' attribute.
+	 * @see #setEnd(Date)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_End()
+	 * @model unique="false" dataType="de.oklab.leipzig.oparl.Date"
+	 * @generated
+	 */
+	Date getEnd();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getEnd <em>End</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>End</em>' attribute.
-     * @see #getEnd()
-     * @generated
-     */
-    void setEnd(Date value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getEnd <em>End</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>End</em>' attribute.
+	 * @see #getEnd()
+	 * @generated
+	 */
+	void setEnd(Date value);
 
-    /**
-     * Returns the value of the '<em><b>Room</b></em>' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Raum, in dem die Sitzung stattfindet.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Room</em>' attribute.
-     * @see #setRoom(String)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Room()
-     * @model unique="false"
-     * @generated
-     */
-    String getRoom();
+	/**
+	 * Returns the value of the '<em><b>Room</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Raum, in dem die Sitzung stattfindet.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Room</em>' attribute.
+	 * @see #setRoom(String)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Room()
+	 * @model unique="false"
+	 * @generated
+	 */
+	String getRoom();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getRoom <em>Room</em>}' attribute.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Room</em>' attribute.
-     * @see #getRoom()
-     * @generated
-     */
-    void setRoom(String value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getRoom <em>Room</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Room</em>' attribute.
+	 * @see #getRoom()
+	 * @generated
+	 */
+	void setRoom(String value);
 
-    /**
-     * Returns the value of the '<em><b>Location</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.MeetingLocation#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Sitzungsort in Form von Geodaten.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Location</em>' containment reference.
-     * @see #setLocation(MeetingLocation)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Location()
-     * @see de.oklab.leipzig.oparl.MeetingLocation#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    MeetingLocation getLocation();
+	/**
+	 * Returns the value of the '<em><b>Location</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.MeetingLocation#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Sitzungsort in Form von Geodaten.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Location</em>' containment reference.
+	 * @see #setLocation(MeetingLocation)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Location()
+	 * @see de.oklab.leipzig.oparl.MeetingLocation#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	MeetingLocation getLocation();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getLocation <em>Location</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Location</em>' containment reference.
-     * @see #getLocation()
-     * @generated
-     */
-    void setLocation(MeetingLocation value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getLocation <em>Location</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Location</em>' containment reference.
+	 * @see #getLocation()
+	 * @generated
+	 */
+	void setLocation(MeetingLocation value);
 
-    /**
-     * Returns the value of the '<em><b>Organization</b></em>' reference list.
-     * The list contents are of type {@link de.oklab.leipzig.oparl.MeetingOrganization}.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.MeetingOrganization#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Gruppierungen, denen die Sitzung zugeordnet ist. Im Regelfall wird hier
-     * eine Gruppierung verknüpft sein, es kann jedoch auch gemeinsame Sitzungen
-     * mehrerer Gruppierungen geben. Das erste Element ist dann das
-     * federführende Gremium.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Organization</em>' reference list.
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Organization()
-     * @see de.oklab.leipzig.oparl.MeetingOrganization#getMeeting
-     * @model opposite="meeting"
-     * @generated
-     */
-    EList<MeetingOrganization> getOrganization();
+	/**
+	 * Returns the value of the '<em><b>Organization</b></em>' reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.MeetingOrganization}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.MeetingOrganization#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Gruppierungen, denen die Sitzung zugeordnet ist. Im Regelfall wird hier
+	 * eine Gruppierung verknüpft sein, es kann jedoch auch gemeinsame Sitzungen
+	 * mehrerer Gruppierungen geben. Das erste Element ist dann das
+	 * federführende Gremium.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Organization</em>' reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Organization()
+	 * @see de.oklab.leipzig.oparl.MeetingOrganization#getMeeting
+	 * @model opposite="meeting"
+	 * @generated
+	 */
+	EList<MeetingOrganization> getOrganization();
 
-    /**
-     * Returns the value of the '<em><b>Participant</b></em>' reference list.
-     * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Personen, die an der Sitzung teilgenommen haben (d.h. nicht nur die
-     * eingeladenen Personen, sondern die tatsächlich anwesenden). Diese
-     * Eigenschaft kann selbstverständlich erst nach dem Stattfinden der
-     * Sitzung vorkommen.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Participant</em>' reference list.
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Participant()
-     * @model
-     * @generated
-     */
-    EList<Person> getParticipant();
+	/**
+	 * Returns the value of the '<em><b>Participant</b></em>' reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.Person}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Personen, die an der Sitzung teilgenommen haben (d.h. nicht nur die
+	 * eingeladenen Personen, sondern die tatsächlich anwesenden). Diese
+	 * Eigenschaft kann selbstverständlich erst nach dem Stattfinden der
+	 * Sitzung vorkommen.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Participant</em>' reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Participant()
+	 * @model
+	 * @generated
+	 */
+	EList<Person> getParticipant();
 
-    /**
-     * Returns the value of the '<em><b>Invitation</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.InvitationFile#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Einladungsdokument zur Sitzung.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Invitation</em>' containment reference.
-     * @see #setInvitation(InvitationFile)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Invitation()
-     * @see de.oklab.leipzig.oparl.InvitationFile#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    InvitationFile getInvitation();
+	/**
+	 * Returns the value of the '<em><b>Invitation</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.InvitationFile#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Einladungsdokument zur Sitzung.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Invitation</em>' containment reference.
+	 * @see #setInvitation(InvitationFile)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_Invitation()
+	 * @see de.oklab.leipzig.oparl.InvitationFile#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	InvitationFile getInvitation();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getInvitation <em>Invitation</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Invitation</em>' containment reference.
-     * @see #getInvitation()
-     * @generated
-     */
-    void setInvitation(InvitationFile value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getInvitation <em>Invitation</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Invitation</em>' containment reference.
+	 * @see #getInvitation()
+	 * @generated
+	 */
+	void setInvitation(InvitationFile value);
 
-    /**
-     * Returns the value of the '<em><b>Results Protocol</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.ResultsProtocol#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Ergebnisprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
-     * erst nachdem Stattfinden der Sitzung vorkommen.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Results Protocol</em>' containment reference.
-     * @see #setResultsProtocol(ResultsProtocol)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_ResultsProtocol()
-     * @see de.oklab.leipzig.oparl.ResultsProtocol#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    ResultsProtocol getResultsProtocol();
+	/**
+	 * Returns the value of the '<em><b>Results Protocol</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.ResultsProtocol#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Ergebnisprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
+	 * erst nachdem Stattfinden der Sitzung vorkommen.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Results Protocol</em>' containment reference.
+	 * @see #setResultsProtocol(ResultsProtocol)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_ResultsProtocol()
+	 * @see de.oklab.leipzig.oparl.ResultsProtocol#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	ResultsProtocol getResultsProtocol();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getResultsProtocol <em>Results Protocol</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Results Protocol</em>' containment reference.
-     * @see #getResultsProtocol()
-     * @generated
-     */
-    void setResultsProtocol(ResultsProtocol value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getResultsProtocol <em>Results Protocol</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Results Protocol</em>' containment reference.
+	 * @see #getResultsProtocol()
+	 * @generated
+	 */
+	void setResultsProtocol(ResultsProtocol value);
 
-    /**
-     * Returns the value of the '<em><b>Verbatim Protocol</b></em>' containment reference.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.VerbatimProtocol#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Wortprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
-     * erst nach dem Stattfinden der Sitzung vorkommen.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Verbatim Protocol</em>' containment reference.
-     * @see #setVerbatimProtocol(VerbatimProtocol)
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_VerbatimProtocol()
-     * @see de.oklab.leipzig.oparl.VerbatimProtocol#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    VerbatimProtocol getVerbatimProtocol();
+	/**
+	 * Returns the value of the '<em><b>Verbatim Protocol</b></em>' containment reference.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.VerbatimProtocol#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Wortprotokoll zur Sitzung. Diese Eigenschaft kann selbstverständlich
+	 * erst nach dem Stattfinden der Sitzung vorkommen.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Verbatim Protocol</em>' containment reference.
+	 * @see #setVerbatimProtocol(VerbatimProtocol)
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_VerbatimProtocol()
+	 * @see de.oklab.leipzig.oparl.VerbatimProtocol#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	VerbatimProtocol getVerbatimProtocol();
 
-    /**
-     * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getVerbatimProtocol <em>Verbatim Protocol</em>}' containment reference.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Verbatim Protocol</em>' containment reference.
-     * @see #getVerbatimProtocol()
-     * @generated
-     */
-    void setVerbatimProtocol(VerbatimProtocol value);
+	/**
+	 * Sets the value of the '{@link de.oklab.leipzig.oparl.Meeting#getVerbatimProtocol <em>Verbatim Protocol</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Verbatim Protocol</em>' containment reference.
+	 * @see #getVerbatimProtocol()
+	 * @generated
+	 */
+	void setVerbatimProtocol(VerbatimProtocol value);
 
-    /**
-     * Returns the value of the '<em><b>Auxiliary File</b></em>' containment reference list.
-     * The list contents are of type {@link de.oklab.leipzig.oparl.AuxiliaryFile}.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.AuxiliaryFile#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Dateianhang zur Sitzung. Hiermit sind Dateien gemeint, die
-     * üblicherweise mit der Einladung zu einer Sitzung verteilt werden,
-     * und die nicht bereits über einzelne Tagesordnungspunkte referenziert sind.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Auxiliary File</em>' containment reference list.
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_AuxiliaryFile()
-     * @see de.oklab.leipzig.oparl.AuxiliaryFile#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    EList<AuxiliaryFile> getAuxiliaryFile();
+	/**
+	 * Returns the value of the '<em><b>Auxiliary File</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.AuxiliaryFile}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.AuxiliaryFile#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Dateianhang zur Sitzung. Hiermit sind Dateien gemeint, die
+	 * üblicherweise mit der Einladung zu einer Sitzung verteilt werden,
+	 * und die nicht bereits über einzelne Tagesordnungspunkte referenziert sind.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Auxiliary File</em>' containment reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_AuxiliaryFile()
+	 * @see de.oklab.leipzig.oparl.AuxiliaryFile#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	EList<AuxiliaryFile> getAuxiliaryFile();
 
-    /**
-     * Returns the value of the '<em><b>Agenda Item</b></em>' containment reference list.
-     * The list contents are of type {@link de.oklab.leipzig.oparl.AgendaItem}.
-     * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.AgendaItem#getMeeting <em>Meeting</em>}'.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Tagesordnungspunkte der Sitzung. Die Reihenfolge ist relevant.
-     * Es kann Sitzungen ohne TOPs geben.
-     * </p>
-     * <!-- end-model-doc -->
-     * @return the value of the '<em>Agenda Item</em>' containment reference list.
-     * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_AgendaItem()
-     * @see de.oklab.leipzig.oparl.AgendaItem#getMeeting
-     * @model opposite="meeting" containment="true"
-     * @generated
-     */
-    EList<AgendaItem> getAgendaItem();
+	/**
+	 * Returns the value of the '<em><b>Agenda Item</b></em>' containment reference list.
+	 * The list contents are of type {@link de.oklab.leipzig.oparl.AgendaItem}.
+	 * It is bidirectional and its opposite is '{@link de.oklab.leipzig.oparl.AgendaItem#getMeeting <em>Meeting</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Tagesordnungspunkte der Sitzung. Die Reihenfolge ist relevant.
+	 * Es kann Sitzungen ohne TOPs geben.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Agenda Item</em>' containment reference list.
+	 * @see de.oklab.leipzig.oparl.OparlPackage#getMeeting_AgendaItem()
+	 * @see de.oklab.leipzig.oparl.AgendaItem#getMeeting
+	 * @model opposite="meeting" containment="true"
+	 * @generated
+	 */
+	EList<AgendaItem> getAgendaItem();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return \"https://oparl.org/schema/1.0/Meeting\";'"
-     * @generated
-     */
-    String getType();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @model kind="operation" dataType="de.oklab.leipzig.oparl.OParlType" unique="false"
+	 * @generated
+	 */
+	String getType();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Name der Sitzung.
-     * </p>
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getName();'"
-     * @generated
-     */
-    String getName();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Name der Sitzung.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 * @generated
+	 */
+	String getName();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Straße und Hausnummer des Sitzungsortes.
-     * </p>
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getStreetAddress();'"
-     * @generated
-     */
-    String getStreetAddress();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Straße und Hausnummer des Sitzungsortes.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 * @generated
+	 */
+	String getStreetAddress();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Postleitzahl des Sitzungsortes.
-     * </p>
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getPostalCode();'"
-     * @generated
-     */
-    String getPostalCode();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Postleitzahl des Sitzungsortes.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 * @generated
+	 */
+	String getPostalCode();
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * <!-- begin-model-doc -->
-     *  <p>
-     * Ortsangabe des Sitzungsortes.
-     * </p>
-     * <!-- end-model-doc -->
-     * @model kind="operation" unique="false"
-     *        annotation="http://www.eclipse.org/emf/2002/GenModel body='return super.getLocality();'"
-     * @generated
-     */
-    String getLocality();
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 *  <p>
+	 * Ortsangabe des Sitzungsortes.
+	 * </p>
+	 * <!-- end-model-doc -->
+	 * @model kind="operation" unique="false"
+	 * @generated
+	 */
+	String getLocality();
 
 } // Meeting

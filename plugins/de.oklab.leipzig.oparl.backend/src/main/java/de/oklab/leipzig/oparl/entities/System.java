@@ -10,6 +10,11 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Document(collection = "system")
 public class System {
 
@@ -53,108 +58,4 @@ public class System {
 
     @Field("other_oparl_versions")
     private List<String> otherOparlVersions = new ArrayList<>();
-
-    public List<Body> getBody() {
-        return body;
-    }
-
-    public void setBody(List<Body> body) {
-        this.body = body;
-    }
-
-    public URI getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(URI website) {
-        this.website = website;
-    }
-
-    public String getProduct() {
-        return product;
-    }
-
-    public void setProduct(String product) {
-        this.product = product;
-    }
-
-    public URI getOparlVersion() {
-        return oparlVersion;
-    }
-
-    public void setOparlVersion(URI oparlVersion) {
-        this.oparlVersion = oparlVersion;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public void setVendor(String vendor) {
-        this.vendor = vendor;
-    }
-
-    public URI getOriginalId() {
-        return originalId;
-    }
-
-    public void setOriginalId(URI originalId) {
-        this.originalId = originalId;
-    }
-
-    public URI getWeb() {
-        return web;
-    }
-
-    public void setWeb(URI web) {
-        this.web = web;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public List<String> getOtherOparlVersions() {
-        return otherOparlVersions;
-    }
-
-    public void setOtherOparlVersions(List<String> otherOparlVersions) {
-        this.otherOparlVersions = otherOparlVersions;
-    }
 }

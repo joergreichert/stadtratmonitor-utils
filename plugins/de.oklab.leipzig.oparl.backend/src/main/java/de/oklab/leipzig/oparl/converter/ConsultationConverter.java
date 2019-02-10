@@ -25,28 +25,28 @@ public class ConsultationConverter implements Converter<Consultation, de.oklab.l
     @Override
     public de.oklab.leipzig.oparl.entities.Consultation convert(Consultation source) {
         de.oklab.leipzig.oparl.entities.Consultation entity = new de.oklab.leipzig.oparl.entities.Consultation();
-        entity.setCreated(source.getCreated());
-        entity.setModified(source.getModified());
-        entity.setPolitikBeiUnsOriginalId(source.getOriginalId());
-        URI bodyURI = source.getBody();
-        Body body = null;
-        if (!bodies.containsKey(bodyURI)) {
-            body = oParlRepository.findBodyByURI(bodyURI);
-            bodies.put(bodyURI, body);
-        } else {
-            body = bodies.get(bodyURI);
-        }
-        entity.setBody(body);
-        URI agendaItemURI = source.getAgendaItem();
-        AgendaItem agendaItem = null;
-        if (!agendaItems.containsKey(agendaItemURI)) {
-            agendaItem = oParlRepository.findAgendaItemByURI(agendaItemURI);
-            agendaItems.put(agendaItemURI, agendaItem);
-        } else {
-            agendaItem = agendaItems.get(agendaItemURI);
-        }
-        entity.setAgendaItem(agendaItem);
-        entity.setOriginalId(source.getId());
+//        entity.setCreated(source.getCreated());
+//        entity.setModified(source.getModified());
+//        entity.setPolitikBeiUnsOriginalId(source.getOriginalId());
+//        URI bodyURI = source.getBody();
+//        Body body = null;
+//        if (!bodies.containsKey(bodyURI)) {
+//            body = oParlRepository.findBodyByURI(bodyURI);
+//            bodies.put(bodyURI, body);
+//        } else {
+//            body = bodies.get(bodyURI);
+//        }
+//        entity.setBody(body);
+//        URI agendaItemURI = source.getAgendaItem();
+//        AgendaItem agendaItem = null;
+//        if (!agendaItems.containsKey(agendaItemURI)) {
+//            agendaItem = oParlRepository.findAgendaItemByURI(agendaItemURI);
+//            agendaItems.put(agendaItemURI, agendaItem);
+//        } else {
+//            agendaItem = agendaItems.get(agendaItemURI);
+//        }
+//        entity.setAgendaItem(agendaItem);
+//        entity.setOriginalId(source.getId());
         return entity;
     }
 }

@@ -4,6 +4,13 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 @Document(collection = "membership")
 public class Membership extends AbstractDatedEntity {
 
@@ -16,28 +23,4 @@ public class Membership extends AbstractDatedEntity {
 
     @Field
     private String role;
-
-    public String getPolitikBeiUnsOriginalId() {
-        return politikBeiUnsOriginalId;
-    }
-
-    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
-        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public Organization getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(Organization organization) {
-        this.organization = organization;
-    }
 }

@@ -24,4 +24,6 @@ public interface OParlRepository {
     public Organization findOrganizationByURI(URI uri);
 
     public AgendaItem findAgendaItemByURI(URI agendaItemURI);
+
+	public Meeting findMeetingByURI(URI meetingURI);
 }

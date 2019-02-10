@@ -118,7 +118,7 @@ public class MongoTest {
         BodyResult result = new ObjectMapper().readerFor(BodyResult.class).readValue(new File("data/body.json"));
         List<Body> entities = result.getData().stream().parallel().map(b -> bodyConverter.convert(b))
                 .collect(Collectors.toList());
-        bodyRepository.save(entities);
+        bodyRepository.saveAll(entities);
     }
 
     @Test
@@ -129,7 +129,7 @@ public class MongoTest {
         for (de.oklab.leipzig.oparl.entities.System system : systems) {
             system.setBody(bodies);
         }
-        systemRepository.save(systems);
+        systemRepository.saveAll(systems);
     }
 
     @Test
@@ -139,7 +139,7 @@ public class MongoTest {
                 .readValue(new File("data/organization.json"));
         List<Organization> entities = result.getData().stream().parallel().map(b -> organizationConverter.convert(b))
                 .collect(Collectors.toList());
-        organizationRepository.save(entities);
+        organizationRepository.saveAll(entities);
     }
 
     @Test
@@ -156,7 +156,7 @@ public class MongoTest {
                 .collect(Collectors.toList());
         Map<Body, List<Meeting>> bodyToMeeting = new HashMap<>();
         for (Meeting entity : entities) {
-            agendaItemRepository.save(entity.getAgendaItem());
+            agendaItemRepository.saveAll(entity.getAgendaItem());
             if (bodyToMeeting.containsKey(entity.getBody())) {
                 bodyToMeeting.get(entity.getBody()).add(entity);
             } else {
@@ -167,11 +167,11 @@ public class MongoTest {
                 }
             }
         }
-        meetingRepository.save(entities);
+        meetingRepository.saveAll(entities);
         for (Map.Entry<Body, List<Meeting>> entry : bodyToMeeting.entrySet()) {
             entry.getKey().setMeeting(entry.getValue());
         }
-        bodyRepository.save(bodyToMeeting.keySet());
+        bodyRepository.saveAll(bodyToMeeting.keySet());
         if (result.getLinks() != null) {
             URI next = result.getLinks().getNext();
             if (next != null) {
@@ -186,7 +186,7 @@ public class MongoTest {
     public void testSaveMembership() throws JsonProcessingException, IOException {
         List<Membership> entities = Files.list(Paths.get("data/memberships")).map(file -> processMembershipFile(file))
                 .filter(e -> e != null).collect(Collectors.toList());
-        membershipRepository.save(entities);
+        membershipRepository.saveAll(entities);
     }
 
     private Membership processMembershipFile(Path file) {

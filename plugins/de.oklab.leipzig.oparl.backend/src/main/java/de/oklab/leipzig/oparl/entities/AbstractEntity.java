@@ -6,6 +6,11 @@ import java.util.Date;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 public abstract class AbstractEntity {
 
     @Field("originalId")
@@ -20,36 +25,4 @@ public abstract class AbstractEntity {
     @DBRef(lazy = true)
     @Field("body")
     private Body body;
-
-    public URI getOriginalId() {
-        return originalId;
-    }
-
-    public void setOriginalId(URI originalId) {
-        this.originalId = originalId;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public void setCreated(Date created) {
-        this.created = created;
-    }
-
-    public Date getModified() {
-        return modified;
-    }
-
-    public void setModified(Date modified) {
-        this.modified = modified;
-    }
-
-    public Body getBody() {
-        return body;
-    }
-
-    public void setBody(Body body) {
-        this.body = body;
-    }
 }

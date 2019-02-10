@@ -11,7 +11,7 @@ import de.oklab.leipzig.oparl.persistence.SystemRepository;
 import de.oklab.leipzig.oparl.service.model.Body;
 
 @Component
-public class BodyConverter implements Converter<Body, de.oklab.leipzig.oparl.entities.Body> {
+public class LegislativeTermConverter implements Converter<Body, de.oklab.leipzig.oparl.entities.Body> {
     @Autowired
     private SystemRepository systemRepository;
 
@@ -20,34 +20,27 @@ public class BodyConverter implements Converter<Body, de.oklab.leipzig.oparl.ent
     @Override
     public de.oklab.leipzig.oparl.entities.Body convert(Body source) {
         de.oklab.leipzig.oparl.entities.Body entity = new de.oklab.leipzig.oparl.entities.Body();
-//        source.getAgendaItem()
-//        source.getAgs()
-//        source.getClassification()
-//        source.getConsultation()
 //        entity.setContactEmail(source.getContactEmail());
 //        entity.setContactName(source.getContactName());
-//        source.getDeleted()
-//        source.getEquivalent()
-//        source.getFile()
-//        source.getKeyword()
-//        source.getLegislativeTerm()
-//        source.getLegislativeTermList()
 //        entity.setCreated(source.getCreated());
+//        entity.setGeofabrikData(source.getGeofabrikData());
 //        entity.setLegislativeTerm(source.getLegislativeTerm());
 //        entity.setLicense(source.getLicense());
 //        entity.setLicenseValidSince(source.getLicenseValidSince());
 //        entity.setModified(source.getModified());
 //        entity.setName(source.getName());
 //        entity.setOriginalId(source.getId());
-        if (system == null) {
-            URI systemURI = source.getSystem();
-            systemURI = URI
-                    .create(systemURI.getScheme() + "://" + "1-0.oparl." + systemURI.getHost() + systemURI.getPath());
-            de.oklab.leipzig.oparl.entities.System example = new de.oklab.leipzig.oparl.entities.System();
-            example.setOriginalId(systemURI);
-            system = systemRepository.findOne(Example.of(example)).orElse(null);
-        }
-        entity.setSystem(system);
+//        entity.setOsmRelation(source.getOsmRelation());
+//        entity.setRegionalschluessel(source.getRegionalschluessel());
+//        if (system == null) {
+//            URI systemURI = source.getSystem();
+//            systemURI = URI
+//                    .create(systemURI.getScheme() + "://" + "1-0.oparl." + systemURI.getHost() + systemURI.getPath());
+//            de.oklab.leipzig.oparl.entities.System example = new de.oklab.leipzig.oparl.entities.System();
+//            example.setOriginalId(systemURI);
+//            system = systemRepository.findOne(Example.of(example)).orElse(null);
+//        }
+//        entity.setSystem(system);
         return entity;
     }
 }

@@ -15,23 +15,23 @@ import org.eclipse.emf.ecore.EClass;
  * @generated
  */
 public abstract class InnerOParlElementImpl extends TaggedImpl implements InnerOParlElement {
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    protected InnerOParlElementImpl() {
-        super();
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected InnerOParlElementImpl() {
+		super();
+	}
 
-    /**
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    @Override
-    protected EClass eStaticClass() {
-        return OparlPackage.Literals.INNER_OPARL_ELEMENT;
-    }
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	protected EClass eStaticClass() {
+		return OparlPackage.Literals.INNER_OPARL_ELEMENT;
+	}
 
 } //InnerOParlElementImpl

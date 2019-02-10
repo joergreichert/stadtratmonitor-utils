@@ -7,6 +7,13 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 @Document(collection = "organization")
 public class Organization extends AbstractEntity {
 
@@ -29,52 +36,4 @@ public class Organization extends AbstractEntity {
 
     @Field("slug")
     private String slug;
-
-    public String getClassification() {
-        return classification;
-    }
-
-    public void setClassification(String classification) {
-        this.classification = classification;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSlug() {
-        return slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
-    public List<Meeting> getMeeting() {
-        return meeting;
-    }
-
-    public void setMeeting(List<Meeting> meeting) {
-        this.meeting = meeting;
-    }
-
-    public List<Membership> getMembership() {
-        return membership;
-    }
-
-    public void setMembership(List<Membership> membership) {
-        this.membership = membership;
-    }
-
-    public String getPolitikBeiUnsOriginalId() {
-        return politikBeiUnsOriginalId;
-    }
-
-    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
-        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
-    }
 }

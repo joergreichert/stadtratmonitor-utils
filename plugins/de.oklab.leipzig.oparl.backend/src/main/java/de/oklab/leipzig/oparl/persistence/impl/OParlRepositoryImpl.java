@@ -48,6 +48,11 @@ public class OParlRepositoryImpl implements OParlRepository {
         return findItemByURI(uri, Body.class);
     }
 
+	@Override
+	public Meeting findMeetingByURI(URI uri) {
+        return findItemByURI(uri, Meeting.class);
+	}
+	
     @Override
     public Organization findOrganizationByURI(URI uri) {
         return findItemByURI(uri, Organization.class);

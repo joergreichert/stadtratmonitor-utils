@@ -4,6 +4,13 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 @Document(collection = "consultation")
 public class Consultation extends AbstractEntity {
     @DBRef(lazy = true)
@@ -14,28 +21,4 @@ public class Consultation extends AbstractEntity {
 
     @Field
     private String politikBeiUnsOriginalId;
-
-    public AgendaItem getAgendaItem() {
-        return agendaItem;
-    }
-
-    public void setAgendaItem(AgendaItem agendaItem) {
-        this.agendaItem = agendaItem;
-    }
-
-    public Paper getPaper() {
-        return paper;
-    }
-
-    public void setPaper(Paper paper) {
-        this.paper = paper;
-    }
-
-    public String getPolitikBeiUnsOriginalId() {
-        return politikBeiUnsOriginalId;
-    }
-
-    public void setPolitikBeiUnsOriginalId(String politikBeiUnsOriginalId) {
-        this.politikBeiUnsOriginalId = politikBeiUnsOriginalId;
-    }
 }
